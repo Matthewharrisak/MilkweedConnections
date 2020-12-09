@@ -7,7 +7,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 // the component name TemplateClass with the name for the new
 // component.
 
-class TemplateClass extends Component {
+class ProviderPage extends Component {
   state = {
     heading: 'Class Component',
   };
@@ -16,9 +16,10 @@ class TemplateClass extends Component {
     return (
       <div>
         <h2>{this.state.heading}</h2>
+        <h1> this page will be for ADMIN view of the Provider Table</h1>
       </div>
     );
   }
 }
 
-export default connect(mapStoreToProps)(TemplateClass);
+export default connect(mapStoreToProps)(ProviderPage);

@@ -7,7 +7,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 // the component name TemplateClass with the name for the new
 // component.
 
-class TemplateClass extends Component {
+class RegisterProvider extends Component {
   state = {
     heading: 'Class Component',
   };
@@ -21,4 +21,4 @@ class TemplateClass extends Component {
   }
 }
 
-export default connect(mapStoreToProps)(TemplateClass);
+export default connect(mapStoreToProps)(RegisterProvider);

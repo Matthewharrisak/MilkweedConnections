@@ -16,11 +16,11 @@ CREATE TABLE "providers" (
 	"acitve" boolean default false,
 	"first_name" varchar(120) NOT NULL,
 	"last_name" varchar(120) NOT NULL,
-	"phone_num" integer,
+	"phone_num" varchar(120),
 	"email" varchar(120) NOT NULL,
 	"county" varchar(120) NOT NULL,
 	"programs" varchar(255),
-	"openings" integer NOT NULL,
+	"openings" integer,
 	"schedule" varchar(120),
 	"user_id" integer REFERENCES "user"
 );
@@ -48,7 +48,7 @@ CREATE TABLE "participants" (
 	"first_name" varchar(120) NOT NULL,
 	"last_name" varchar(120) NOT NULL,
 	"dob" date,
-	"phone_num" integer,
+	"phone_num" varchar(120),
 	"address" varchar(300),
 	"county" varchar(80) NOT NULL,
 	"service" varchar(120) NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE "prov_part" (
 CREATE TABLE "service_workers" (
 	"id" SERIAL PRIMARY KEY,
 	"name" varchar(120),
-	"phone" integer,
+	"phone" varchar(120),
 	"email" varchar(120),
 	"county" varchar(80),
 	"participants_id" integer REFERENCES "participants"

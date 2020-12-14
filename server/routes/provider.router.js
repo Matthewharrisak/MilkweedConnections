@@ -7,6 +7,14 @@ const router = express.Router();
  */
 router.get('/', (req, res) => {
   // GET route code here
+  const queryText = 'SELECT * FROM providers;';
+  pool.query(queryText)
+  .then((result) => {
+    res.send(result.rows);
+  }).catch((error) => {
+    console.log('error in the provider Query' , error);
+    res.sendStatus(500);
+  });
 });
 
 /**

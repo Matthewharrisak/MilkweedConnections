@@ -1,15 +1,4 @@
 
-<<<<<<< HEAD
--- USER is a reserved keyword with Postgres
--- You must use double quotes in every query that user is in:
--- ex. SELECT * FROM "user";
--- Otherwise you will have errors!
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-=======
 --- TABLES ---
 -- User TABLE
 CREATE TABLE "user" (
@@ -91,4 +80,3 @@ CREATE TABLE "service_workers" (
 );
 
 
->>>>>>> 1f2986f2b65f4d935ef62ed88d32db1398e80843

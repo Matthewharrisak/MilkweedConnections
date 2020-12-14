@@ -1,4 +1,4 @@
-
+DATABASE NAME : milkweed
 --- TABLES ---
 -- User TABLE
 CREATE TABLE "user" (
@@ -27,7 +27,7 @@ CREATE TABLE "providers" (
 --
 
 --
--- Provider profile TABLE for linked based off their provider id
+-- Provider profile TABLE linked based off their provider id
 CREATE TABLE "provider_profile" (
 	"id" SERIAL PRIMARY KEY,
 	"name" varchar(120) NOT NULL,
@@ -65,7 +65,6 @@ CREATE TABLE "prov_part" (
 	"providers_id" integer REFERENCES "providers",
 	"participants_id" integer REFERENCES "participants"
 );
-
 --
 
 --
@@ -78,5 +77,3 @@ CREATE TABLE "service_workers" (
 	"county" varchar(80),
 	"participants_id" integer REFERENCES "participants"
 );
-
-

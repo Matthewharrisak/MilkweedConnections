@@ -21,7 +21,8 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
 import './App.css';
-
+import PartDisplay from '../PartDisplay/PartDisplay';
+import ProvDisplay from '../ProvDisplay/ProvDisplay';
 class App extends Component {
   componentDidMount() {
     this.props.dispatch({ type: 'FETCH_USER' });
@@ -60,6 +61,20 @@ class App extends Component {
               exact
               path="/info"
               component={InfoPage}
+            />
+
+            <ProtectedRoute
+              // logged in shows InfoPage else shows LoginPage
+              exact
+              path="/participants"
+              component={PartDisplay}
+            />
+
+            <ProtectedRoute
+              // logged in shows InfoPage else shows LoginPage
+              exact
+              path="/providers"
+              component={ProvDisplay}
             />
 
             {/* When a value is supplied for the authRedirect prop the user will

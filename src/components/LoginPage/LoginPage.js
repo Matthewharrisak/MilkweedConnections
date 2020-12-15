@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import LoginForm from '../LoginForm/LoginForm';
 import NewUserForm from '../NewUserForm/NewUserForm'
+import MultiStepForm from '../NewUserForm/MultiForm';
 
 class LoginPage extends Component {
   render() {
@@ -11,7 +12,7 @@ class LoginPage extends Component {
         <LoginForm />
 
         <center>
-          <NewUserForm />
+          <MultiStepForm />
         </center>
       </div>
     );

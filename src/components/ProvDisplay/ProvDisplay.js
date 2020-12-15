@@ -12,6 +12,10 @@ class ProvDisplay extends Component {
     heading: 'Class Component',
   };
 
+  componentDidMount = () => {
+    this.props.dispatch({ type: 'GET_PROV'});
+  }
+  
   render() {
     return (
       <div>

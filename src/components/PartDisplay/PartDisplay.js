@@ -12,10 +12,15 @@ class PartDisplay extends Component {
     heading: 'Class Component',
   };
 
+  componentDidMount = () => {
+    this.props.dispatch({ type: 'GET_PART'});
+  }
+
   render() {
     return (
       <div>
         <h2>this is where we'll display the participants table for admins</h2>
+        {JSON.stringify(this.props.store.participants)}
         
       </div>
     );

@@ -44,11 +44,12 @@ const useStyles = makeStyles((theme) => ({
     },
     }));
 
-export default function MixFormDialog(props) {
+export default function MixFormDialog(navigation) {
     const classes = useStyles();
     // react hooks that will be used when submitting or saving form to DB
     const dispatch = useDispatch();
     // const history = useHistory();
+     const { previous, next } = navigation;
 
   // state variables
     const [open, setOpen] = React.useState(false);
@@ -99,7 +100,8 @@ export default function MixFormDialog(props) {
                 openings: participants,
                 schedule: schedule
             },
-        });   
+        }); 
+        next()  
         setOpen(false);
     };
     // on click of canceling a new account, change state status to false and close input form

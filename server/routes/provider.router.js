@@ -32,25 +32,6 @@ router.get('/', (req, res) => {
   });
 });
 
-// this POST request creates a new Provider depenedent on the user ID 
-router.post('/', (req, res) => {
-  // POST route code here
-  console.log('we are logging from the provider post router' , req.body)
-  const queryText = `INSERT INTO providers ("active" , "first_name" , "last_name" ,
-  "phone_num" , "email" , "county" ,
-  "programs" , "openings" , "schedule" , "user_id")
-  VALUES ($1 , $2 , $3 , $4 , $5 , $6 , $7 , $8 , $9 , $10);`;
-   pool.query(queryText, [ req.body.active , req.body.first_name , req.body.last_name,
-  req.body.phone_num , req.body.email , req.body.county, 
-  req.body.programs , req.body.openings , req.body.schedule , req.user.id ])
-  .then((result) => {
-    res.sendStatus(200);
-  }).catch((error) => {
-    console.log('error in the post!' , error);
-    res.sendStatus(500);
-  })
-});
-
 // get request to GET provider information upon logging in -- pass provider.id to provider_profile POST request
 // This needs the reducer name to continue working on it
 router.post('/:id', (req, res) => {

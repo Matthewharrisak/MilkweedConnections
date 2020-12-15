@@ -47,8 +47,7 @@ const useStyles = makeStyles((theme) => ({
 export default function MixFormDialog(props) {
     const classes = useStyles();
     // react hooks that will be used when submitting or saving form to DB
-
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     // const history = useHistory();
 
   // state variables
@@ -84,12 +83,26 @@ export default function MixFormDialog(props) {
         console.log('open');
         setOpen(true);
     };
-    // on closing the input form add mix to order and fetch mixes in order from db
+
+    // on closing the input form register new account and send provider info
     const handleChangeClose = () => {
-        
+        dispatch({
+            type: 'REGISTER',
+            payload: {
+                username: email,
+                password: password,
+                first_name: first,
+                last_name: last,
+                phone_num: number,
+                county: county,
+                programs: programs,
+                openings: participants,
+                schedule: schedule
+            },
+        });   
         setOpen(false);
     };
-    // on click of canceling a new order, change state status to false and close input form
+    // on click of canceling a new account, change state status to false and close input form
     const handleClose = () => {
         setOpen(false); 
     };

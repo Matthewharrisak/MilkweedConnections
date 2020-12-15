@@ -14,22 +14,38 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
+// async transaction 
 // Handles POST request with new user data
-// The only thing different from this and every other post we've seen
-// is that the password gets encrypted before being inserted
-router.post('/register', (req, res, next) => {
-  const username = req.body.username;
-  const password = encryptLib.encryptPassword(req.body.password);
+// Takes user_id after new user is created and registers a new provider with given user_id attached
+router.post('/register', async (req, res) => {
+  console.log('we are logging from the provider post router' , req.body)
 
-  const queryText = `INSERT INTO "user" (username, password)
+  const connection = await pool.connect()    
+  try {
+    await connection.query('BEGIN');
+    const username = req.body.username;
+    const password = encryptLib.encryptPassword(req.body.password);
+    const addingUser = `INSERT INTO "user" (username, password)
     VALUES ($1, $2) RETURNING id`;
-  pool
-    .query(queryText, [username, password])
-    .then(() => res.sendStatus(201))
-    .catch((err) => {
-      console.log('User registration failed: ', err);
-      res.sendStatus(500);
-    });
+    // CREATE query to register a new user
+    const result = await connection.query( addingUser, [username, password]); 
+    // GET user_id from response from query and create new provider linked to that user_id
+    const user_id = result.rows[0].id; 
+    const addingProvider = `INSERT INTO providers ("first_name" , "last_name" ,
+                            "phone_num" , "email" , "county" ,
+                            "programs" , "openings" , "schedule" , "user_id")
+                            VALUES ($1 , $2 , $3 , $4 , $5 , $6 , $7 , $8 , $9);`;
+    // CREATE query to register a new provider linked to specefic user_id
+    await connection.query( addingProvider, [req.body.first_name, req.body.last_name, req.body.phone_num, username, req.body.county, req.body.programs, req.body.openings, req.body.schedule, user_id]); 
+    await connection.query('COMMIT');
+    res.sendStatus(200); 
+  } catch ( error ) {
+    await connection.query('ROLLBACK');
+    console.log(`Transaction Error - Rolling back account registry`, error);
+    res.sendStatus(500); 
+  } finally {
+    connection.release()
+  }
 });
 
 // Handles login form authenticate/login POST

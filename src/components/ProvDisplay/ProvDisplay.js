@@ -15,11 +15,12 @@ class ProvDisplay extends Component {
   componentDidMount = () => {
     this.props.dispatch({ type: 'GET_PROV'});
   }
-  
+
   render() {
     return (
       <div>
         <h2>This is where we'll display all providers for the Admin view</h2>
+        {JSON.stringify(this.props.store.provider)}
       </div>
     );
   }

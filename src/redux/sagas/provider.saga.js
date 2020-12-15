@@ -5,7 +5,7 @@ import axios from 'axios';
 
 function* fetchProvider() {
     try {
-        const providerResponse = yield axios.get('/api/provder');
+        const providerResponse = yield axios.get('/api/provider');
         yield put({type: 'SET_PROV', payload: providerResponse.data})
     }catch(error) {
         console.log('whats up from the fetchProvider' , error);

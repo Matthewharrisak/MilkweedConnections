@@ -41,7 +41,7 @@ router.post('/:id', (req, res) => {
   "help_info" , "mission" , "bio" , "image" , "providers_id")
   VALUES ($1 , $2 , $3 , $4 , $5 , $6,  $7 );`;
    pool.query(queryText, [req.body.name, req.body.description, req.body.help_info,
-  req.body.mission , req.body.bio , req.body.image ,
+  req.body.mission , req.body.bio , req.body.image, req.params.id
   // provider_id will come from reducer that hold * provider information EX req.REDUCERNAME.id
   ])
   .then((result) => {

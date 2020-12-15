@@ -7,52 +7,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {useDispatch, useSelector} from 'react-redux';
-import {useHistory} from 'react-router-dom';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Chip from '@material-ui/core/Chip';
 
-// predefined values for milkweed 
-const counties = ["Barron", "Burnett", "Buffalo", "Chippewa", "Clark", "Dunn", "Eau Claire", "Pierce", "Pepin", "Polk", 
-   "Trampealeau", "Rusk", "Washburn", "St.Croix"];
+export default function NewProviderProfileForm(navigation) {
+    const dispatch = useDispatch();
+    const { previous, next } = navigation;
 
-const programsAvailable = ["CCS", "Choices", "PSP"];
-
-const schedules = ["Morning", "Afternoon", "Evening"];
-
-// styling for borders of input fields, will be changed based of overall styling of web app
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 180,
-        maxWidth: 300,
-    },
-    chips: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    chip: {
-        width: "100%",
-        margin: 2
-    },
-    noLabel: {
-        marginTop: theme.spacing(3),
-    },
-    }));
-
-export default function MixFormDialog(props) {
-    const classes = useStyles();
-    // react hooks that will be used when submitting or saving form to DB
-
-    // const dispatch = useDispatch();
-    // const history = useHistory();
-
-  // state variables
+    // state variables
     const [open, setOpen] = React.useState(true);
+    const [openImgUrl, setOpenImgUrl] = React.useState(false);
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [help, setHelp] = React.useState('');
@@ -66,11 +28,29 @@ export default function MixFormDialog(props) {
     };
     // on closing the input form add mix to order and fetch mixes in order from db
     const handleChangeClose = () => {
+        dispatch({
+            type: 'CREATE_PROFILE',
+            payload: {
+                name: name,
+                description: description,
+                help_info: help,
+                mission: mission,
+                bio: bio,
+                image: img
+            },
+        }); 
         setOpen(false);
+        next();
     };
     // on click of canceling a new order, change state status to false and close input form
     const handleClose = () => {
         setOpen(false); 
+    };
+    const handleClickOpenBtn = () => {
+        setOpenImgUrl(true);
+    };
+    const handleCloseBtn = () => {
+        setOpenImgUrl(false); 
     };
 
     return (
@@ -79,13 +59,29 @@ export default function MixFormDialog(props) {
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle >Provider Profile:</DialogTitle>
                 <DialogContent>
+                    <Button variant="outlined-light" className="addMixBtn text-light" onClick={handleClickOpenBtn}>Register</Button>
+                    <Dialog open={openImgUrl} onClose={handleCloseBtn} aria-labelledby="form-dialog-title">
+                        <DialogTitle >Image:</DialogTitle>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="img"
+                            label="Image URL"
+                            value={img}
+                            fullWidth="true"
+                            onChange={e => setImg(e.target.value)}
+                        />
+                        <DialogActions>
+                            <Button onClick={handleCloseBtn} color="primary"> Close </Button>
+                        </DialogActions>
+                    </Dialog>
                     <TextField
                         autoFocus
                         margin="dense"
                         id="name"
                         label="Full Name"
                         value={name}
-                        halfwidth="true"
+                        fullWidth="true"
                         onChange={e => setName(e.target.value)}
                     />
                     <TextField
@@ -94,7 +90,7 @@ export default function MixFormDialog(props) {
                         id="description"
                         label="Provider Service Description"
                         value={description}
-                        halfwidth="true"
+                        fullWidth="true"
                         onChange={e => setDescription(e.target.value)}
                     />
                     <TextField
@@ -103,7 +99,7 @@ export default function MixFormDialog(props) {
                         id="help"
                         label="Who are you aiming to help?"
                         value={help}
-                        halfwidth="true"
+                        fullWidth="true"
                         onChange={e => setHelp(e.target.value)}
                     />
                     <TextField
@@ -112,7 +108,7 @@ export default function MixFormDialog(props) {
                         id="mission"
                         label="Mission Statement"
                         value={mission}
-                        halfwidth="true"
+                        fullWidth="true"
                         onChange={e => setMission(e.target.value)}
                     />
                     <TextField
@@ -121,22 +117,14 @@ export default function MixFormDialog(props) {
                         id="bio"
                         label="Bio"
                         value={bio}
-                        halfwidth="true"
+                        fullWidth="true"
                         onChange={e => setBio(e.target.value)}
                     />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="img"
-                        label="Image URL"
-                        value={img}
-                        halfwidth="true"
-                        onChange={e => setImg(e.target.value)}
-                    />
+                    
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary"> Cancel </Button>
-                    <Button onClick={handleChangeClose} color="primary"> Save </Button>
+                    <Button onClick={handleChangeClose} color="primary"> Submit </Button>
                 </DialogActions>
             </Dialog>
         </div>

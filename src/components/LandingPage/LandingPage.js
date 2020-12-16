@@ -25,7 +25,6 @@ class LandingPage extends Component {
         <div className="grid">
           <div className="grid-col grid-col_8">
         <h1> this is where users will go upon login!  </h1>
-        <AdminPage/>
           </div>
           <div className="grid-col grid-col_4">
             <RegisterForm />

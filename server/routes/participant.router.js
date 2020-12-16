@@ -23,7 +23,7 @@ router.get("/", (req, res) => {
  */
 router.post("/", (req, res) => {
     // console.log(req.body);
-  const queryText = `INSERT INTO participants ("status", "first_name", "last_name", "dob", "phone_num", "address", "county", "service", "gender", "limitations", "notes") VALUES ('Inactive', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
+  const queryText = `INSERT INTO participants ("status", "first_name", "last_name", "dob", "phone_num", "address", "county", "service", "gender", "limitations", "notes") VALUES ('Waitlist', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
   pool
     .query(queryText, [
       req.body.first_name,

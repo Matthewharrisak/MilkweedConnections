@@ -1,29 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import WaitlistPart from '../WaitlistPart/WaitlistPart';
-import PartDisplay from '../PartDisplay/PartDisplay';
-import ProvDisplay from '../ProvDisplay/ProvDisplay';
 // Basic class component structure for React with default state
 // value setup. When making a new component be sure to replace
 // the component name TemplateClass with the name for the new
 // component.
 
-class AdminPage extends Component {
+class WaitlistPart extends Component {
   state = {
     heading: 'Class Component',
   };
 
+  componentDidMount = () => {
+    this.props.dispatch({ type: 'GET_PART'});
+  }
+
   render() {
     return (
       <div>
-        <h2>{this.state.heading}</h2>
-        <WaitlistPart/>
-        <ProvDisplay/>
-        <PartDisplay/>
+        <h2>this is where we'll display the participants who are waitlisted table for admins</h2>
       </div>
     );
   }
 }
 
-export default connect(mapStoreToProps)(AdminPage);
+export default connect(mapStoreToProps)(WaitlistPart);

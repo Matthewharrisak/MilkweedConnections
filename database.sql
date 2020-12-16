@@ -13,12 +13,11 @@ CREATE TABLE "user" (
 -- Providers TABLE for information on a user based off their user id.
 CREATE TABLE "providers" (
 	"id" SERIAL PRIMARY KEY,
-	"acitve" boolean default false,
+	"active" boolean default false,
 	"first_name" varchar(120) NOT NULL,
 	"last_name" varchar(120) NOT NULL,
 	"phone_num" varchar(120),
 	"email" varchar(120) NOT NULL,
-	"county" varchar(120) NOT NULL,
 	"programs" varchar(255),
 	"openings" integer,
 	"schedule" varchar(120),
@@ -67,6 +66,23 @@ CREATE TABLE "prov_part" (
 );
 --
 
+--
+-- Counties TABLE for linked based off their provider id
+CREATE TABLE "counties" (
+	"id" SERIAL PRIMARY KEY,
+	"name" varchar(120) NOT NULL
+);
+--
+
+--
+--   Junction table between a provider and their counties to work int
+CREATE TABLE "providers_counties" (
+	"id" SERIAL PRIMARY KEY,
+	"providers_id" integer REFERENCES "providers",
+	"counties_id" integer REFERENCES "counties"
+);
+--
+INSERT INTO "providers_counties" ("providers_id", "counties_id") VALUES (2, 2);
 --
 -- Service workers TABLE, representing the service worker who filed a participant
 CREATE TABLE "service_workers" (

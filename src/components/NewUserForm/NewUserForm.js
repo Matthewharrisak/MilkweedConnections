@@ -16,13 +16,16 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+
+
 // predefined values for milkweed 
-const counties = ["Barron", "Burnett", "Buffalo", "Chippewa", "Clark", "Dunn", "Eau Claire", "Pierce", "Pepin", "Polk", 
-   "Trampealeau", "Rusk", "Washburn", "St.Croix"];
-
-const programsAvailable = ["CCS", "Choices", "PSP"];
-
-const schedules = ["Morning", "Afternoon", "Evening"];
+const counties = [{id: 1, name: "Barron"}, {id: 2, name: "Burnett"}, {id: 3, name: "Buffalo"}, {id: 4, name: "Chippewa"}, {id: 5, name: "Clark"}, {id: 6, name: "Dunn"}, {id: 7, name: "Eau Claire"}, 
+{id: 8, name: "Pierce"}, {id: 9, name: "Pepin"}, {id: 10, name: "Polk"}, 
+   {id: 11, name: "Trampealeau"}, {id: 12, name: "Rusk"}, {id: 13, name: "Washburn"}, {id: 14, name: "St.Croix"}];
 
 // styling for borders of input fields, will be changed based of overall styling of web app
 const useStyles = makeStyles((theme) => ({
@@ -51,32 +54,26 @@ export default function MixFormDialog(navigation) {
     // const history = useHistory();
      const { previous, next } = navigation;
 
-  // state variables
+    // state variables
     const [open, setOpen] = React.useState(false);
     const [first, setFirst] = React.useState('');
     const [last, setLast] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [number, setNumber] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const [programs, setPrograms] = React.useState([]);
     const [county, setCounty] = React.useState([]);
     const [participants, setParticipants] = React.useState('');
-    const [schedule, setSchedule] = React.useState([]);
+    const [morning, setMorning] = React.useState(false);
+    const [evening, setEvening] = React.useState(false);
+    const [afternoon, setAfternoon] = React.useState(false);
+    const [ccs, setCcs] = React.useState(false);
+    const [choices, setChoices] = React.useState(false);
+    const [psp, setPsp] = React.useState(false);
 
     // handle change functions for multiple select dropdowns
     const handleChangeCounties = (event) => {
         setCounty(event.target.value);
         console.log(county);
-    };
-
-    const handleChangePrograms = (event) => {
-        setPrograms(event.target.value);
-        console.log(programs);
-    };
-
-    const handleChangeSchedules = (event) => {
-        setSchedule(event.target.value);
-        console.log(schedule);
     };
 
     // on click of adding new order, change the state status to true
@@ -96,13 +93,16 @@ export default function MixFormDialog(navigation) {
                 last_name: last,
                 phone_num: number,
                 county: county,
-                programs: programs,
                 openings: participants,
-                schedule: schedule
+                morning: morning,
+                evening: evening,
+                afternoon: afternoon,
+                ccs: ccs,
+                choices: choices,
+                psp: psp
             },
         }); 
         next()  
-        setOpen(false);
     };
     // on click of canceling a new account, change state status to false and close input form
     const handleClose = () => {
@@ -161,7 +161,8 @@ export default function MixFormDialog(navigation) {
                         halfwidth="true"
                         onChange={e => setPassword(e.target.value)}
                     />
-                    <DialogContentText> Work Details: </DialogContentText>
+                    <br/>
+
                     <FormControl className={classes.formControl} >
                         <InputLabel id="county-selector">County to Work</InputLabel>
                         <Select
@@ -174,63 +175,84 @@ export default function MixFormDialog(navigation) {
                             renderValue={(selected) => (
                                 <div className={classes.chips}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} className={classes.chip} />
+                                        <Chip key={value.id} label={value.name} className={classes.chip} />
                                     ))}
                                 </div>
                             )}>
-                            {counties.map((name, index) => (
-                                <MenuItem key={index} value={name}>
-                                {name}
+                            {counties.map((elem) => (
+                                <MenuItem key={elem.id} value={elem}>
+                                {elem.name}
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel id="program-selector">Programs to Work in</InputLabel>
-                        <Select
-                            labelId="program-selector"
-                            id="program-selected"
-                            multiple
-                            value={programs}
-                            onChange={handleChangePrograms}
-                            input={<Input id="select-multiple-program" />}
-                            renderValue={(selected) => (
-                                <div className={classes.chips}>
-                                    {selected.map((value) => (
-                                        <Chip key={value} label={value} className={classes.chip} />
-                                    ))}
-                                </div>
-                            )}>
-                            {programsAvailable.map((name, index) => (
-                                <MenuItem key={index} value={name}>
-                                {name}
-                                </MenuItem>
-                            ))}
-                        </Select>
+                    <br/>
+                    <FormControl component="fieldset">
+                        <FormLabel component="legend">General Availability:</FormLabel>
+                        <FormGroup aria-label="position" row>
+                            <FormControlLabel
+                            value={morning}
+                            control={<Checkbox color="primary" />}
+                            label="Morning"
+                            labelPlacement="top"
+                            onChange={() => {
+                            setMorning(!morning);
+                        }}
+                            />
+                            <FormControlLabel
+                            value={evening}
+                            control={<Checkbox color="primary" />}
+                            label="Evening"
+                            labelPlacement="top"
+                            onChange={() => {
+                            setEvening(!evening);
+                            }}
+                            />
+                            <FormControlLabel
+                            value={afternoon}
+                            control={<Checkbox color="primary" />}
+                            label="Afternoon"
+                            labelPlacement="top"
+                            onChange={() => {
+                            setAfternoon(!afternoon);
+                            }}
+                            />
+                        </FormGroup>
                     </FormControl>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel id="availibility-selector">General Availibilty</InputLabel>
-                        <Select
-                            labelId="availibility-selector"
-                            id="availibility-selected"
-                            multiple
-                            value={schedule}
-                            onChange={handleChangeSchedules}
-                            input={<Input id="select-multiple-availibilities" />}
-                            renderValue={(selected) => (
-                                <div className={classes.chips}>
-                                    {selected.map((value) => (
-                                        <Chip key={value} label={value} className={classes.chip} />
-                                    ))}
-                                </div>
-                            )}>
-                            {schedules.map((name, index) => (
-                                <MenuItem key={index} value={name}>
-                                {name}
-                                </MenuItem>
-                            ))}
-                        </Select>
+                    <br/>
+                    <FormControl component="fieldset">
+                        <FormLabel component="legend">Select Programs to work in:</FormLabel>
+                        <FormGroup aria-label="position" row>
+                            <FormControlLabel
+                            value={ccs}
+                            control={<Checkbox color="primary" />}
+                            label="CCS"
+                            labelPlacement="top"
+                            onChange={() => {
+                            setCcs(!ccs);
+                        }}
+                            />
+                            <FormControlLabel
+                            value={choices}
+                            control={<Checkbox color="primary" />}
+                            label="Choices"
+                            labelPlacement="top"
+                            onChange={() => {
+                            setChoices(!choices);
+                            }}
+                            />
+                            <FormControlLabel
+                            value={psp}
+                            control={<Checkbox color="primary" />}
+                            label="PSP"
+                            labelPlacement="top"
+                            onChange={() => {
+                            setPsp(!psp);
+                            }}
+                            />
+                        </FormGroup>
                     </FormControl>
+                    <br/>
                     <TextField
                         autoFocus
                         margin="dense"

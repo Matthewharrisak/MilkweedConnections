@@ -19,7 +19,7 @@ const Nav = (props) => {
   return (
     <div className="nav">
       <Link to="/home">
-        <h2 className="nav-title">Milkweed Connection</h2>
+        <h2 className="nav-title">Milkweed Connections</h2>
       </Link>
       <div className="nav-right">
         <Link className="nav-link" to={loginLinkData.path}>
@@ -35,12 +35,8 @@ const Nav = (props) => {
               Info Page
             </Link>
 
-            <Link className="nav-link" to="/participants">
-              Participants
-            </Link>
-
-            <Link className="nav-link" to="/providers">
-              Providers
+            <Link className="nav-link" to="/admin">
+              Admin
             </Link>
 
             <LogOutButton className="nav-link" />

@@ -6,6 +6,7 @@ import './LandingPage.css';
 
 // CUSTOM COMPONENTS
 import RegisterForm from '../RegisterForm/RegisterForm';
+import AdminPage from '../AdminPage/AdminPage';
 
 class LandingPage extends Component {
   state = {
@@ -27,6 +28,7 @@ class LandingPage extends Component {
           </div>
           <div className="grid-col grid-col_4">
             <RegisterForm />
+       
 
             <center>
               <h4>Already a Member?</h4>

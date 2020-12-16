@@ -4,6 +4,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 import WaitlistPart from '../WaitlistPart/WaitlistPart';
 import PartDisplay from '../PartDisplay/PartDisplay';
 import ProvDisplay from '../ProvDisplay/ProvDisplay';
+import AdminTabBar from '../AdminTabBar/AdminTabBar';
 // Basic class component structure for React with default state
 // value setup. When making a new component be sure to replace
 // the component name TemplateClass with the name for the new
@@ -18,9 +19,8 @@ class AdminPage extends Component {
     return (
       <div>
         <h2>{this.state.heading}</h2>
-        <WaitlistPart/>
-        <ProvDisplay/>
-        <PartDisplay/>
+        <AdminTabBar/>
+      
       </div>
     );
   }

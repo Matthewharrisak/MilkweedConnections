@@ -35,12 +35,8 @@ const Nav = (props) => {
               Info Page
             </Link>
 
-            <Link className="nav-link" to="/participants">
-              Participants
-            </Link>
-
-            <Link className="nav-link" to="/providers">
-              Providers
+            <Link className="nav-link" to="/admin">
+              Admin
             </Link>
 
             <LogOutButton className="nav-link" />

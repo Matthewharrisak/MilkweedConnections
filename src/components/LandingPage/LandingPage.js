@@ -7,7 +7,7 @@ import './LandingPage.css';
 // CUSTOM COMPONENTS
 import RegisterForm from '../RegisterForm/RegisterForm';
 import AdminPage from '../AdminPage/AdminPage';
-
+import ProvDisplay from '../ProvDisplay/ProvDisplay';
 class LandingPage extends Component {
   state = {
     heading: 'Class Component',
@@ -25,6 +25,7 @@ class LandingPage extends Component {
         <div className="grid">
           <div className="grid-col grid-col_8">
         <h1> this is where users will go upon login!  </h1>
+        <ProvDisplay/>
           </div>
           <div className="grid-col grid-col_4">
             <RegisterForm />

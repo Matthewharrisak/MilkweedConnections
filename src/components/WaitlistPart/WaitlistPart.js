@@ -95,8 +95,10 @@ function Row(props) {
           <span> </span>
           {row.psp === "true" ? <>PSP</> : <></>}
           <span> </span>
+          {row.other != "" ? <>{row.other}</>
+          :
+          <></>}
         </TableCell>
-        <TableCell align="right">{row.other}</TableCell>
         <TableCell align="right">{row.status}</TableCell>
       </TableRow>
       <TableRow>
@@ -191,7 +193,6 @@ export default function CollapsibleTable() {
             <TableCell>Name</TableCell>
             <TableCell align="right">Phone</TableCell>
             <TableCell align="right">Program(s)</TableCell>
-            <TableCell align="right">Other</TableCell>
             <TableCell align="right">Status</TableCell>
           </TableRow>
         </TableHead>

@@ -13,10 +13,18 @@ function* fetchParticipants() {
     }
 }
 
+function* setPart(action) {
+    try{
+        yield axios.post('/api/participant', action.payload)
+    } catch (error){
+        console.log('error in the post' , error);
+    }
+}
 
 
 function* participantsSaga() {
   yield takeLatest('GET_PART', fetchParticipants);
+  yield takeLatest('SET_PART' , setPart);
 }
 
 export default participantsSaga;

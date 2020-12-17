@@ -5,6 +5,8 @@ import NewUserFrom from "./NewUserForm";
 import NewProviderProfileForm from "./NewProviderProfileForm";
 import SuccessDialog from './SuccessDialog';
 
+import './NewUserForm.css'
+
 // steps of MultiForm to navigate between forms
 const steps = [
   { id: "user" },

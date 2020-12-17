@@ -113,7 +113,6 @@ export default function MixFormDialog(navigation) {
         <div>
             <Button variant="outlined-light" className="addMixBtn text-light" onClick={handleClickOpen}>Register</Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle >Register New Provider</DialogTitle>
                 <DialogContent>
                     <DialogContentText> Connection Details: </DialogContentText>
                     <TextField
@@ -134,6 +133,7 @@ export default function MixFormDialog(navigation) {
                         halfwidth="true"
                         onChange={e => setLast(e.target.value)}
                     />
+                    <br/>
                     <TextField
                         autoFocus
                         margin="dense"
@@ -152,6 +152,7 @@ export default function MixFormDialog(navigation) {
                         halfwidth="true"
                         onChange={e => setEmail(e.target.value)}
                     />
+                    <br/>
                     <TextField
                         autoFocus
                         margin="dense"
@@ -162,7 +163,6 @@ export default function MixFormDialog(navigation) {
                         onChange={e => setPassword(e.target.value)}
                     />
                     <br/>
-
                     <FormControl className={classes.formControl} >
                         <InputLabel id="county-selector">County to Work</InputLabel>
                         <Select
@@ -186,6 +186,17 @@ export default function MixFormDialog(navigation) {
                             ))}
                         </Select>
                     </FormControl>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="participant"
+                        type="number"
+                        label="Number of clients"
+                        value={participants}
+                        halfwidth="true"
+                        onChange={e => setParticipants(e.target.value)}
+                    />
+                    <br/>
                     <br/>
                     <FormControl component="fieldset">
                         <FormLabel component="legend">General Availability:</FormLabel>
@@ -220,6 +231,7 @@ export default function MixFormDialog(navigation) {
                         </FormGroup>
                     </FormControl>
                     <br/>
+                    <br/>
                     <FormControl component="fieldset">
                         <FormLabel component="legend">Select Programs to work in:</FormLabel>
                         <FormGroup aria-label="position" row>
@@ -252,17 +264,7 @@ export default function MixFormDialog(navigation) {
                             />
                         </FormGroup>
                     </FormControl>
-                    <br/>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="participant"
-                        type="number"
-                        label="Number of clients"
-                        value={participants}
-                        halfwidth="true"
-                        onChange={e => setParticipants(e.target.value)}
-                    />
+                
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary"> Cancel </Button>

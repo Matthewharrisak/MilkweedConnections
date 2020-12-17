@@ -13,14 +13,19 @@ CREATE TABLE "user" (
 -- Providers TABLE for information on a user based off their user id.
 CREATE TABLE "providers" (
 	"id" SERIAL PRIMARY KEY,
-	"active" boolean default false,
+	"acitve" boolean default false,
 	"first_name" varchar(120) NOT NULL,
 	"last_name" varchar(120) NOT NULL,
-	"phone_num" varchar(120),
+	"phone_num" varchar(80),
 	"email" varchar(120) NOT NULL,
-	"programs" varchar(255),
-	"openings" integer,
-	"schedule" varchar(120),
+	"ccs" boolean default false,
+	"choices" boolean default false,
+	"psp" boolean default false,
+	"other" varchar(120),
+	"openings" integer NOT NULL,
+	"morning" boolean default false,
+	"evening" boolean default false,
+	"afternoon" boolean default false,
 	"user_id" integer REFERENCES "user"
 );
 --

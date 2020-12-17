@@ -19,6 +19,20 @@ router.get('/', (req, res) => {
   });
 });
 
+router.get('/:first_name/:last_name/:email', (req, res) => {
+  console.log('IN GET PROV ID ROUTER', req.params);
+  // GET route code here
+  const queryText = `SELECT "id" FROM providers WHERE "first_name" = $1 AND "last_name" = $2 AND "email" = $3;`;
+  pool.query(queryText, [req.params.first_name, req.params.last_name, req.params.email])
+  .then((result) => {
+    console.log(result.rows);
+    res.send(result.rows[0]);
+  }).catch((error) => {
+    console.log('error in the provider Query' , error);
+    res.sendStatus(500);
+  });
+});
+
 // selects all information for provider profiles // this will be for provider view for other providers
 router.get('/', (req, res) => {
   // GET route code here

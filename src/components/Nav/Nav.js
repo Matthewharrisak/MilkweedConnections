@@ -39,7 +39,7 @@ const Nav = (props) => {
               Admin
             </Link>
 
-            <LogOutButton className="nav-link" />
+            <LogOutButton id="logoutBtn" className="nav-link1" />
           </>
         )}
         {/* Always show this link since the about page is not protected */}

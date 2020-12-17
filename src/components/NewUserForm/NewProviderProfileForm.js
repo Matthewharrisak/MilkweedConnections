@@ -12,6 +12,8 @@ export default function NewProviderProfileForm(navigation) {
     const dispatch = useDispatch();
     const { previous, next } = navigation;
 
+    const state = useSelector(state => state)
+
     // state variables
     const [open, setOpen] = React.useState(true);
     const [openImgUrl, setOpenImgUrl] = React.useState(false);
@@ -31,6 +33,7 @@ export default function NewProviderProfileForm(navigation) {
         dispatch({
             type: 'CREATE_PROFILE',
             payload: {
+                prov_id: state.errors.providerId,
                 name: name,
                 description: description,
                 help_info: help,
@@ -68,7 +71,7 @@ export default function NewProviderProfileForm(navigation) {
                             id="img"
                             label="Image URL"
                             value={img}
-                            fullWidth="true"
+                            fullWidth= {true}
                             onChange={e => setImg(e.target.value)}
                         />
                         <DialogActions>
@@ -81,7 +84,7 @@ export default function NewProviderProfileForm(navigation) {
                         id="name"
                         label="Full Name"
                         value={name}
-                        fullWidth="true"
+                        fullWidth={true}
                         onChange={e => setName(e.target.value)}
                     />
                     <TextField
@@ -90,7 +93,7 @@ export default function NewProviderProfileForm(navigation) {
                         id="description"
                         label="Provider Service Description"
                         value={description}
-                        fullWidth="true"
+                        fullWidth={true}
                         onChange={e => setDescription(e.target.value)}
                     />
                     <TextField
@@ -99,7 +102,7 @@ export default function NewProviderProfileForm(navigation) {
                         id="help"
                         label="Who are you aiming to help?"
                         value={help}
-                        fullWidth="true"
+                        fullWidth={true}
                         onChange={e => setHelp(e.target.value)}
                     />
                     <TextField
@@ -108,7 +111,7 @@ export default function NewProviderProfileForm(navigation) {
                         id="mission"
                         label="Mission Statement"
                         value={mission}
-                        fullWidth="true"
+                        fullWidth={true}
                         onChange={e => setMission(e.target.value)}
                     />
                     <TextField
@@ -117,7 +120,7 @@ export default function NewProviderProfileForm(navigation) {
                         id="bio"
                         label="Bio"
                         value={bio}
-                        fullWidth="true"
+                        fullWidth={true}
                         onChange={e => setBio(e.target.value)}
                     />
                     

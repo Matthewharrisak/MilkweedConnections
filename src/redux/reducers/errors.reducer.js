@@ -31,6 +31,15 @@ const registrationMessage = (state = '', action) => {
       return state;
   }
 };
+const providerId = (state = 0, action) => {
+  // holds provider after API get
+  switch (action.type) {
+    case "SET_PROV_ID":
+      return action.payload
+    default:
+      return state;
+  }
+};
 
 // make one object that has keys loginMessage, registrationMessage
 // these will be on the redux state at:
@@ -38,4 +47,5 @@ const registrationMessage = (state = '', action) => {
 export default combineReducers({
   loginMessage,
   registrationMessage,
+  providerId
 });

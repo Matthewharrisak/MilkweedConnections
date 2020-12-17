@@ -13,20 +13,29 @@ function* registerUser(action) {
     // automatically log a user in after registration
     yield put({ type: 'LOGIN', payload: action.payload });
 
+
     // set to 'login' mode so they see the login screen
     // after registration or after they log out
     yield put({ type: 'SET_TO_LOGIN_MODE' });
+
+    try {
+      const response = yield axios.get(`/api/provider/${action.payload.first_name}/${action.payload.last_name}/${action.payload.username}`);
+      yield put({type: 'SET_PROV_ID', payload: response.data.id})
+    }
+    catch (error) {
+      console.log('Error with user registration:', error);
+    }
+    
   } 
   catch (error) {
     console.log('Error with user registration:', error);
     yield put({ type: 'REGISTRATION_FAILED' });
   }
 }
-
+// takes in provider_id created from registering new user and provider and creates a provider profile linked to their provider account based off id
 function* createProfile(action) {
   try {
-    // passes the username and password from the payload to the server
-    yield axios.post('/api/provider/3', action.payload);
+    yield axios.post(`/api/provider/${action.payload.prov_id}`, action.payload);
   } 
   catch (error) {
     console.log('Error with user creating profile:', error);

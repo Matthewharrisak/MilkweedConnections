@@ -16,7 +16,7 @@ CREATE TABLE "providers" (
 	"acitve" boolean default false,
 	"first_name" varchar(120) NOT NULL,
 	"last_name" varchar(120) NOT NULL,
-	"phone_num" varchar(120),
+	"phone_num" varchar(80),
 	"email" varchar(120) NOT NULL,
 	"ccs" boolean default false,
 	"choices" boolean default false,

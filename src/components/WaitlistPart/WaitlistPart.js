@@ -31,20 +31,39 @@ function createData(
   phone_num,
   address,
   county,
-  service,
   gender,
   limitations,
   notes,
-  status
+  status,
+  ccs,
+  choices,
+  psp,
+  other,
+  avatar,
+  guardian,
 ) {
   return {
     id,
     first_name,
     last_name,
     phone_num,
-    service,
     status,
-    details: [{ dob, address, county, gender, limitations, notes }],
+    ccs,
+    choices,
+    psp,
+    other,
+    details: [
+      {
+        dob,
+        address,
+        county,
+        gender,
+        limitations,
+        notes,
+        avatar,
+        guardian,
+      },
+    ],
   };
 }
 
@@ -69,7 +88,10 @@ function Row(props) {
           {row.first_name} {row.last_name}
         </TableCell>
         <TableCell align="right">{row.phone_num}</TableCell>
-        <TableCell align="right">{row.service}</TableCell>
+        <TableCell align="right">{row.ccs}</TableCell>
+        <TableCell align="right">{row.choices}</TableCell>
+        <TableCell align="right">{row.psp}</TableCell>
+        <TableCell align="right">{row.other}</TableCell>
         <TableCell align="right">{row.status}</TableCell>
       </TableRow>
       <TableRow>
@@ -83,9 +105,11 @@ function Row(props) {
                 <TableHead>
                   <TableRow>
                     <TableCell>County</TableCell>
+                    <TableCell>Avatar/ID</TableCell>
                     <TableCell>Address</TableCell>
                     <TableCell>Gender</TableCell>
                     <TableCell>Birthday</TableCell>
+                    <TableCell>Guardian Name</TableCell>
                     <TableCell>Scheduling Limitations</TableCell>
                     <TableCell align="right">Notes</TableCell>
                   </TableRow>
@@ -96,9 +120,11 @@ function Row(props) {
                       <TableCell component="th" scope="row">
                         {detailsRow.county}
                       </TableCell>
+                      <TableCell>{detailsRow.avatar}</TableCell>
                       <TableCell>{detailsRow.address}</TableCell>
                       <TableCell>{detailsRow.gender}</TableCell>
                       <TableCell>{detailsRow.dob}</TableCell>
+                      <TableCell>{detailsRow.guardian}</TableCell>
                       <TableCell>{detailsRow.limitations}</TableCell>
                       <TableCell align="right">{detailsRow.notes}</TableCell>
                     </TableRow>
@@ -129,11 +155,16 @@ export default function CollapsibleTable() {
         part[i].phone_num,
         part[i].address,
         part[i].county,
-        part[i].service,
         part[i].gender,
         part[i].limitations,
         part[i].notes,
-        part[i].status
+        part[i].status,
+        part[i].ccs.toString(),
+        part[i].choices.toString(),
+        part[i].psp.toString(),
+        part[i].other,
+        part[i].avatar,
+        part[i].guardian
       );
     }
   }
@@ -154,7 +185,10 @@ export default function CollapsibleTable() {
             <TableCell />
             <TableCell>Name</TableCell>
             <TableCell align="right">Phone</TableCell>
-            <TableCell align="right">Services</TableCell>
+            <TableCell align="right">CCS</TableCell>
+            <TableCell align="right">PSP</TableCell>
+            <TableCell align="right">Choices</TableCell>
+            <TableCell align="right">Other</TableCell>
             <TableCell align="right">Status</TableCell>
           </TableRow>
         </TableHead>

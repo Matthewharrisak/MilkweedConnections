@@ -55,7 +55,7 @@ router.post("/test", async (req, res) => {
   const connection = await pool.connect();
   try {
     await connection.query("BEGIN");
-    const sqlAddAccount = `INSERT INTO participants ("status", "first_name", "last_name", "dob", "phone_num", "address", "county", "other", "gender", "limitations", "notes", "choices", "psp", "avatar", "guardian") VALUES ('Waitlist', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING id`;
+    const sqlAddAccount = `INSERT INTO participants ("status", "first_name", "last_name", "dob", "phone_num", "address", "county", "other", "gender", "limitations", "notes", "ccs", "choices", "psp", "avatar", "guardian") VALUES ('Waitlist', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING id`;
     // Save the result so we can get the returned value
     const result = await connection.query(sqlAddAccount, [
       req.body.referralFormData.participantRef.first_name,
@@ -68,6 +68,7 @@ router.post("/test", async (req, res) => {
       req.body.referralFormData.participantRef.gender,
       req.body.referralFormData.participantRef.limitations,
       req.body.referralFormData.participantRef.notes,
+      req.body.referralFormData.participantRef.ccs,
       req.body.referralFormData.participantRef.choices,
       req.body.referralFormData.participantRef.psp,
       req.body.referralFormData.participantRef.avatar,

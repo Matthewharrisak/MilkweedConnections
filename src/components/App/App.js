@@ -62,7 +62,7 @@ class App extends Component {
               component={InfoPage}
             />
 
-            <Route
+            <ProtectedRoute
               // logged in shows InfoPage else shows LoginPage
               exact
               path="/admin"

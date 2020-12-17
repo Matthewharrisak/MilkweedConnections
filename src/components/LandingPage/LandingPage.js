@@ -25,8 +25,7 @@ class LandingPage extends Component {
         <div className="grid">
           <div className="grid-col grid-col_8">
         <h1> this is where users will go upon login!  </h1>
-        <ProvDisplay/>
-          </div>
+        </div>
           <div className="grid-col grid-col_4">
             <RegisterForm />
        

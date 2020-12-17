@@ -88,9 +88,14 @@ function Row(props) {
           {row.first_name} {row.last_name}
         </TableCell>
         <TableCell align="right">{row.phone_num}</TableCell>
-        <TableCell align="right">{row.ccs}</TableCell>
-        <TableCell align="right">{row.choices}</TableCell>
-        <TableCell align="right">{row.psp}</TableCell>
+        <TableCell align="right">
+          {row.ccs === "true" ? <>CCS</> : <></>}
+          <span> </span>
+          {row.choices === "true" ? <>Choices</> : <></>}
+          <span> </span>
+          {row.psp === "true" ? <>PSP</> : <></>}
+          <span> </span>
+        </TableCell>
         <TableCell align="right">{row.other}</TableCell>
         <TableCell align="right">{row.status}</TableCell>
       </TableRow>
@@ -185,9 +190,7 @@ export default function CollapsibleTable() {
             <TableCell />
             <TableCell>Name</TableCell>
             <TableCell align="right">Phone</TableCell>
-            <TableCell align="right">CCS</TableCell>
-            <TableCell align="right">PSP</TableCell>
-            <TableCell align="right">Choices</TableCell>
+            <TableCell align="right">Program(s)</TableCell>
             <TableCell align="right">Other</TableCell>
             <TableCell align="right">Status</TableCell>
           </TableRow>

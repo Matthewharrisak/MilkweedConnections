@@ -9,6 +9,12 @@ const AboutPage = () => (
   <div className="container">
     <div>
       <p>This about page is for anyone to read! cool </p>
+      <iframe
+        title="Wikipedia page for Avocados"
+        src="https://lawlernp.wixsite.com/mysite"
+        width="100%"
+        height="1700"
+      ></iframe>
     </div>
   </div>
 );

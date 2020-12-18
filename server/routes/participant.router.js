@@ -16,6 +16,41 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/:id", (req, res) => {
+  const queryText = `
+  SELECT
+    participants.id,
+    participants.status,
+    participants.first_name,
+    participants.last_name,
+    participants.dob date,
+    participants.phone_num,
+    participants.address,
+    participants.county,
+    participants.ccs,
+    participants.choices,
+    participants.psp,
+    participants.avatar,
+    participants.guardian,
+    participants.other,
+    participants.gender,
+    participants.limitations,
+    participants.notes
+FROM "prov_part"
+JOIN providers ON providers.id = prov_part.providers_id
+JOIN participants ON participants.id = prov_part.participants_id
+WHERE providers_id = $1;`;
+  pool
+    .query(queryText, [req.params.id])
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      alert("error in participants GET with given id", error);
+    });
+});
+
 /// route for POSTING participant and service worker at the same time through form 
 // the form exists on the clinets WIX page and the "add new participant button"
 router.post("/test", async (req, res) => {

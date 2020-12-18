@@ -5,7 +5,6 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 import './LandingPage.css';
 
 // CUSTOM COMPONENTS
-import RegisterForm from '../RegisterForm/RegisterForm';
 import AdminPage from '../AdminPage/AdminPage';
 import ProvDisplay from '../ProvDisplay/ProvDisplay';
 class LandingPage extends Component {
@@ -27,7 +26,6 @@ class LandingPage extends Component {
         <h1> this is where users will go upon login!  </h1>
         </div>
           <div className="grid-col grid-col_4">
-            <RegisterForm />
        
 
             <center>

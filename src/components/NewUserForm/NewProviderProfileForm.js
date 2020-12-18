@@ -61,8 +61,8 @@ export default function NewProviderProfileForm(navigation) {
             <Button variant="outlined-light" className="addMixBtn text-light" onClick={handleClickOpen}>Register</Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle >Provider Profile:</DialogTitle>
-                <DialogContent>
-                    <Button variant="outlined-light" className="addMixBtn text-light" onClick={handleClickOpenBtn}>Register</Button>
+                <DialogContent id="profile-container">
+                    <Button variant="outlined-light" className="addMixBtn text-light" onClick={handleClickOpenBtn}>Image Upload</Button>
                     <Dialog open={openImgUrl} onClose={handleCloseBtn} aria-labelledby="form-dialog-title">
                         <DialogTitle >Image:</DialogTitle>
                         <TextField

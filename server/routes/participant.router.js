@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
       alert("error in participants GET", error);
     });
 });
-
+// GET route to grab participants for partcipants tabel in admin view
 router.get("/:id", (req, res) => {
   const queryText = `
   SELECT

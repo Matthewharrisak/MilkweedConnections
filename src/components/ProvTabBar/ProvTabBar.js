@@ -6,8 +6,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import ProvDisplay from '../ProvDisplay/ProvDisplay';
-import PartDisplay from '../PartDisplay/PartDisplay';
+import ProvDisplay from '../AdminProvDisplay/AdminProvDisplay';
+import PartDisplay from '../AdminPartDisplay/AdminPartDisplay';
 import WaitlistPart from '../WaitlistPart/WaitlistPart';
 
 // this component holds the tab bar for the admin page -- sources in the data tables 

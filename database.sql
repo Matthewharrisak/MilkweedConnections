@@ -1,4 +1,4 @@
-DATABASE NAME : milkweed
+--DATABASE NAME : milkweed
 --- TABLES ---
 -- User TABLE
 CREATE TABLE "user" (
@@ -92,7 +92,6 @@ CREATE TABLE "providers_counties" (
 	"counties_id" integer REFERENCES "counties"
 );
 --
-INSERT INTO "providers_counties" ("providers_id", "counties_id") VALUES (2, 2);
 --
 -- Service workers TABLE, representing the service worker who filed a participant
 CREATE TABLE "service_workers" (
@@ -103,3 +102,21 @@ CREATE TABLE "service_workers" (
 	"county" varchar(80),
 	"participants_id" integer REFERENCES "participants"
 );
+
+INSERT INTO "providers_counties" ("providers_id", "counties_id") VALUES (2, 2);
+
+
+INSERT INTO "counties" ("name") VALUES ('Barron');
+INSERT INTO "counties" ("name") VALUES ('Burnett');
+INSERT INTO "counties" ("name") VALUES ('Buffalo');
+INSERT INTO "counties" ("name") VALUES ('Chippewa');
+INSERT INTO "counties" ("name") VALUES ('Clark');
+INSERT INTO "counties" ("name") VALUES ('Dunn');
+INSERT INTO "counties" ("name") VALUES ('Eau Claire');
+INSERT INTO "counties" ("name") VALUES ('Pierce');
+INSERT INTO "counties" ("name") VALUES ('Pepin');
+INSERT INTO "counties" ("name") VALUES ('Polk');
+INSERT INTO "counties" ("name") VALUES ('Trampealeau');
+INSERT INTO "counties" ("name") VALUES ('Rusk');
+INSERT INTO "counties" ("name") VALUES ('Washburn');
+INSERT INTO "counties" ("name") VALUES ('St.Croix');

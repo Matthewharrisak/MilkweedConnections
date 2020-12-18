@@ -15,6 +15,7 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { useDispatch, useSelector } from "react-redux";
 
+// sets styles for rows using makeStyles hook
 const useRowStyles = makeStyles({
   root: {
     "& > *": {
@@ -23,6 +24,7 @@ const useRowStyles = makeStyles({
   },
 });
 
+// defining the structure of our data and a function to assemble it
 function createData(
   id,
   first_name,
@@ -67,9 +69,12 @@ function createData(
   };
 }
 
+//function setting up rows for display
 function Row(props) {
   const { row } = props;
+  //using a state hook to track dropdowns
   const [open, setOpen] = React.useState(false);
+
   const classes = useRowStyles();
 
   return (
@@ -148,11 +153,10 @@ function Row(props) {
 
 export default function CollapsibleTable() {
   let rows = [];
-
+  // getting participants from redux store
   const part = useSelector((store) => store.participants);
-
+  // loop through participants and assign each to a row
   for (let i = 0; i < part.length; i++) {
-    console.log(part[i].status);
     if (part[i].status === "Waitlist") {
       rows[i] = createData(
         part[i].id,
@@ -175,9 +179,9 @@ export default function CollapsibleTable() {
       );
     }
   }
-
+  //this is the hook for dispatching actions to redux
   const dispatch = useDispatch();
-
+  //this is the hook we use componentDidMount in functional components
   React.useEffect(() => {
     console.log("mounted");
     dispatch({ type: "GET_PART" });

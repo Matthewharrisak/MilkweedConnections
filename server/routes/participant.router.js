@@ -2,9 +2,7 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 
-/**
- * GET route template
- */
+// Route to get all from the Participants table 
 router.get("/", (req, res) => {
   const queryText = `SELECT * FROM participants`;
   pool
@@ -18,44 +16,17 @@ router.get("/", (req, res) => {
     });
 });
 
-/**
- * POST route template
- */
-router.post("/", (req, res) => {
-    // console.log(req.body);
-  const queryText = `INSERT INTO participants ("status", "first_name", "last_name", "dob", "phone_num", "address", "county", "service", "gender", "limitations", "notes") VALUES ('Waitlist', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
-  pool
-    .query(queryText, [
-      req.body.first_name,
-      req.body.last_name,
-      req.body.dob,
-      req.body.phone_num,
-      req.body.address,
-      req.body.county,
-      req.body.service,
-      req.body.gender,
-      req.body.limitations,
-      req.body.notes,
-    ])
-    .then((result) => {
-      console.log(result.rows);
-      res.sendStatus(201);
-    })
-    .catch((error) => {
-      res.sendStatus(500);
-      console.log("error in add participant", error);
-    });
-});
-
-
-/// route for POSTING participant and service worker at the same time through form
+/// route for POSTING participant and service worker at the same time through form 
+// the form exists on the clinets WIX page and the "add new participant button"
 router.post("/test", async (req, res) => {
   // console.log("in transactional post", req.body);
   
   const connection = await pool.connect();
   try {
     await connection.query("BEGIN");
-    const sqlAddAccount = `INSERT INTO participants ("status", "first_name", "last_name", "dob", "phone_num", "address", "county", "other", "gender", "limitations", "notes", "ccs", "choices", "psp", "avatar", "guardian") VALUES ('Waitlist', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING id`;
+    const sqlAddAccount = `INSERT INTO participants 
+    ("status", "first_name", "last_name", "dob", "phone_num", "address", "county", "other", "gender", "limitations", "notes", "ccs", "choices", "psp", "avatar", "guardian") 
+    VALUES ('Waitlist', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING id`;
     // Save the result so we can get the returned value
     const result = await connection.query(sqlAddAccount, [
       req.body.referralFormData.participantRef.first_name,
@@ -76,7 +47,8 @@ router.post("/test", async (req, res) => {
     ]);
     // Get the id from the result - will have 1 row with the id
     const accountId = result.rows[0].id;
-    const sqlInitialDeposit = `INSERT INTO service_workers ("name", "phone", "email", "county", "participants_id") VALUES ($1, $2, $3, $4, $5);`;
+    const sqlInitialDeposit = `INSERT INTO service_workers ("name", "phone", "email", "county", "participants_id") 
+    VALUES ($1, $2, $3, $4, $5);`;
     await connection.query(sqlInitialDeposit, [
       req.body.referralFormData.serviceWorkerRef.name,
       req.body.referralFormData.serviceWorkerRef.phone,

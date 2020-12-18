@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
   });
 });
 
+// this route grabs the provider ID when registering a new account. As registration is a multi step process
 router.get('/:first_name/:last_name/:email', (req, res) => {
   console.log('IN GET PROV ID ROUTER', req.params);
   // GET route code here
@@ -47,7 +48,7 @@ router.get('/', (req, res) => {
 });
 
 // get request to GET provider information upon logging in -- pass provider.id to provider_profile POST request
-// This needs the reducer name to continue working on it
+//This needs the reducer name to continue working on it
 router.post('/:id', (req, res) => {
   // POST route code here
   console.log('we are logging from the provider_profile post router' , req.body)

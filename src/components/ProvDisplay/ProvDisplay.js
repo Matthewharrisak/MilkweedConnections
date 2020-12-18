@@ -15,6 +15,8 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { useDispatch, useSelector } from "react-redux";
 
+// this component hold the data table for providers that are being displayed for admins
+
 const useRowStyles = makeStyles({
   root: {
     "& > *": {

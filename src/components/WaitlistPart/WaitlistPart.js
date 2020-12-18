@@ -15,6 +15,8 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { useDispatch, useSelector } from "react-redux";
 
+// this component displays waitlisted participants 
+
 // sets styles for rows using makeStyles hook
 const useRowStyles = makeStyles({
   root: {

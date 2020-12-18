@@ -1,7 +1,7 @@
 
 
 const participantsReducer = (state = {}, action) => {
-    // holds provider after API get
+    // holds participant after API get
     switch (action.type) {
       case "SET_PART":
         return action.payload;

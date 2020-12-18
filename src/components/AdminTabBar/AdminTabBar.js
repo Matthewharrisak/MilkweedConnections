@@ -6,8 +6,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import ProvDisplay from "../ProvDisplay/ProvDisplay";
-import PartDisplay from "../PartDisplay/PartDisplay";
+import AdminProvDisplay from "../AdminProvDisplay/AdminProvDisplay";
+import AdminPartDisplay from "../AdminPartDisplay/AdminPartDisplay";
 import WaitlistPart from "../WaitlistPart/WaitlistPart";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -110,10 +110,10 @@ export default function SimpleTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <ProvDisplay />
+        <AdminProvDisplay />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <PartDisplay />
+        <AdminPartDisplay />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <WaitlistPart />

@@ -6,7 +6,7 @@ import './LandingPage.css';
 
 // CUSTOM COMPONENTS
 import AdminPage from '../AdminPage/AdminPage';
-import ProvDisplay from '../ProvDisplay/ProvDisplay';
+import AdminProvDisplay from '../AdminProvDisplay/AdminProvDisplay';
 class LandingPage extends Component {
   state = {
     heading: 'Class Component',

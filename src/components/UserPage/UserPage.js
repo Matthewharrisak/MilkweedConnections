@@ -4,8 +4,9 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import NewUserForm from '../NewUserForm/NewUserForm'
 
+// this component will display Providers list of participants
 class UserPage extends Component {
-  // this component doesn't do much to start, just renders some user info to the DOM
+
   render() {
     return (
       <div>

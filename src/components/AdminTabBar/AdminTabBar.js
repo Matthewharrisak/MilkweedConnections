@@ -10,6 +10,8 @@ import ProvDisplay from '../ProvDisplay/ProvDisplay';
 import PartDisplay from '../PartDisplay/PartDisplay';
 import WaitlistPart from '../WaitlistPart/WaitlistPart';
 
+// this component holds the tab bar for the admin page -- sources in the data tables 
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 

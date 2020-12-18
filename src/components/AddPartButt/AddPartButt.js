@@ -18,6 +18,8 @@ export default function FormDialog() {
     setOpen(false);
   };
 
+  // this component will be changed to hold the refereal form from the WIX page
+
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>

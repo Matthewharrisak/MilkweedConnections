@@ -14,6 +14,7 @@ import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { useDispatch, useSelector } from "react-redux";
+import Checkbox from '@material-ui/core/Checkbox';
 
 // this component displays waitlisted participants 
 
@@ -25,6 +26,8 @@ const useRowStyles = makeStyles({
     },
   },
 });
+
+
 
 // defining the structure of our data and a function to assemble it
 function createData(
@@ -78,6 +81,7 @@ function Row(props) {
   const [open, setOpen] = React.useState(false);
 
   const classes = useRowStyles();
+  const dispatch = useDispatch();
 
   return (
     <React.Fragment>
@@ -107,6 +111,8 @@ function Row(props) {
           <></>}
         </TableCell>
         <TableCell align="right">{row.status}</TableCell>
+        <Checkbox onChange={() => dispatch({type: 'SET_PRINT', payload: [row]})} align="center"/>
+
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -142,6 +148,7 @@ function Row(props) {
                       <TableCell>{detailsRow.limitations}</TableCell>
                       <TableCell align="right">{detailsRow.notes}</TableCell>
                     </TableRow>
+                    
                   ))}
                 </TableBody>
               </Table>
@@ -150,6 +157,7 @@ function Row(props) {
         </TableCell>
       </TableRow>
     </React.Fragment>
+    
   );
 }
 
@@ -190,7 +198,9 @@ export default function CollapsibleTable() {
     console.log(part);
   }, []);
 
+
   return (
+    
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
@@ -209,5 +219,7 @@ export default function CollapsibleTable() {
         </TableBody>
       </Table>
     </TableContainer>
+
   );
+
 }

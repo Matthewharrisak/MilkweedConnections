@@ -9,7 +9,7 @@ import Box from '@material-ui/core/Box';
 import ProvTable from '../AdminProvDisplay/AdminProvDisplay';
 import PartDisplay from '../AdminPartDisplay/AdminPartDisplay';
 import WaitlistPart from '../WaitlistPart/WaitlistPart';
-
+import PartTable from '../PartTable/PartTable';
 // this component holds the tab bar for the admin page -- sources in the data tables 
 
 function TabPanel(props) {
@@ -72,7 +72,7 @@ export default function SimpleTabs() {
         <ProvTable/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <PartDisplay/>
+        <PartTable/>
       </TabPanel>
       <TabPanel value={value} index={2}>
       </TabPanel>

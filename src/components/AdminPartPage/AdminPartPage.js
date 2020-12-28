@@ -22,4 +22,6 @@ class AdminPartPage extends Component {
   }
 }
 
+//
+
 export default connect(mapStoreToProps)(AdminPartPage);

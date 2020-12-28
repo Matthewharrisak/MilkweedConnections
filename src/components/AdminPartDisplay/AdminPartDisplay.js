@@ -59,15 +59,15 @@ function createData(
     choices,
     psp,
     other,
+    county,
+    avatar,
+    dob,
     details: [
       {
-        dob,
         address,
-        county,
         gender,
         limitations,
         notes,
-        avatar,
         guardian,
       },
     ],
@@ -111,11 +111,15 @@ function Row(props) {
           <></>}
         </TableCell>
         <TableCell align="right">{row.status}</TableCell>
+        <TableCell align="right">{row.county}</TableCell>
+        <TableCell align="right">{row.avatar}</TableCell>
+        <TableCell align="right">{row.dob}</TableCell>
+
         <Checkbox onChange={() => dispatch({type: 'SET_PRINT', payload: [row]})} align="center"/>
 
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <Typography variant="h10" gutterBottom component="div">
@@ -124,11 +128,8 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>County</TableCell>
-                    <TableCell>Avatar/ID</TableCell>
                     <TableCell>Address</TableCell>
                     <TableCell>Gender</TableCell>
-                    <TableCell>Birthday</TableCell>
                     <TableCell>Guardian Name</TableCell>
                     <TableCell>Scheduling Limitations</TableCell>
                     <TableCell align="right">Notes</TableCell>
@@ -137,13 +138,8 @@ function Row(props) {
                 <TableBody>
                   {row.details.map((detailsRow) => (
                     <TableRow key={detailsRow.dob}>
-                      <TableCell component="th" scope="row">
-                        {detailsRow.county}
-                      </TableCell>
-                      <TableCell>{detailsRow.avatar}</TableCell>
                       <TableCell>{detailsRow.address}</TableCell>
                       <TableCell>{detailsRow.gender}</TableCell>
-                      <TableCell>{detailsRow.dob}</TableCell>
                       <TableCell>{detailsRow.guardian}</TableCell>
                       <TableCell>{detailsRow.limitations}</TableCell>
                       <TableCell align="right">{detailsRow.notes}</TableCell>
@@ -210,6 +206,14 @@ export default function CollapsibleTable() {
             <TableCell align="right">Phone</TableCell>
             <TableCell align="right">Program(s)</TableCell>
             <TableCell align="right">Status</TableCell>
+            <TableCell align="right">County</TableCell>
+            <TableCell align="right">Avatar/ID</TableCell>
+            <TableCell align="right">Date of Birth</TableCell>
+            <TableCell align="right">Referring Worker</TableCell>
+
+            <TableCell align="right">Print</TableCell>
+
+
           </TableRow>
         </TableHead>
         <TableBody>

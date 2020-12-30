@@ -102,4 +102,35 @@ router.post("/test", async (req, res) => {
   }
 });
 
+router.post("/", (req, res) => {
+  // console.log("in transactional post", req.body);
+  
+    const queryText = `INSERT INTO participants 
+    ("status", "first_name", "last_name", "dob", "phone_num", "address", "county", "other", "gender", "limitations", "notes", "ccs", "choices", "psp", "avatar", "guardian") 
+    VALUES ('Waitlist', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING id`;
+    // Save the result so we can get the returned value
+    pool.query(queryText, [
+      req.body.first_name,
+      req.body.last_name,
+      req.body.dob,
+      req.body.phone_num,
+      req.body.address,
+      req.body.county,
+      req.body.other,
+      req.body.gender,
+      req.body.limitations,
+      req.body.notes,
+      req.body.ccs,
+      req.body.choices,
+      req.body.psp,
+      req.body.avatar,
+      req.body.guardian,
+    ]).then((result) => {
+      res.sendStatus(200);
+    }).catch((error) => {
+      console.log(' Error in the POST', error);
+      res.sendStatus(500);
+    });
+  });
+
 module.exports = router;

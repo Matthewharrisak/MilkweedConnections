@@ -15,7 +15,7 @@ class AdminPage extends Component {
     return (
       <div>
         <AdminTabBar/>
-        <CSVLink data={this.props.store.print}><div className="printLink">Print checked Participant rows</div></CSVLink>
+        <CSVLink data={this.props.store.print}><div className="printLink">Print all of the check marked Participant rows</div></CSVLink>
         <NewPartForm/>
       </div>
     );

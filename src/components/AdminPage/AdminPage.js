@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import AdminTabBar from '../AdminTabBar/AdminTabBar';
 import { CSVLink, CSVDownload } from "react-csv";
+import NewPartForm from '../NewPartForm/NewPartForm';
 import './AdminPage.css';
 
 
@@ -15,7 +16,7 @@ class AdminPage extends Component {
       <div>
         <AdminTabBar/>
         <CSVLink data={this.props.store.print}><div className="printLink">Print checked Participant rows</div></CSVLink>
-
+        <NewPartForm/>
       </div>
     );
   }

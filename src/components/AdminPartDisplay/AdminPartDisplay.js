@@ -15,7 +15,7 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { useDispatch, useSelector } from "react-redux";
 import Checkbox from '@material-ui/core/Checkbox';
-
+import EditPartForm from '../EditPartForm/EditPartForm'
 // this component displays waitlisted participants 
 
 // sets styles for rows using makeStyles hook
@@ -143,6 +143,7 @@ function Row(props) {
                       <TableCell>{detailsRow.guardian}</TableCell>
                       <TableCell>{detailsRow.limitations}</TableCell>
                       <TableCell align="right">{detailsRow.notes}</TableCell>
+                      <EditPartForm rowEdit = {row} />
                     </TableRow>
                     
                   ))}

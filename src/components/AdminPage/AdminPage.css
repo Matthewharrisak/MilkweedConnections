@@ -5,10 +5,11 @@
     margin-left: 10px;
     margin-top: 20px;
     margin-right: 10px;
-    text-decoration: none;
-
+    border-radius: 2.5px;
 }
 
 .printLink:hover {
     background-color: #878C36 !important;
+    color: white;
+    text-align: center;
 }

@@ -8,3 +8,7 @@
     text-decoration: none;
 
 }
+
+.printLink:hover {
+    background-color: #878C36 !important;
+}

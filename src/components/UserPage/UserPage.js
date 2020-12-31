@@ -4,6 +4,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 import NewUserForm from '../NewUserForm/NewUserForm'
 import ProvTabBar from '../ProvTabBar/ProvTabBar'
 import { CSVLink, CSVDownload } from "react-csv";
+import './UserPage.css';
 
 // this component will display Providers list of participants
 class UserPage extends Component {
@@ -12,7 +13,7 @@ class UserPage extends Component {
     return (
       <div>
         <h1 id="welcome">Milkweed Connect!</h1>
-        <p>{this.props.store.user.username}</p>
+        <p className='usernameStyle'>{this.props.store.user.username}</p>
         {/* <CSVLink data={this.props.store.print}>Download me</CSVLink>; */}
         <ProvTabBar/>
       </div>

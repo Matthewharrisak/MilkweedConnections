@@ -8,6 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {useDispatch, useSelector} from 'react-redux';
 import './EditPartForm.css';
+import swal from 'sweetalert';
 
 export default function FormDialog(row) {
   const dispatch = useDispatch();
@@ -34,8 +35,29 @@ export default function FormDialog(row) {
   const handleClose = () => {
     setOpen(false);
   };
-{console.log(row, 'coming in from the EDITPART FORM !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
+// //delete function for deleting a Participant row in the Participants table with swal alerts
+const deletePart = (id) => {
+  swal({
+      title: "Are you sure?",
+      text: "Are you sure you want to delete this Participant forever?",
+      icon: "info",
+      buttons: true,
+      dangerMode: true,
+    })
+    
+    .then((willDelete) => {
+      if (willDelete) {dispatch({type: 'DELETE_PARTICIPANT', payload: {id: id}})
+        swal("Poof! The Participant is kindly deleted!", {
+          icon: "success",
+        });
+      } else {
+        swal("The Participant is NOT deleted");
+      }
+    });
 }
+
+
   return (
     <div>
       <Button class="editButtonStyle" onClick={handleClickOpen}>
@@ -164,8 +186,8 @@ export default function FormDialog(row) {
           <Button onClick={handleUpdate} color="primary">
             Update
           </Button>
-          <Button onClick={handleUpdate} color="primary">
-            Delete
+          <Button className="deleteButton" onClick={() => deletePart(row.rowEdit.id)} color="primary">
+            Delete Participant
           </Button>
         </DialogActions>
       </Dialog>

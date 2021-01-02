@@ -48,6 +48,8 @@ function createData(
   other,
   avatar,
   guardian,
+  name,
+  email,
 ) {
   return {
     id,
@@ -62,6 +64,8 @@ function createData(
     county,
     avatar,
     dob,
+    name,
+    email,
     details: [
       {
         address,
@@ -82,6 +86,8 @@ function Row(props) {
 
   const classes = useRowStyles();
   const dispatch = useDispatch();
+  const { DateTime } = require("luxon");
+  const dt = DateTime.fromISO(row.dob);
 
   return (
     <React.Fragment>
@@ -106,17 +112,20 @@ function Row(props) {
           <span> </span>
           {row.psp === "true" ? <>PSP</> : <></>}
           <span> </span>
-          {row.other != "" ? <>{row.other}</>
-          :
-          <></>}
+          {row.other != "" ? <>{row.other}</> : <></>}
         </TableCell>
         <TableCell align="right">{row.status}</TableCell>
         <TableCell align="right">{row.county}</TableCell>
         <TableCell align="right">{row.avatar}</TableCell>
-        <TableCell align="right">{row.dob}</TableCell>
+        <TableCell align="right">{dt.toLocaleString()}</TableCell>
+        <TableCell align="right">
+          {row.name}<br/>{row.email}
+        </TableCell>
 
-        <Checkbox onChange={() => dispatch({type: 'SET_PRINT', payload: [row]})} align="center"/>
-
+        <Checkbox
+          onChange={() => dispatch({ type: "SET_PRINT", payload: [row] })}
+          align="center"
+        />
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
@@ -143,9 +152,8 @@ function Row(props) {
                       <TableCell>{detailsRow.guardian}</TableCell>
                       <TableCell>{detailsRow.limitations}</TableCell>
                       <TableCell align="right">{detailsRow.notes}</TableCell>
-                      <EditPartForm rowEdit = {row} />
+                      <EditPartForm rowEdit={row} />
                     </TableRow>
-                    
                   ))}
                 </TableBody>
               </Table>
@@ -154,7 +162,6 @@ function Row(props) {
         </TableCell>
       </TableRow>
     </React.Fragment>
-    
   );
 }
 
@@ -182,7 +189,9 @@ export default function CollapsibleTable() {
         part[i].psp.toString(),
         part[i].other,
         part[i].avatar,
-        part[i].guardian
+        part[i].guardian,
+        part[i].name,
+        part[i].email
       );
     }
   }

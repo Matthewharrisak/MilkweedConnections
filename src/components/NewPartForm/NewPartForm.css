@@ -4,5 +4,9 @@
     margin-right: 10px !important;
     margin-top: 20px !important;
     float: right !important;
+}
 
+.addNewBtn:hover {
+    background-color: #878C36 !important;
+    color: white !important;
 }

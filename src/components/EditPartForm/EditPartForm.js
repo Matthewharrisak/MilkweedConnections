@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {useDispatch, useSelector} from 'react-redux';
+import './EditPartForm.css';
 
 export default function FormDialog(row) {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ export default function FormDialog(row) {
 }
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button class="editButtonStyle" onClick={handleClickOpen}>
         Edit
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

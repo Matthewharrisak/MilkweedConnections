@@ -13,10 +13,22 @@ function* fetchParticipants() {
     }
 }
 
+function* deletePart(action){
 
+    try{
+        console.log('hello from deletePart:', action.payload);
+    // use string interpolation to pass the payload
+    yield axios.delete(`/api/participant/${action.payload.id}`)
+    
+    } catch (error){
+        console.log('error in post', error);
+    }
+  }
 
 function* participantsSaga() {
   yield takeLatest('GET_PART', fetchParticipants);
+  yield takeLatest('DELETE_PARTICIPANT', deletePart);
 }
+
 
 export default participantsSaga;

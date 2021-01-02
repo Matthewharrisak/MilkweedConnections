@@ -4,7 +4,8 @@ const router = express.Router();
 
 // Route to get all from the Participants table 
 router.get("/", (req, res) => {
-  const queryText = `SELECT * FROM participants`;
+  const queryText = `SELECT * from participants
+  JOIN service_workers ON participants.id = service_workers.participants_id;`;
   pool
     .query(queryText)
     .then((result) => {
@@ -15,6 +16,7 @@ router.get("/", (req, res) => {
       alert("error in participants GET", error);
     });
 });
+
 // GET route to grab participants for partcipants tabel in admin view
 router.get("/:id", (req, res) => {
   const queryText = `

@@ -164,6 +164,9 @@ export default function FormDialog(row) {
           <Button onClick={handleUpdate} color="primary">
             Update
           </Button>
+          <Button onClick={handleUpdate} color="primary">
+            Delete
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -5,7 +5,8 @@ const router = express.Router();
 // route to get all data from Service Worker table
 router.get("/", (req, res) => {
   const queryText = `SELECT * from service_workers 
-  JOIN participants ON service_workers.participants_id = participants.id;`;
+   JOIN participants ON service_workers.participants_id = participants.id;
+  `;
   pool
     .query(queryText)
     .then((result) => {

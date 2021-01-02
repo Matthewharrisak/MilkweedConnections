@@ -6,9 +6,25 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import {useDispatch, useSelector} from 'react-redux';
 
 export default function FormDialog(row) {
+  const dispatch = useDispatch();
+
   const [open, setOpen] = React.useState(false);
+
+  const [fName, first_name] = React.useState('');
+
+  const handleUpdate = () => {
+      dispatch({
+        type: 'UPDATE_PART',
+        payload: {
+            first_name: fName,
+        }, 
+      }); 
+      handleClose();
+ 
+};
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -38,19 +54,29 @@ export default function FormDialog(row) {
             label={row.rowEdit.first_name}
             type="Name"
             fullWidth
+            onChange={e => first_name(e.target.value)}
+
+          />
+           <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label={row.rowEdit.last_name}
+            type="Name"
+            fullWidth
           />
             <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="Phone"
+            label={row.rowEdit.phone_num}
             type="email"
             fullWidth
           />     <TextField
           autoFocus
           margin="dense"
           id="name"
-          label="Program(s)"
+          label={row.rowEdit.last_name}
           type="email"
           fullWidth
         />     <TextField
@@ -134,8 +160,8 @@ export default function FormDialog(row) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
-            Save
+          <Button onClick={handleUpdate} color="primary">
+            Update
           </Button>
         </DialogActions>
       </Dialog>

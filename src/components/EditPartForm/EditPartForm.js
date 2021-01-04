@@ -132,10 +132,6 @@ const deletePart = (id) => {
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Edit Participants</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-          {JSON.stringify(row)}
-    
-          </DialogContentText>
           <TextField
             autoFocus
             margin="dense"

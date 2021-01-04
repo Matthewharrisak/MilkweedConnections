@@ -10,3 +10,21 @@
     background-color: #878C36 !important;
     color: white;
 }
+
+.deleteButton {
+    background-color: #f08621 !important;
+    color: white !important;
+    border-radius: 2.5px;
+}
+
+.updateButton {
+    background-color: #878C36 !important;
+    color: white !important;
+    border-radius: 2.5px;
+}
+
+.cancelButton {
+    background-color: #92BBBF !important;
+    color: white !important;
+    border-radius: 2.5px;
+}

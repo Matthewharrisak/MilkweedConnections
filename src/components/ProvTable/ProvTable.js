@@ -113,9 +113,11 @@ function Row(props) {
 export default function CollapsibleTable() {
   let rows = [];
 
-  const prov = useSelector((store) => store.provider);
+  const prov = useSelector((store) => store.provider.providerReducer);
 
+  
   for (let i = 0; i < prov.length; i++) {
+    console.log('POPOOOOO', prov);
     console.log(prov[i]);
     if (prov[i]) {
       rows[i] = createData(
@@ -136,10 +138,9 @@ export default function CollapsibleTable() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    console.log("mounted");
+    console.log("ddd", prov);
     dispatch({ type: "GET_PROV"});
-    console.log(prov);
-  }, []);
+  });
 
   return (
     <TableContainer component={Paper}>

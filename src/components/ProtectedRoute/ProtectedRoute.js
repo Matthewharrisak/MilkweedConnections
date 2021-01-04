@@ -3,6 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LoginPage from '../LoginPage/LoginPage';
 import mapStoreToProps from '../../redux/mapStoreToProps';
+import InfoPage from '../InfoPage/InfoPage';
 
 // A Custom Wrapper Component -- This will keep our code DRY.
 // Responsible for watching redux state, and returning an appropriate component
@@ -28,11 +29,15 @@ const ProtectedRoute = (props) => {
 
   let ComponentToShow;
 
-  if (store.user.id) {
+  if (store.user.id && store.provider.currentProvider.acitve == true) {
     // if the user is logged in (only logged in users have ids)
     // show the component that is protected
     ComponentToShow = ComponentToProtect;
-  } else {
+  } 
+  else if (store.user.id && store.provider.currentProvider.acitve == false) {
+    ComponentToShow = InfoPage
+  }
+  else {
     // if they are not logged in, check the loginMode on Redux State
     // if the mode is 'login', show the LoginPage
     ComponentToShow = LoginPage;

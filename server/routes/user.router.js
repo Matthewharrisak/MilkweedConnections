@@ -17,7 +17,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // GET speceific provider id based of user id for assigning counties through registration 
 router.get('/:id', (req, res) => {
   // GET route code here
-  const queryText = 'SELECT "id" FROM providers WHERE "user_id" = $1;';
+  const queryText = 'SELECT * FROM providers WHERE "user_id" = $1;';
   pool.query(queryText, [req.params.id])
   .then((result) => {
     res.send(result.rows);

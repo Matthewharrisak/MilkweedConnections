@@ -10,19 +10,17 @@ import {useDispatch, useSelector} from 'react-redux';
 import './EditPartForm.css';
 import swal from 'sweetalert';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
-
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
-
+import { counties } from '../NewUserForm/NewUserForm';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -47,7 +45,6 @@ export default function FormDialog(row) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  // const [id, setId] = React.useState('');
   const [firstName, first_name] = React.useState('');
   const [lastName, last_name] = React.useState('');
   const [dOb, dob] = React.useState(new Date());
@@ -64,9 +61,6 @@ export default function FormDialog(row) {
   const [choices, setChoices] = React.useState(false);
   const [psp, setPsp] = React.useState(false);
 
-  const counties = [{id: 1, name: "Barron"}, {id: 2, name: "Burnett"}, {id: 3, name: "Buffalo"}, {id: 4, name: "Chippewa"}, {id: 5, name: "Clark"}, {id: 6, name: "Dunn"}, {id: 7, name: "Eau Claire"}, 
-  {id: 8, name: "Pierce"}, {id: 9, name: "Pepin"}, {id: 10, name: "Polk"}, 
-     {id: 11, name: "Trampealeau"}, {id: 12, name: "Rusk"}, {id: 13, name: "Washburn"}, {id: 14, name: "St.Croix"}];
 
   const handleUpdate = () => {
       dispatch({

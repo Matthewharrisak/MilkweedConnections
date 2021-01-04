@@ -23,7 +23,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 
 // predefined values for milkweed 
-const counties = [{id: 1, name: "Barron"}, {id: 2, name: "Burnett"}, {id: 3, name: "Buffalo"}, {id: 4, name: "Chippewa"}, {id: 5, name: "Clark"}, {id: 6, name: "Dunn"}, {id: 7, name: "Eau Claire"}, 
+export const counties = [{id: 1, name: "Barron"}, {id: 2, name: "Burnett"}, {id: 3, name: "Buffalo"}, {id: 4, name: "Chippewa"}, {id: 5, name: "Clark"}, {id: 6, name: "Dunn"}, {id: 7, name: "Eau Claire"}, 
 {id: 8, name: "Pierce"}, {id: 9, name: "Pepin"}, {id: 10, name: "Polk"}, 
    {id: 11, name: "Trampealeau"}, {id: 12, name: "Rusk"}, {id: 13, name: "Washburn"}, {id: 14, name: "St.Croix"}];
 

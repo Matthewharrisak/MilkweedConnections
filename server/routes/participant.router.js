@@ -149,4 +149,51 @@ router.post("/", (req, res) => {
     });
   });
 
+
+  router.put('/:id', (req, res) => {
+    console.log('whats up form the put request?' , req.params.id , req.body);
+    let id = req.params.id;
+    let queryText = `UPDATE "participants" 
+    SET "first_name" = $1, 
+    "last_name"  = $2,
+    "dob"  = $3,
+    "phone_num" = $4,
+    "address" = $5, 
+    "county" = $6, 
+    "other" = $7, 
+    "gender" = $8, 
+   "limitations" = $9, 
+    "notes" =$10 ,
+    "ccs" = $11,
+    "choices" =$12 , 
+    "psp" = $13,
+    "avatar" = $14,
+    "guardian" = $15 
+   WHERE id = $16;`;
+    pool.query(queryText , [    
+      req.body.first_name,
+      req.body.last_name,
+      req.body.dob,
+      req.body.phone_num,
+      req.body.address,
+      req.body.county,
+      req.body.other,
+      req.body.gender,
+      req.body.limitations,
+      req.body.notes,
+      req.body.ccs,
+      req.body.choices,
+      req.body.psp,
+      req.body.avatar,
+      req.body.guardian,
+       id]).then((result) => {
+      res.sendStatus(200);
+    }).catch((error) => {
+      console.log('error in the PUT' , error);
+      res.sendStatus(500)
+    });
+  
+  });
+
+
 module.exports = router;

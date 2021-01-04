@@ -25,9 +25,20 @@ function* deletePart(action){
     }
   }
 
+  function* updatePart(action) {
+    yield console.log('UPDATING  ITEM:', action)
+    try {
+      yield axios.put(`/api/participant/${action.payload.id}` , action.payload);
+    } catch (error) {
+      console.log('ERROR in axios update', error);
+    }
+  }
+
 function* participantsSaga() {
   yield takeLatest('GET_PART', fetchParticipants);
   yield takeLatest('DELETE_PARTICIPANT', deletePart);
+  yield takeLatest('UPDATE_PART' , updatePart)
+
 }
 
 

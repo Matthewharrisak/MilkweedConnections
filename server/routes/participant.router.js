@@ -53,18 +53,21 @@ WHERE providers_id = $1;`;
     });
 });
 
-router.delete ('/:id', (req, res) => {
-  console.log('In delete router', req.params.id);
-  
-  const queryText = `DELETE FROM service_workers WHERE participants_id IN (SELECT id FROM participants);
-  DELETE FROM participants WHERE participants.id = $1;`;
-pool
-.query(queryText, [req.params.id])
-.then(() => res.sendStatus(201))
-.catch((err) => {
+router.delete ('/:id', async (req, res) => {
+  const connection = await pool.connect();
+  try {
+    await connection.query("BEGIN");
+  const queryText = `DELETE FROM service_workers WHERE participants_id = $1;`;
+  pool.query(queryText, [req.params.id])
+  const sqlInitialDeposit = `DELETE FROM participants WHERE participants.id = $1;`;
+  await connection.query(sqlInitialDeposit, [req.params.id]);
+  await connection.query("COMMIT");
+  res.sendStatus(201);
+  }
+  catch(err) {
   console.log('User registration failed: ', err);
   res.sendStatus(500);
-});
+};
 });
 
 /// route for POSTING participant and service worker at the same time through form 

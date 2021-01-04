@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux';
-
 const providerReducer = (state = {}, action) => {
   // holds provider after API get
   switch (action.type) {
@@ -11,16 +9,5 @@ const providerReducer = (state = {}, action) => {
       return state;
   }
 };
-const currentProvider = (state = {}, action) => {
-  switch (action.type) {
-    case "SET_CURR_PROVIDER":
-      return action.payload;
-    default:
-      return state;
-  }
-};
 
-export default combineReducers({
-  providerReducer,
-  currentProvider
-});
+export default providerReducer;

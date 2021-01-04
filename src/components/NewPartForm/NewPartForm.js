@@ -137,10 +137,10 @@ export default function FormDialog() {
       />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button className="cancelPartButton" onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button className="savePartButton"onClick={handleClose} color="primary">
             Save
           </Button>
         </DialogActions>

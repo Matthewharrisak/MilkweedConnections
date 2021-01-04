@@ -10,3 +10,15 @@
     background-color: #878C36 !important;
     color: white !important;
 }
+
+.cancelPartButton {
+    background-color: #92BBBF !important;
+    color: white !important;
+    border-radius: 2.5px;
+}
+
+.savePartButton {
+    background-color: #878C36 !important;
+    color: white !important;
+    border-radius: 2.5px;
+}

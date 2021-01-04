@@ -310,10 +310,10 @@ const deletePart = (id) => {
 />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button className="cancelButton" onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleUpdate} color="primary">
+          <Button className="updateButton" onClick={handleUpdate} color="primary">
             Update
           </Button>
           <Button className="deleteButton" onClick={() => deletePart(row.rowEdit.id)} color="primary">

@@ -38,50 +38,56 @@ export default function FormDialog() {
             type="Name"
             fullWidth
           />
-            <TextField
+          <TextField
             autoFocus
             margin="dense"
             id="name"
             label="Phone"
             type="email"
             fullWidth
-          />     <TextField
+          />    
+          <TextField
           autoFocus
           margin="dense"
           id="name"
           label="Program(s)"
           type="email"
           fullWidth
-        />     <TextField
-        autoFocus
-        margin="dense"
-        id="name"
-        label="Status"
-        type="email"
-        fullWidth
-      />     <TextField
-      autoFocus
-      margin="dense"
-      id="name"
-      label="County"
-      type="email"
-      fullWidth
-    />     <TextField
-    autoFocus
-    margin="dense"
-    id="name"
-    label="Avatar/ID"
-    type="email"
-    fullWidth
-  />     <TextField
-  autoFocus
-  margin="dense"
-  id="name"
-  label="Date of Birth"
-  type="email"
-  fullWidth
-/>  
-<TextField
+          />   
+          <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Status"
+          type="email"
+          fullWidth
+          />   
+          <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="County"
+          type="email"
+          fullWidth
+          />    
+          <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Avatar/ID"
+          type="email"
+          fullWidth
+          />   
+          <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Date of Birth"
+          type="email"
+          fullWidth
+          />  
+
+          <TextField
             autoFocus
             margin="dense"
             id="name"
@@ -89,45 +95,46 @@ export default function FormDialog() {
             type="email"
             fullWidth
           />   
-            <TextField
+          <TextField
           autoFocus
           margin="dense"
           id="name"
           label="Address"
           type="email"
           fullWidth
-        />  
-        <TextField
+          />  
+          <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Gender"
+          type="email"
+          fullWidth
+            />  
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Guardian Name"
+            type="email"
+            fullWidth
+          />   
+            <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Schedule Limitations"
+          type="email"
+          fullWidth
+        />   
+          <TextField
         autoFocus
         margin="dense"
         id="name"
-        label="Gender"
+        label="Notes"
         type="email"
         fullWidth
-      />  
-     <TextField
-      autoFocus
-      margin="dense"
-      id="name"
-      label="Guardian Name"
-      type="email"
-      fullWidth
-    />   
-      <TextField
-    autoFocus
-    margin="dense"
-    id="name"
-    label="Schedule Limitations"
-    type="email"
-    fullWidth
-  />     <TextField
-  autoFocus
-  margin="dense"
-  id="name"
-  label="Notes"
-  type="email"
-  fullWidth
-/>
+      />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

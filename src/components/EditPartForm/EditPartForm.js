@@ -9,24 +9,96 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {useDispatch, useSelector} from 'react-redux';
 import './EditPartForm.css';
 import swal from 'sweetalert';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Chip from '@material-ui/core/Chip';
+
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+      margin: theme.spacing(1),
+      minWidth: 180,
+      maxWidth: 300,
+  },
+  chips: {
+      display: 'flex',
+      flexWrap: 'wrap',
+  },
+  chip: {
+      width: "100%",
+      margin: 2
+  },
+  noLabel: {
+      marginTop: theme.spacing(3),
+  },
+  }));
 
 export default function FormDialog(row) {
   const dispatch = useDispatch();
-
+  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  // const [id, setId] = React.useState('');
+  const [firstName, first_name] = React.useState('');
+  const [lastName, last_name] = React.useState('');
+  const [dOb, dob] = React.useState(new Date());
+  const [phoneNum, phone_num] = React.useState('');
+  const [Address, address] = React.useState('');
+  const [county, setCounty] = React.useState([]);
+  const [avatarID, avatar] = React.useState('');
+  const [Guardian, guardian] = React.useState('');
+  const [Other, other] = React.useState('');
+  const [Gender, gender] = React.useState('');
+  const [Limitations , limitations ] = React.useState('');
+  const [Notes, notes] = React.useState('');
+  const [ccs, setCcs] = React.useState(false);
+  const [choices, setChoices] = React.useState(false);
+  const [psp, setPsp] = React.useState(false);
 
-  const [fName, first_name] = React.useState('');
+  const counties = [{id: 1, name: "Barron"}, {id: 2, name: "Burnett"}, {id: 3, name: "Buffalo"}, {id: 4, name: "Chippewa"}, {id: 5, name: "Clark"}, {id: 6, name: "Dunn"}, {id: 7, name: "Eau Claire"}, 
+  {id: 8, name: "Pierce"}, {id: 9, name: "Pepin"}, {id: 10, name: "Polk"}, 
+     {id: 11, name: "Trampealeau"}, {id: 12, name: "Rusk"}, {id: 13, name: "Washburn"}, {id: 14, name: "St.Croix"}];
 
   const handleUpdate = () => {
       dispatch({
         type: 'UPDATE_PART',
         payload: {
-            first_name: fName,
+          id: row.rowEdit.id,
+          first_name: firstName,
+          last_name: lastName,
+          dob: dOb,
+          phone_num: phoneNum,
+          address: Address,
+          avatar: avatarID,
+          guardian: Guardian,
+          other: Other,
+          gender: Gender,
+          limitations: Limitations,
+          notes: Notes,
+          ccs: ccs,
+          choices: choices,
+          psp: psp,
+          county: county,
         }, 
       }); 
       handleClose();
  
 };
+
+const handleChangeCounties = (event) => {
+  setCounty(event.target.value);
+  console.log(county);
+};
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -87,66 +159,125 @@ const deletePart = (id) => {
             label={row.rowEdit.last_name}
             type="Name"
             fullWidth
+            onChange={e => last_name(e.target.value)}
+
           />
             <TextField
             autoFocus
             margin="dense"
             id="name"
-            label={row.rowEdit.phone_num}
+            label={row.rowEdit.dob}
             type="email"
             fullWidth
-          />     <TextField
-          autoFocus
-          margin="dense"
-          id="name"
-          label={row.rowEdit.last_name}
-          type="email"
-          fullWidth
-        />     <TextField
-        autoFocus
-        margin="dense"
-        id="name"
-        label="Status"
-        type="email"
-        fullWidth
-      />     <TextField
-      autoFocus
-      margin="dense"
-      id="name"
-      label="County"
-      type="email"
-      fullWidth
-    />     <TextField
-    autoFocus
-    margin="dense"
-    id="name"
-    label="Avatar/ID"
-    type="email"
-    fullWidth
-  />     <TextField
-  autoFocus
-  margin="dense"
-  id="name"
-  label="Date of Birth"
-  type="email"
-  fullWidth
-/>  
-<TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Referring Worker"
-            type="email"
-            fullWidth
+            onChange={e => dob(e.target.value)}
+
           />   
             <TextField
           autoFocus
           margin="dense"
           id="name"
-          label="Address"
+          label={row.rowEdit.address}
           type="email"
           fullWidth
+          onChange={e => address(e.target.value)}
+
         />  
+           <TextField
+        autoFocus
+        margin="dense"
+        id="name"
+        label={row.rowEdit.phone_num}
+        type="email"
+        fullWidth
+        onChange={e => phone_num(e.target.value)}
+       />  
+   <FormControl className={classes.formControl} >
+                        <InputLabel id="county-selector">County</InputLabel>
+                        <Select
+                            labelId="county-selector"
+                            id="county-selected"
+                            multiple
+                            value={county}
+                            onChange={handleChangeCounties}
+                            input={<Input id="select-multiple-counties" />}
+                            renderValue={(selected) => (
+                                <div className={classes.chips}>
+                                    {selected.map((value) => (
+                                        <Chip key={value.id} label={value.name} className={classes.chip} />
+                                    ))}
+                                </div>
+                            )}>
+                            {counties.map((elem) => (
+                                <MenuItem key={elem.id} value={elem}>
+                                {elem.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                      <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label={row.rowEdit.avatar}
+                    type="email"
+                    fullWidth
+                    onChange={e => avatar(e.target.value)}
+
+                  />   
+                    <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="Date of Birth"
+                  type="email"
+                  fullWidth
+                  onChange={e => guardian(e.target.value)}
+
+                />  
+  
+  <FormControl component="fieldset">
+                        <FormLabel component="legend"> Programs </FormLabel>
+                        <FormGroup aria-label="position" row>
+                            <FormControlLabel
+                            value={ccs}
+                            control={<Checkbox color="primary" />}
+                            label="CCS"
+                            labelPlacement="top"
+                            onChange={() => {
+                            setCcs(!ccs);
+                        }}
+                            />
+                            <FormControlLabel
+                            value={choices}
+                            control={<Checkbox color="primary" />}
+                            label="Choices"
+                            labelPlacement="top"
+                            onChange={() => {
+                            setChoices(!choices);
+                            }}
+                            />
+                            <FormControlLabel
+                            value={psp}
+                            control={<Checkbox color="primary" />}
+                            label="PSP"
+                            labelPlacement="top"
+                            onChange={() => {
+                            setPsp(!psp);
+                            }}
+                            />
+                        </FormGroup>
+                    </FormControl>
+
+                    <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="Address"
+                  type="email"
+                  fullWidth
+                  onChange={e => other(e.target.value)}
+
+                />  
         <TextField
         autoFocus
         margin="dense"
@@ -154,6 +285,8 @@ const deletePart = (id) => {
         label="Gender"
         type="email"
         fullWidth
+        onChange={e => gender(e.target.value)}
+
       />  
      <TextField
       autoFocus
@@ -162,6 +295,8 @@ const deletePart = (id) => {
       label="Guardian Name"
       type="email"
       fullWidth
+      onChange={e => limitations(e.target.value)}
+
     />   
       <TextField
     autoFocus
@@ -170,13 +305,18 @@ const deletePart = (id) => {
     label="Schedule Limitations"
     type="email"
     fullWidth
-  />     <TextField
+    onChange={e => notes(e.target.value)}
+
+  />   
+    <TextField
   autoFocus
   margin="dense"
   id="name"
   label="Notes"
   type="email"
   fullWidth
+  // onChange={e => status(e.target.value)}
+
 />
         </DialogContent>
         <DialogActions>

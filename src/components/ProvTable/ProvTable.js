@@ -113,7 +113,7 @@ function Row(props) {
 export default function CollapsibleTable() {
   let rows = [];
 
-  const prov = useSelector((store) => store.provider.providerReducer);
+  const prov = useSelector((store) => store.provider);
 
   for (let i = 0; i < prov.length; i++) {
     console.log(prov[i]);

@@ -14,9 +14,9 @@ import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { useDispatch, useSelector } from "react-redux";
-import Checkbox from '@material-ui/core/Checkbox';
-import EditPartForm from '../EditPartForm/EditPartForm'
-// this component displays waitlisted participants 
+import Checkbox from "@material-ui/core/Checkbox";
+import EditPartForm from "../EditPartForm/EditPartForm";
+// this component displays waitlisted participants
 
 // sets styles for rows using makeStyles hook
 const useRowStyles = makeStyles({
@@ -26,8 +26,6 @@ const useRowStyles = makeStyles({
     },
   },
 });
-
-
 
 // defining the structure of our data and a function to assemble it
 function createData(
@@ -49,7 +47,7 @@ function createData(
   avatar,
   guardian,
   name,
-  email,
+  email
 ) {
   return {
     id,
@@ -119,13 +117,16 @@ function Row(props) {
         <TableCell align="right">{row.avatar}</TableCell>
         <TableCell align="right">{dt.toLocaleString()}</TableCell>
         <TableCell align="right">
-          {row.name}<br/>{row.email}
+          {row.name}
+          <br />
+          {row.email}
         </TableCell>
-
-        <Checkbox
-          onChange={() => dispatch({ type: "SET_PRINT", payload: [row] })}
-          align="center"
-        />
+        <TableCell align="right">
+          <Checkbox
+            onChange={() => dispatch({ type: "SET_PRINT", payload: [row] })}
+            align="center"
+          />
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
@@ -204,36 +205,78 @@ export default function CollapsibleTable() {
     console.log(part);
   }, []);
 
+  function nameAsc() {
+    dispatch({ type: "GET_PART_NAME_ASC" });
+  }
+
+  function nameDesc() {
+    dispatch({ type: "GET_PART_NAME_DESC" });
+  }
+
+  function countyAsc() {
+    dispatch({ type: "GET_PART_COUNTY_ASC" });
+  }
+
+  function countyDesc() {
+    dispatch({ type: "GET_PART_COUNTY_DESC" });
+  }
+
+  function ccsSort() {
+    dispatch({ type: "GET_PART_CCS" });
+  }
+
+  function choicesSort() {
+    dispatch({ type: "GET_PART_CHOICES" });
+  }
+
+  function pspSort() {
+    dispatch({ type: "GET_PART_PSP" });
+  }
+
+  function allSort() {
+    dispatch({ type: "GET_PART" });
+  }
 
   return (
-    
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Phone</TableCell>
-            <TableCell align="right">Program(s)</TableCell>
-            <TableCell align="right">Status</TableCell>
-            <TableCell align="right">County</TableCell>
-            <TableCell align="right">Avatar/ID</TableCell>
-            <TableCell align="right">Date of Birth</TableCell>
-            <TableCell align="right">Referring Worker</TableCell>
+    <>
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>
+                Name
+                <button onClick={nameAsc}>Name ASC</button>
+                <button onClick={nameDesc}>Name DESC</button>
+              </TableCell>
+              <TableCell align="right">Phone</TableCell>
+              <TableCell align="right">
+                Program(s)
+                <button onClick={ccsSort}>CCS</button>
+                <button onClick={choicesSort}>Choices</button>
+                <button onClick={pspSort}>PSP</button>
+                <button onClick={allSort}>All</button>
+              </TableCell>
+              <TableCell align="right">Status</TableCell>
+              <TableCell align="right">
+                County
+                <button onClick={countyAsc}>County ASC</button>
+                <button onClick={countyDesc}>County DESC</button>
+              </TableCell>
+              <TableCell align="right">Avatar/ID</TableCell>
+              <TableCell align="right">Date of Birth</TableCell>
+              <TableCell align="right">Referring Worker</TableCell>
 
-            <TableCell align="right">Print</TableCell>
-
-
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <Row key={row.id} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-
+              <TableCell align="right">Print</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <Row key={row.id} row={row} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
-
 }

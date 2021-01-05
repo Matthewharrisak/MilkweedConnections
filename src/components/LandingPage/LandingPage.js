@@ -26,7 +26,6 @@ class LandingPage extends Component {
         <h1> this is where users will go upon login!  </h1>
         </div>
           <div className="grid-col grid-col_4">
-       <TemplateFunction/>
 
             <center>
               <h4>Already a Member?</h4>

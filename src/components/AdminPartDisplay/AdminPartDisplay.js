@@ -23,7 +23,8 @@ import './AdminPartDisplay.css';
 const useRowStyles = makeStyles({
   root: {
     "& > *": {
-      borderBottom: "unset",
+      // borderBottom: "unset",
+      borderColor: "#f08621",
     },
   },
 });
@@ -91,7 +92,7 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow className={classes.root}>
+      <TableRow id='borderStyle' className={classes.root}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -190,6 +191,7 @@ function Row(props) {
 }
 
 export default function CollapsibleTable() {
+  const classes = useRowStyles();
   let rows = [];
   // getting participants from redux store
   const part = useSelector((store) => store.participants);

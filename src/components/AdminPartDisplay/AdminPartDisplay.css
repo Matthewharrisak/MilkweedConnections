@@ -13,6 +13,7 @@
 .ccsSortBtn {
     color: black !important;
     background-color: cornsilk !important;
+    margin-right: 2px !important;
     border-width: inherit !important;
 }
 
@@ -47,3 +48,7 @@
     background-color: cornsilk !important;
     border-width: inherit !important;
 }
+
+/* #borderStyle {
+    border-color: #f08621 !important;
+} */

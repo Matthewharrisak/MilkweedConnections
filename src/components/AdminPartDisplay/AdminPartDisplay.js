@@ -86,6 +86,7 @@ function Row(props) {
   const dispatch = useDispatch();
   const { DateTime } = require("luxon");
   const dt = DateTime.fromISO(row.dob);
+  const prov = useSelector((store) => store.provider);
 
   return (
     <React.Fragment>
@@ -153,6 +154,27 @@ function Row(props) {
                       <TableCell>{detailsRow.guardian}</TableCell>
                       <TableCell>{detailsRow.limitations}</TableCell>
                       <TableCell align="right">{detailsRow.notes}</TableCell>
+                      <select name="users" id="users">
+                        <optgroup label="Users">
+                          <option value="">Select here</option>
+                          {prov[0] ? (
+                            <>
+                              {prov.map((provider) => {
+                                return (
+                                  <option value={provider.id}>
+                                    {provider.first_name}
+                                    {provider.last_name}
+                                  </option>
+                                );
+                              })}
+                              {/* <button onClick= */}
+                            </>
+                          ) : (
+                            <></>
+                          )}
+                        </optgroup>
+                      </select>
+
                       <EditPartForm rowEdit={row} />
                     </TableRow>
                   ))}
@@ -202,6 +224,7 @@ export default function CollapsibleTable() {
   React.useEffect(() => {
     console.log("mounted");
     dispatch({ type: "GET_PART" });
+    dispatch({ type: "GET_PROV" });
     console.log(part);
   }, []);
 

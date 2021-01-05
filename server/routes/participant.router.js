@@ -17,6 +17,108 @@ router.get("/", (req, res) => {
     });
 });
 
+// Route to get all from the Participants table 
+router.get("/name_ascend", (req, res) => {
+  const queryText = `SELECT * from participants
+  JOIN service_workers ON participants.id = service_workers.participants_id ORDER BY last_name;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      alert("error in participants GET", error);
+    });
+});
+
+// Route to get all from the Participants table 
+router.get("/name_decend", (req, res) => {
+  const queryText = `SELECT * from participants
+  JOIN service_workers ON participants.id = service_workers.participants_id ORDER BY last_name DESC;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      alert("error in participants GET", error);
+    });
+});
+
+// Route to get all from the Participants table 
+router.get("/county_acend", (req, res) => {
+  const queryText = `SELECT * from participants
+  JOIN service_workers ON participants.id = service_workers.participants_id ORDER BY participants.county ASC;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("error in participants GET", error);
+    });
+});
+
+// Route to get all from the Participants table 
+router.get("/county_decend", (req, res) => {
+  const queryText = `SELECT * from participants
+  JOIN service_workers ON participants.id = service_workers.participants_id ORDER BY participants.county DESC;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("error in participants GET", error);
+    });
+});
+
+router.get("/ccs", (req, res) => {
+  const queryText = `SELECT * from participants 
+  JOIN service_workers ON participants.id = service_workers.participants_id WHERE ccs = true ORDER BY last_name ASC;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("error in participants GET", error);
+    });
+});
+
+router.get("/choices", (req, res) => {
+  const queryText = `SELECT * from participants 
+  JOIN service_workers ON participants.id = service_workers.participants_id WHERE choices = true ORDER BY last_name ASC;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("error in participants GET", error);
+    });
+});
+
+router.get("/psp", (req, res) => {
+  const queryText = `SELECT * from participants 
+  JOIN service_workers ON participants.id = service_workers.participants_id WHERE psp = true ORDER BY last_name ASC;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("error in participants GET", error);
+    });
+});
+
 // GET route to grab participants for partcipants tabel in admin view
 router.get("/:id", (req, res) => {
   const queryText = `

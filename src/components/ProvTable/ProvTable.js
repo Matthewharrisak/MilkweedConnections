@@ -15,6 +15,8 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { useDispatch, useSelector } from "react-redux";
 import userReducer from "../../redux/reducers/user.reducer";
+import ProvCard from "../ProvCard/ProvCard";
+import React, { useState, useEffect } from 'react';
 
 // this component hold the data table for providers that are being displayed for admins
 
@@ -52,6 +54,7 @@ function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
+  
 
   return (
     <React.Fragment>
@@ -111,6 +114,7 @@ function Row(props) {
 }
 
 export default function CollapsibleTable() {
+
   let rows = [];
 
   const prov = useSelector((store) => store.provider.providerReducer);
@@ -136,9 +140,10 @@ export default function CollapsibleTable() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    console.log("mounted");
+    console.log("as,d.fmasd,./fma");
     dispatch({ type: "GET_PROV"});
-    console.log(prov);
+    dispatch({ type: "GET_ALL_PROVS" });
+    console.log("prov");
   }, []);
 
   return (

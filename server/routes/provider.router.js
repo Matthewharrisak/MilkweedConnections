@@ -2,10 +2,36 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
+
 /**
  * GET route for all providers
  */
-
+router.get('/providers', (req, res) => {
+  // GET route code here
+  const queryText = `
+  SELECT
+    providers.id,
+    description,
+    help_info,
+    mission,
+    bio,
+    providers.first_name,
+    providers.last_name,
+    providers.phone_num,
+    providers.email,
+    providers.ccs,
+    providers.choices,
+    providers.psp
+  FROM "provider_profile"
+  JOIN providers ON providers.id = provider_profile.providers_id;`;
+  pool.query(queryText)
+  .then((result) => {
+    res.send(result.rows);
+  }).catch((error) => {
+    console.log('error in the provider Query' , error);
+    res.sendStatus(500);
+  });
+});
  // this is only for ADMIN view 
 router.get('/', (req, res) => {
   // GET route code here
@@ -28,19 +54,6 @@ router.get('/:first_name/:last_name/:email', (req, res) => {
   .then((result) => {
     console.log(result.rows);
     res.send(result.rows[0]);
-  }).catch((error) => {
-    console.log('error in the provider Query' , error);
-    res.sendStatus(500);
-  });
-});
-
-// selects all information for provider profiles // this will be for provider view for other providers
-router.get('/', (req, res) => {
-  // GET route code here
-  const queryText = 'SELECT * FROM provider_profile;';
-  pool.query(queryText)
-  .then((result) => {
-    res.send(result.rows);
   }).catch((error) => {
     console.log('error in the provider Query' , error);
     res.sendStatus(500);

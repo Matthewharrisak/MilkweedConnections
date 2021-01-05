@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect }from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -6,10 +6,12 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import ProvTable from '../AdminProvDisplay/AdminProvDisplay';
+import ProvTable from '../ProvTable/ProvTable';
 import PartDisplay from '../AdminPartDisplay/AdminPartDisplay';
 import WaitlistPart from '../WaitlistPart/WaitlistPart';
 import PartTable from '../PartTable/PartTable';
+import { useDispatch, useSelector } from "react-redux";
+
 // this component holds the tab bar for the admin page -- sources in the data tables 
 
 function TabPanel(props) {
@@ -59,6 +61,12 @@ export default function SimpleTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log("as,d.fmasd,./fma");    
+    dispatch({ type: "GET_ALL_PROVS" });
+  }, []);
 
   return (
     <div className={classes.root}>

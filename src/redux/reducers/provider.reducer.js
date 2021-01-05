@@ -19,9 +19,18 @@ const currentProvider = (state = {}, action) => {
       return state;
   }
 };
+const allProviders = (state = [], action) => {
+  switch (action.type) {
+    case "SET_ALL_PROVS":
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
 // export default providerReducer;
 export default combineReducers({
   providerReducer,
-  currentProvider
+  currentProvider,
+  allProviders
 });

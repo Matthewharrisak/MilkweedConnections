@@ -40,7 +40,7 @@ CREATE TABLE "provider_profile" (
 	"mission" varchar(1000),
 	"bio" varchar(2500) NOT NULL,
 	"image" varchar(255),
-	"providers_id" integer REFERENCES "providers"
+	"providers_id" integer REFERENCES "providers" ON DELETE CASCADE;
 );
 --
 
@@ -71,8 +71,8 @@ CREATE TABLE "participants" (
 -- JUNCTION TABLE between providers and participants
 CREATE TABLE "prov_part" (
 	"id" SERIAL PRIMARY KEY,
-	"providers_id" integer REFERENCES "providers",
-	"participants_id" integer REFERENCES "participants"
+	"providers_id" integer REFERENCES "providers" ON DELETE CASCADE;,
+	"participants_id" integer REFERENCES "participants" ON DELETE CASCADE;
 );
 --
 
@@ -88,7 +88,7 @@ CREATE TABLE "counties" (
 --   Junction table between a provider and their counties to work int
 CREATE TABLE "providers_counties" (
 	"id" SERIAL PRIMARY KEY,
-	"providers_id" integer REFERENCES "providers",
+	"providers_id" integer REFERENCES "providers" ON DELETE CASCADE;,
 	"counties_id" integer REFERENCES "counties"
 );
 --
@@ -100,7 +100,7 @@ CREATE TABLE "service_workers" (
 	"phone" varchar(120),
 	"email" varchar(120),
 	"county" varchar(80),
-	"participants_id" integer REFERENCES "participants"
+	"participants_id" integer REFERENCES "participants" ON DELETE CASCADE;
 );
 
 INSERT INTO "providers_counties" ("providers_id", "counties_id") VALUES (2, 2);

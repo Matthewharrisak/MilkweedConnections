@@ -26,6 +26,7 @@
 .pspSortBtn {
     color: black !important;
     background-color: cornsilk !important;
+    margin-right: 2px !important;
     border-width: inherit !important;
 }
 

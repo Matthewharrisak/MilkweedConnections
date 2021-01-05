@@ -133,9 +133,9 @@ function Row(props) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
-              <Typography variant="h10" gutterBottom component="div">
+              {/* <Typography variant="h10" gutterBottom component="div">
                 {row.first_name}'s Details
-              </Typography>
+              </Typography> */}
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>

@@ -300,5 +300,28 @@ router.post("/", (req, res) => {
   
   });
 
+  router.post("/participant", (req, res) => {
+    console.log(req.body)
+
+      const queryText = `select exists(select 1 from prov_part where providers_id=$1 AND participants_id=$2);`;
+      pool
+        .query(queryText, [req.body.prov, req.body.part])
+      .then((result) => {
+        console.log(result.rows[0].exists);
+        
+        if (result.rows[0].exists === false) {
+          const queryText = `INSERT INTO prov_part (providers_id, participants_id) VALUES ($1, $2);`;
+          pool
+            .query(queryText, [+req.body.prov, req.body.part])
+            .then((result) => {
+              res.sendStatus(200);
+            })
+            .catch((error) => {
+              res.sendStatus(500);
+              console.log("error in add book", error);
+            });
+        }})})
+
+
 
 module.exports = router;

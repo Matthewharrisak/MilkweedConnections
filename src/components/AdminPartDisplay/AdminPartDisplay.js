@@ -16,6 +16,7 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@material-ui/core/Checkbox";
 import EditPartForm from "../EditPartForm/EditPartForm";
+import AdminPartAssign from "../AdminPartAssign/AdminPartAssign";
 import './AdminPartDisplay.css';
 // this component displays waitlisted participants
 
@@ -156,27 +157,7 @@ function Row(props) {
                       <TableCell>{detailsRow.guardian}</TableCell>
                       <TableCell>{detailsRow.limitations}</TableCell>
                       <TableCell align="right">{detailsRow.notes}</TableCell>
-                      <select name="users" id="users">
-                        <optgroup label="Users">
-                          <option value="">Select here</option>
-                          {prov[0] ? (
-                            <>
-                              {prov.map((provider) => {
-                                return (
-                                  <option value={provider.id}>
-                                    {provider.first_name}
-                                    {provider.last_name}
-                                  </option>
-                                );
-                              })}
-                              {/* <button onClick= */}
-                            </>
-                          ) : (
-                            <></>
-                          )}
-                        </optgroup>
-                      </select>
-
+                      <AdminPartAssign prov={prov} row={row}/>
                       <EditPartForm rowEdit={row} />
                     </TableRow>
                   ))}

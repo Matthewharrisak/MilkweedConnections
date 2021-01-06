@@ -1,0 +1,54 @@
+.nameAscBtn {
+    color: black !important;
+    background-color: cornsilk !important;
+    border-width: inherit !important;
+}
+
+.nameDescBtn {
+    color: black !important;
+    background-color: cornsilk !important;
+    border-width: inherit !important;
+}
+
+.ccsSortBtn {
+    color: black !important;
+    background-color: cornsilk !important;
+    margin-right: 2px !important;
+    border-width: inherit !important;
+}
+
+.choicesSortBtn {
+    color: black !important;
+    background-color: cornsilk !important;
+    margin-right: 2px !important;
+    border-width: inherit !important;
+}
+
+.pspSortBtn {
+    color: black !important;
+    background-color: cornsilk !important;
+    margin-right: 2px !important;
+    border-width: inherit !important;
+}
+
+.allSortBtn {
+    color: black !important;
+    background-color: cornsilk !important;
+    border-width: inherit !important;
+}
+
+.countyAscBtn {
+    color: black !important;
+    background-color: cornsilk !important;
+    border-width: inherit !important;
+}
+
+.countyDescBtn {
+    color: black !important;
+    background-color: cornsilk !important;
+    border-width: inherit !important;
+}
+
+/* #borderStyle {
+    border-color: #f08621 !important;
+} */

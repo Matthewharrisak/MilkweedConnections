@@ -15,6 +15,7 @@ router.get('/providers', (req, res) => {
     help_info,
     mission,
     bio,
+    image,
     providers.first_name,
     providers.last_name,
     providers.phone_num,

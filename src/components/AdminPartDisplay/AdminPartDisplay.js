@@ -17,13 +17,15 @@ import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@material-ui/core/Checkbox";
 import EditPartForm from "../EditPartForm/EditPartForm";
 import AdminPartAssign from "../AdminPartAssign/AdminPartAssign";
+import './AdminPartDisplay.css';
 // this component displays waitlisted participants
 
 // sets styles for rows using makeStyles hook
 const useRowStyles = makeStyles({
   root: {
     "& > *": {
-      borderBottom: "unset",
+      // borderBottom: "unset",
+      borderColor: "#f08621",
     },
   },
 });
@@ -91,7 +93,7 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow className={classes.root}>
+      <TableRow id='borderStyle' className={classes.root}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -170,6 +172,7 @@ function Row(props) {
 }
 
 export default function CollapsibleTable() {
+  const classes = useRowStyles();
   let rows = [];
   // getting participants from redux store
   const part = useSelector((store) => store.participants);
@@ -250,22 +253,22 @@ export default function CollapsibleTable() {
               <TableCell />
               <TableCell>
                 Name
-                <button onClick={nameAsc}>Name ASC</button>
-                <button onClick={nameDesc}>Name DESC</button>
+                <button className="nameAscBtn" onClick={nameAsc}>Name ASC</button>
+                <button className="nameDescBtn" onClick={nameDesc}>Name DESC</button>
               </TableCell>
               <TableCell align="right">Phone</TableCell>
               <TableCell align="right">
                 Program(s)
-                <button onClick={ccsSort}>CCS</button>
-                <button onClick={choicesSort}>Choices</button>
-                <button onClick={pspSort}>PSP</button>
-                <button onClick={allSort}>All</button>
+                <button className="ccsSortBtn" onClick={ccsSort}>CCS</button>
+                <button className="choicesSortBtn" onClick={choicesSort}>Choices</button>
+                <button className="pspSortBtn" onClick={pspSort}>PSP</button>
+                <button className="allSortBtn" onClick={allSort}>All</button>
               </TableCell>
               <TableCell align="right">Status</TableCell>
               <TableCell align="right">
                 County
-                <button onClick={countyAsc}>County ASC</button>
-                <button onClick={countyDesc}>County DESC</button>
+                <button className="countyAscBtn" onClick={countyAsc}>County ASC</button>
+                <button className="countyDescBtn" onClick={countyDesc}>County DESC</button>
               </TableCell>
               <TableCell align="right">Avatar/ID</TableCell>
               <TableCell align="right">Date of Birth</TableCell>

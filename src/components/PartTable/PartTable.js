@@ -11,6 +11,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import PhoneIcon from '@material-ui/icons/Phone';
+import EmailIcon from '@material-ui/icons/Email';
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { useDispatch, useSelector } from "react-redux";
@@ -124,8 +126,22 @@ function Row(props) {
                   <TableHead>
                     <TableRow>
                       <TableCell>Name</TableCell>
-                      <TableCell>Email</TableCell>
-                      <TableCell>Phone Number</TableCell>
+                      <TableCell>
+                        Email
+                        <IconButton 
+                            href={'mailto' + row.worker_email}
+                            aria-label="share">
+                            <EmailIcon />
+                          </IconButton>
+                      </TableCell>
+                      <TableCell>
+                        Phone
+                        <IconButton 
+                            href={'tel:' + row.worker_phone}
+                            aria-label="add to favorites">
+                            <PhoneIcon />
+                        </IconButton>
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

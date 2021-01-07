@@ -45,22 +45,23 @@ export default function FormDialog(row) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [firstName, first_name] = React.useState('');
-  const [lastName, last_name] = React.useState('');
+  const [firstName, first_name] = React.useState(row.rowEdit.first_name);
+  const [lastName, last_name] = React.useState(row.rowEdit.last_name);
   const [dOb, dob] = React.useState(new Date());
-  const [phoneNum, phone_num] = React.useState('');
-  const [Address, address] = React.useState('');
-  const [county, setCounty] = React.useState([]);
-  const [avatarID, avatar] = React.useState('');
-  const [Guardian, guardian] = React.useState('');
-  const [Other, other] = React.useState('');
-  const [Gender, gender] = React.useState('');
-  const [Limitations , limitations ] = React.useState('');
-  const [Notes, notes] = React.useState('');
+  const [phoneNum, phone_num] = React.useState(row.rowEdit.phone_num);
+  const [Address, address] = React.useState(row.rowEdit.address);
+  const [county, setCounty] = React.useState([row.rowEdit.county]);
+  const [avatarID, avatar] = React.useState(row.rowEdit.avatar);
+  const [Guardian, guardian] = React.useState(row.rowEdit.guardian);
+  const [Other, other] = React.useState(row.rowEdit.other);
+  const [Gender, gender] = React.useState(row.rowEdit.gender);
+  const [Limitations , limitations ] = React.useState(row.rowEdit.limitations);
+  const [Notes, notes] = React.useState(row.rowEdit.notes);
   const [ccs, setCcs] = React.useState(false);
   const [choices, setChoices] = React.useState(false);
   const [psp, setPsp] = React.useState(false);
-
+  const { DateTime } = require("luxon");
+  const dt = DateTime.fromISO(row.rowEdit.dob);
 
   const handleUpdate = () => {
       dispatch({
@@ -136,7 +137,7 @@ const deletePart = (id) => {
             autoFocus
             margin="dense"
             id="name"
-            label={row.rowEdit.first_name}
+            placeholder={row.rowEdit.first_name}
             type="Name"
             fullWidth
             onChange={e => first_name(e.target.value)}
@@ -156,7 +157,7 @@ const deletePart = (id) => {
             autoFocus
             margin="dense"
             id="name"
-            label={row.rowEdit.dob}
+            label={dt.toLocaleString()}
             type="email"
             fullWidth
             onChange={e => dob(e.target.value)}
@@ -218,7 +219,7 @@ const deletePart = (id) => {
                   autoFocus
                   margin="dense"
                   id="name"
-                  label="Date of Birth"
+                  label={row.rowEdit.guardian}
                   type="email"
                   fullWidth
                   onChange={e => guardian(e.target.value)}
@@ -262,7 +263,7 @@ const deletePart = (id) => {
                   autoFocus
                   margin="dense"
                   id="name"
-                  label="Address"
+                  label={row.rowEdit.other}
                   type="email"
                   fullWidth
                   onChange={e => other(e.target.value)}
@@ -272,7 +273,7 @@ const deletePart = (id) => {
         autoFocus
         margin="dense"
         id="name"
-        label="Gender"
+        label={row.rowEdit.gender}
         type="email"
         fullWidth
         onChange={e => gender(e.target.value)}
@@ -282,7 +283,7 @@ const deletePart = (id) => {
       autoFocus
       margin="dense"
       id="name"
-      label="Guardian Name"
+      label={row.rowEdit.limitations}
       type="email"
       fullWidth
       onChange={e => limitations(e.target.value)}
@@ -292,7 +293,7 @@ const deletePart = (id) => {
     autoFocus
     margin="dense"
     id="name"
-    label="Schedule Limitations"
+    label={row.rowEdit.notes}
     type="email"
     fullWidth
     onChange={e => notes(e.target.value)}
@@ -302,7 +303,7 @@ const deletePart = (id) => {
   autoFocus
   margin="dense"
   id="name"
-  label="Notes"
+  label={row.rowEdit.status}
   type="email"
   fullWidth
   // onChange={e => status(e.target.value)}

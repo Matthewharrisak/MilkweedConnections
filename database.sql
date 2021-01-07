@@ -99,7 +99,7 @@ CREATE TABLE "service_workers" (
 	"name" varchar(120),
 	"phone" varchar(120),
 	"email" varchar(120),
-	"county" varchar(80),
+	"serv_county" varchar(80),
 	"participants_id" integer REFERENCES "participants"
 );
 

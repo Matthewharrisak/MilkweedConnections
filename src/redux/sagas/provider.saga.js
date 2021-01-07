@@ -34,7 +34,7 @@ function* addProviderParticipant(action) {
     console.log("Assign Provider Failed", error);
   }
 }
-
+// Removes relationships in prov_part table
 function* removeProviderParticipant(action) {
   try {
     yield axios.delete(`/api/participant/provPart/${action.payload}`)

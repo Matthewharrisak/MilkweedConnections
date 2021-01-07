@@ -322,8 +322,8 @@ export default function CollapsibleTable() {
               </TableCell>
               <TableCell align="right">
                 Status
-                <button onClick={filterDischarged}>Hide Discharged</button>
-                <button onClick={allSort}>Show All</button>
+                <button className="hideDischargeBtn" onClick={filterDischarged}>Hide Discharged</button>
+                <button className="showAllBtn" onClick={allSort}>Show All</button>
               </TableCell>
               <TableCell align="right">
                 County
@@ -340,7 +340,7 @@ export default function CollapsibleTable() {
 
               <TableCell align="right">
 
-              <button onClick={ButtonClick}> Print All </button>
+              <button className="printAllBtn" onClick={ButtonClick}> Print All </button>
 
               </TableCell>
 

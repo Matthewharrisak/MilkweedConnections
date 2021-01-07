@@ -18,6 +18,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import EditPartForm from "../EditPartForm/EditPartForm";
 import AdminPartAssign from "../AdminPartAssign/AdminPartAssign";
 import "./AdminPartDisplay.css";
+
 // this component displays waitlisted participants
 
 // sets styles for rows using makeStyles hook
@@ -99,6 +100,7 @@ function Row(props) {
     });
   }
 
+
   return (
     <React.Fragment>
       <TableRow id="borderStyle" className={classes.root}>
@@ -134,10 +136,10 @@ function Row(props) {
           {row.email}
         </TableCell>
         <TableCell align="right">
-          <Checkbox
-            onChange={() => dispatch({ type: "SET_PRINT", payload: [row] })}
-            align="center"
-          />
+
+          <SelectAll row={[row]}
+            align="center"/>
+
         </TableCell>
       </TableRow>
       <TableRow>
@@ -198,6 +200,13 @@ function Row(props) {
 
 export default function CollapsibleTable() {
   const classes = useRowStyles();
+
+
+  function ButtonClick() {
+    dispatch({ type: "SET_PRINT", payload: rows })
+  }
+
+
   let rows = [];
   // getting participants from redux store
   const provPart = useSelector((store) => store.provPart);
@@ -317,7 +326,12 @@ export default function CollapsibleTable() {
               <TableCell align="right">Date of Birth</TableCell>
               <TableCell align="right">Referring Worker</TableCell>
 
-              <TableCell align="right">Print</TableCell>
+              <TableCell align="right">
+
+              <button onClick={ButtonClick}> Print All </button>
+
+              </TableCell>
+
             </TableRow>
           </TableHead>
           <TableBody>

@@ -16,8 +16,9 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@material-ui/core/Checkbox";
 import EditPartForm from "../EditPartForm/EditPartForm";
-import './AdminPartDisplay.css';
-import SelectAll from '../SelectAll/SelectAll'
+import AdminPartAssign from "../AdminPartAssign/AdminPartAssign";
+import "./AdminPartDisplay.css";
+
 // this component displays waitlisted participants
 
 // sets styles for rows using makeStyles hook
@@ -89,12 +90,20 @@ function Row(props) {
   const dispatch = useDispatch();
   const { DateTime } = require("luxon");
   const dt = DateTime.fromISO(row.dob);
-  const prov = useSelector((store) => store.provider);
+  const prov = useSelector((store) => store.provider.providerReducer);
+  const part_prov = useSelector((store) => store.provider.provPart);
+
+  function removeProvPart(event) {
+    dispatch({
+      type: "DELETE_PROV_PART",
+      payload: event.target.value,
+    });
+  }
 
 
   return (
     <React.Fragment>
-      <TableRow id='borderStyle' className={classes.root}>
+      <TableRow id="borderStyle" className={classes.root}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -158,27 +167,24 @@ function Row(props) {
                       <TableCell>{detailsRow.guardian}</TableCell>
                       <TableCell>{detailsRow.limitations}</TableCell>
                       <TableCell align="right">{detailsRow.notes}</TableCell>
-                      <select name="users" id="users">
-                        <optgroup label="Users">
-                          <option value="">Select here</option>
-                          {prov[0] ? (
-                            <>
-                              {prov.map((provider) => {
-                                return (
-                                  <option value={provider.id}>
-                                    {provider.first_name}
-                                    {provider.last_name}
-                                  </option>
-                                );
-                              })}
-                              {/* <button onClick= */}
-                            </>
+                      {part_prov.map((provPart) => (
+                        <>
+                          {row.id === provPart.participants_id ? (
+                            <p>
+                              {provPart.first_name} {provPart.last_name}{" "}
+                              <button
+                                onClick={removeProvPart}
+                                value={provPart.id}
+                              >
+                                Remove
+                              </button>
+                            </p>
                           ) : (
                             <></>
                           )}
-                        </optgroup>
-                      </select>
-
+                        </>
+                      ))}
+                      <AdminPartAssign prov={prov} row={row} />
                       <EditPartForm rowEdit={row} />
                     </TableRow>
                   ))}
@@ -203,6 +209,7 @@ export default function CollapsibleTable() {
 
   let rows = [];
   // getting participants from redux store
+  const provPart = useSelector((store) => store.provPart);
   const part = useSelector((store) => store.participants);
   // loop through participants and assign each to a row
   for (let i = 0; i < part.length; i++) {
@@ -237,6 +244,7 @@ export default function CollapsibleTable() {
     console.log("mounted");
     dispatch({ type: "GET_PART" });
     dispatch({ type: "GET_PROV" });
+    dispatch({ type: "GET_PROV_PART" });
     console.log(part);
   }, []);
 
@@ -281,22 +289,38 @@ export default function CollapsibleTable() {
               <TableCell />
               <TableCell>
                 Name
-                <button className="nameAscBtn" onClick={nameAsc}>Name ASC</button>
-                <button className="nameDescBtn" onClick={nameDesc}>Name DESC</button>
+                <button className="nameAscBtn" onClick={nameAsc}>
+                  Name ASC
+                </button>
+                <button className="nameDescBtn" onClick={nameDesc}>
+                  Name DESC
+                </button>
               </TableCell>
               <TableCell align="right">Phone</TableCell>
               <TableCell align="right">
                 Program(s)
-                <button className="ccsSortBtn" onClick={ccsSort}>CCS</button>
-                <button className="choicesSortBtn" onClick={choicesSort}>Choices</button>
-                <button className="pspSortBtn" onClick={pspSort}>PSP</button>
-                <button className="allSortBtn" onClick={allSort}>All</button>
+                <button className="ccsSortBtn" onClick={ccsSort}>
+                  CCS
+                </button>
+                <button className="choicesSortBtn" onClick={choicesSort}>
+                  Choices
+                </button>
+                <button className="pspSortBtn" onClick={pspSort}>
+                  PSP
+                </button>
+                <button className="allSortBtn" onClick={allSort}>
+                  All
+                </button>
               </TableCell>
               <TableCell align="right">Status</TableCell>
               <TableCell align="right">
                 County
-                <button className="countyAscBtn" onClick={countyAsc}>County ASC</button>
-                <button className="countyDescBtn" onClick={countyDesc}>County DESC</button>
+                <button className="countyAscBtn" onClick={countyAsc}>
+                  County ASC
+                </button>
+                <button className="countyDescBtn" onClick={countyDesc}>
+                  County DESC
+                </button>
               </TableCell>
               <TableCell align="right">Avatar/ID</TableCell>
               <TableCell align="right">Date of Birth</TableCell>

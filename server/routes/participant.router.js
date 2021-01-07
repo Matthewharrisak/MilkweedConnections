@@ -17,6 +17,22 @@ router.get("/", (req, res) => {
     });
 });
 
+// Route to get all from the Participants and their providers from the table 
+router.get("/part_prov", (req, res) => {
+  const queryText = `SELECT * from providers
+JOIN prov_part ON providers_id = providers.id;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      console.log(result.rows);
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      alert("error in participants GET", error);
+    });
+});
+
 // Route to get all from the Participants table 
 router.get("/name_ascend", (req, res) => {
   const queryText = `SELECT * from participants
@@ -155,21 +171,33 @@ WHERE providers_id = $1;`;
     });
 });
 
-router.delete ('/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const connection = await pool.connect();
   try {
     await connection.query("BEGIN");
-  const queryText = `DELETE FROM service_workers WHERE participants_id = $1;`;
-  pool.query(queryText, [req.params.id])
-  const sqlInitialDeposit = `DELETE FROM participants WHERE participants.id = $1;`;
-  await connection.query(sqlInitialDeposit, [req.params.id]);
-  await connection.query("COMMIT");
-  res.sendStatus(201);
+    const queryText = `DELETE FROM service_workers WHERE participants_id = $1;`;
+    pool.query(queryText, [req.params.id]);
+    const sqlInitialDeposit = `DELETE FROM participants WHERE participants.id = $1;`;
+    await connection.query(sqlInitialDeposit, [req.params.id]);
+    await connection.query("COMMIT");
+    res.sendStatus(201);
+  } catch (err) {
+    console.log("User registration failed: ", err);
+    res.sendStatus(500);
   }
-  catch(err) {
-  console.log('User registration failed: ', err);
-  res.sendStatus(500);
-};
+});
+
+router.delete("/provPart/:id", (req, res) => {
+  const queryText = `DELETE FROM "prov_part" WHERE "id" = $1;`;
+  pool
+    .query(queryText, [req.params.id])
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("Error deleting", error);
+    });
 });
 
 /// route for POSTING participant and service worker at the same time through form 
@@ -299,6 +327,29 @@ router.post("/", (req, res) => {
     });
   
   });
+
+  router.post("/participant", (req, res) => {
+    console.log(req.body)
+
+      const queryText = `select exists(select 1 from prov_part where providers_id=$1 AND participants_id=$2);`;
+      pool
+        .query(queryText, [req.body.prov, req.body.part])
+      .then((result) => {
+        console.log(result.rows[0].exists);
+        
+        if (result.rows[0].exists === false) {
+          const queryText = `INSERT INTO prov_part (providers_id, participants_id) VALUES ($1, $2);`;
+          pool
+            .query(queryText, [+req.body.prov, req.body.part])
+            .then((result) => {
+              res.sendStatus(200);
+            })
+            .catch((error) => {
+              res.sendStatus(500);
+              console.log("error in add book", error);
+            });
+        }})})
+
 
 
 module.exports = router;

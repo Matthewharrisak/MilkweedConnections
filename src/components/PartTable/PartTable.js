@@ -83,6 +83,7 @@ function Row(props) {
     <React.Fragment>
       <TableRow className={classes.root}>
         <TableCell>
+          {('worker_name'in row) ?
           <IconButton
             aria-label="expand row"
             size="small"
@@ -90,6 +91,9 @@ function Row(props) {
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
+          :
+          <div></div>
+        }
         </TableCell>
         <TableCell component="th" scope="row">
           {row.first_name} {row.last_name}
@@ -106,49 +110,46 @@ function Row(props) {
           :
           <></>}
         </TableCell>
-        <TableCell align="right">{row.status}</TableCell>
+        <TableCell align="right">{row.county}</TableCell>
       </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>
-              <Typography variant="h10" gutterBottom component="div">
-                {row.first_name}'s Details
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>County</TableCell>
-                    <TableCell>Avatar/ID</TableCell>
-                    <TableCell>Address</TableCell>
-                    <TableCell>Gender</TableCell>
-                    <TableCell>Birthday</TableCell>
-                    <TableCell>Guardian Name</TableCell>
-                    <TableCell>Scheduling Limitations</TableCell>
-                    <TableCell align="right">Notes</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.details.map((detailsRow) => (
-                    <TableRow key={detailsRow.dob}>
-                      <TableCell component="th" scope="row">
-                        {detailsRow.county}
-                      </TableCell>
-                      <TableCell>{detailsRow.avatar}</TableCell>
-                      <TableCell>{detailsRow.address}</TableCell>
-                      <TableCell>{detailsRow.gender}</TableCell>
-                      <TableCell>{detailsRow.dob}</TableCell>
-                      <TableCell>{detailsRow.guardian}</TableCell>
-                      <TableCell>{detailsRow.limitations}</TableCell>
-                      <TableCell align="right">{detailsRow.notes}</TableCell>
+      {('worker_name'in row) ?
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box margin={1}>
+                <Typography variant="h10" gutterBottom component="div">
+                  Referring County Worker Details:
+                </Typography>
+                <Table size="small" aria-label="purchases">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Email</TableCell>
+                      <TableCell>Phone Number</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
+                  </TableHead>
+                  <TableBody>
+                      <TableRow >
+                        <TableCell component="th" scope="row">
+                          {row.worker_name}
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          {row.worker_email}
+                        </TableCell>
+                        <TableCell component="th" scope="row">
+                          {row.worker_phone}
+                        </TableCell>
+                      </TableRow>
+                    
+                  </TableBody>
+                </Table>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+        :
+        <div></div>
+  }
     </React.Fragment>
   );
 }
@@ -157,29 +158,11 @@ export default function CollapsibleTable() {
   let rows = [];
   const prov = useSelector((store) => store.provider.currProv);
   // getting participants from redux store
-  const part = useSelector((store) => store.participants);
+  const part = useSelector((store) => store.provider.provPart);
   // loop through participants and assign each to a row
   for (let i = 0; i < part.length; i++) {
     if (part[i]) {
-      rows[i] = createData(
-        part[i].id,
-        part[i].first_name,
-        part[i].last_name,
-        part[i].dob,
-        part[i].phone_num,
-        part[i].address,
-        part[i].county,
-        part[i].gender,
-        part[i].limitations,
-        part[i].notes,
-        part[i].status,
-        part[i].ccs.toString(),
-        part[i].choices.toString(),
-        part[i].psp.toString(),
-        part[i].other,
-        part[i].avatar,
-        part[i].guardian
-      );
+      rows[i] = part[i]
     }
   }
   //this is the hook for dispatching actions to redux
@@ -203,7 +186,7 @@ export default function CollapsibleTable() {
             <TableCell>Name</TableCell>
             <TableCell align="right">Phone</TableCell>
             <TableCell align="right">Program(s)</TableCell>
-            <TableCell align="right">Status</TableCell>
+            <TableCell align="right">County</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

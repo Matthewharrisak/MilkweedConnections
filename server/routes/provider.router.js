@@ -33,6 +33,32 @@ router.get('/providers', (req, res) => {
     res.sendStatus(500);
   });
 });
+
+router.get('/participants/:id', (req, res) => {
+  // GET route code here
+  const queryText = 
+  `SELECT 
+  prov_part.id,
+	participants.first_name,
+	participants.last_name,
+	participants.phone_num,
+	participants.county,
+	participants.gender,
+	participants.limitations,
+	participants.notes,
+	participants.county
+  FROM prov_part
+  JOIN providers ON providers.id = prov_part.providers_id
+  JOIN participants ON participants.id = prov_part.participants_id
+  WHERE providers_id = $1;`;
+  pool.query(queryText, [req.params.id])
+  .then((result) => {
+    res.send(result.rows);
+  }).catch((error) => {
+    console.log('error in the provider Query' , error);
+    res.sendStatus(500);
+  });
+});
  // this is only for ADMIN view 
 router.get('/', (req, res) => {
   // GET route code here

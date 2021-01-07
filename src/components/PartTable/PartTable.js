@@ -187,6 +187,7 @@ export default function CollapsibleTable() {
   React.useEffect(() => {
     console.log("mounted");
     dispatch({ type: "GET_PART" });
+    // dispatch({ type: "GET_PART_ON_PROV ", payload: {prov_id: }});
     console.log(part);
   }, []);
 

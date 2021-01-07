@@ -15,10 +15,20 @@ function* fetchProvider() {
 
 function* fetchAllProviders() {
   try {
-    console.log("this is where we are");
     const providerResponse = yield axios.get("/api/provider/providers");
     console.log("all providers", providerResponse.data);
     yield put({ type: "SET_ALL_PROVS", payload: providerResponse.data });
+  } catch (error) {
+    console.log("whats up from the fetchAllProviders", error);
+  }
+}
+
+function* fetchParticipantsOnProvider() {
+  try {
+    console.log("this is where we are");
+    const providerResponse = yield axios.get("/api/provider//participants/:id");
+    console.log("specific participants", providerResponse);
+    // yield put({ type: "SET_ALL_PROVS", payload: providerResponse.data });
   } catch (error) {
     console.log("whats up from the fetchProvider", error);
   }

@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
     })
     .catch((error) => {
       res.sendStatus(500);
-      alert("error in participants GET", error);
+      console.log("error in participants GET", error);
     });
 });
 
@@ -29,7 +29,7 @@ JOIN prov_part ON providers_id = providers.id;`;
     })
     .catch((error) => {
       res.sendStatus(500);
-      alert("error in participants GET", error);
+      console.log("error in participants GET 0", error);
     });
 });
 
@@ -44,7 +44,7 @@ router.get("/name_ascend", (req, res) => {
     })
     .catch((error) => {
       res.sendStatus(500);
-      alert("error in participants GET", error);
+      console.log("error in participants GET 1", error);
     });
 });
 
@@ -59,7 +59,7 @@ router.get("/name_decend", (req, res) => {
     })
     .catch((error) => {
       res.sendStatus(500);
-      alert("error in participants GET", error);
+      console.log("error in participants GET 2", error);
     });
 });
 
@@ -74,7 +74,7 @@ router.get("/county_acend", (req, res) => {
     })
     .catch((error) => {
       res.sendStatus(500);
-      console.log("error in participants GET", error);
+      console.log("error in participants GET 3", error);
     });
 });
 
@@ -167,7 +167,7 @@ WHERE providers_id = $1;`;
     })
     .catch((error) => {
       res.sendStatus(500);
-      alert("error in participants GET with given id", error);
+      console.log("error in participants GET with given id", error);
     });
 });
 
@@ -350,6 +350,19 @@ router.post("/", (req, res) => {
             });
         }})})
 
+// Route to get non discharged Participants from the participants table 
+router.get("/participant/no_discharge", (req, res) => {
+  const queryText = `SELECT * from participants where "status" != 'Discharged'`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("error in non discharged participants GET", error);
+    });
+});
 
 
 module.exports = router;

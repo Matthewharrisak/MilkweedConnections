@@ -271,6 +271,11 @@ export default function CollapsibleTable() {
     dispatch({ type: "GET_PART" });
   }
 
+  function filterDischarged() {
+    dispatch({ type: "GET_PART_NO_DISCHARGE" });
+  }
+  
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -304,6 +309,7 @@ export default function CollapsibleTable() {
                 </button>
               </TableCell>
               <TableCell align="right">Status</TableCell>
+                <button onClick={filterDischarged}>Hide Discharged</button>
               <TableCell align="right">
                 County
                 <button className="countyAscBtn" onClick={countyAsc}>

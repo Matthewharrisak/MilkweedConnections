@@ -128,7 +128,7 @@ const deletePart = (id) => {
   return (
     <div>
       <Button class="editButtonStyle" onClick={handleClickOpen}>
-        Edit
+        Edit Participant
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Edit Participants</DialogTitle>

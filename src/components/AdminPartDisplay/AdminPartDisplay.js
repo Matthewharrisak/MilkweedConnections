@@ -139,10 +139,7 @@ function Row(props) {
           {row.email}
         </TableCell>
         <TableCell align="right">
-
-          <SelectAll row={[row]}
-            align="center"/>
-
+          <SelectAll row={[row]} align="center" />
         </TableCell>
       </TableRow>
       <TableRow>
@@ -159,7 +156,9 @@ function Row(props) {
                     <TableCell>Gender</TableCell>
                     <TableCell>Guardian Name</TableCell>
                     <TableCell>Scheduling Limitations</TableCell>
-                    <TableCell align="right">Notes</TableCell>
+                    <TableCell>Notes</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>Current Provider(s)</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -169,26 +168,34 @@ function Row(props) {
                       <TableCell>{detailsRow.gender}</TableCell>
                       <TableCell>{detailsRow.guardian}</TableCell>
                       <TableCell>{detailsRow.limitations}</TableCell>
-                      <TableCell align="right">{detailsRow.notes}</TableCell>
-                      {part_prov.map((provPart) => (
-                        <>
-                          {row.id === provPart.participants_id ? (
-                            <p>
-                              {provPart.first_name} {provPart.last_name}{" "}
-                              <button
-                                onClick={removeProvPart}
-                                value={provPart.id}
-                              >
-                                Remove
-                              </button>
-                            </p>
-                          ) : (
-                            <></>
-                          )}
-                        </>
-                      ))}
-                      <AdminPartAssign prov={prov} row={row} />
-                      <EditPartForm rowEdit={row} />
+                      <TableCell>{detailsRow.notes}</TableCell>
+
+                      <TableCell>
+                        <AdminPartAssign prov={prov} row={row} />
+                      </TableCell>
+
+                      <TableCell>
+                        {part_prov.map((provPart) => (
+                          <>
+                            {row.id === provPart.participants_id ? (
+                              <>
+                                {provPart.first_name} {provPart.last_name}{" "}
+                                <button
+                                  onClick={removeProvPart}
+                                  value={provPart.id}
+                                >
+                                  Remove
+                                </button>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ))}
+                      </TableCell>
+                      <TableCell>
+                        <EditPartForm rowEdit={row} />
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

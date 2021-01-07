@@ -60,7 +60,6 @@ function ProvCard(props) {
     const programs = [['ccs', data.ccs], ['psp', data.psp], ['choices', data.choices]]
     const email = "mailto:" + data.email
     const phone = "tel:" + data.phone_num
-    console.log('yyyyyyyyyyy', props, programs);
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
@@ -149,7 +148,6 @@ export default function CollapsibleTable() {
   const dispatch = useDispatch();
   
   React.useEffect(() => {
-    console.log("as,d.fmasd,./fma");    
     dispatch({ type: "GET_PROV"});
   }, []);
 

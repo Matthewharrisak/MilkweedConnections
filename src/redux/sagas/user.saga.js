@@ -18,7 +18,15 @@ function* fetchUser() {
     // now that the session has given us a user object
     // with an id and username set the client-side user object to let
     // the client-side code know the user is logged in
+    console.log('CHECK IT OUT', response.data.id);
     yield put({ type: 'SET_USER', payload: response.data });
+
+    const provResponse = yield axios.get(`/api/user/${response.data.id}`)
+    
+    console.log('provResponse', provResponse.data[0]); 
+
+    yield put({ type: 'SET_CURR_PROV', payload: provResponse.data[0] });
+
   } catch (error) {
     console.log('User get request failed', error);
   }

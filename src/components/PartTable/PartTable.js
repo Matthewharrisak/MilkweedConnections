@@ -155,6 +155,7 @@ function Row(props) {
 
 export default function CollapsibleTable() {
   let rows = [];
+  const prov = useSelector((store) => store.provider.currProv);
   // getting participants from redux store
   const part = useSelector((store) => store.participants);
   // loop through participants and assign each to a row
@@ -187,8 +188,10 @@ export default function CollapsibleTable() {
   React.useEffect(() => {
     console.log("mounted");
     dispatch({ type: "GET_PART" });
-    // dispatch({ type: "GET_PART_ON_PROV ", payload: {prov_id: }});
-    console.log(part);
+    console.log('poop', prov.id);
+    dispatch({ type: "GET_PART_ON_PROV", payload: prov.id});
+    console.log('double poop');
+    
   }, []);
 
   return (

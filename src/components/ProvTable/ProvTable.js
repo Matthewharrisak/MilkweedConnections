@@ -13,18 +13,32 @@ import { red } from '@material-ui/core/colors';
 import PhoneIcon from '@material-ui/icons/Phone';
 import EmailIcon from '@material-ui/icons/Email';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import Paper from '@material-ui/core/Paper';
 import { useDispatch, useSelector } from "react-redux";
+import Popover from '@material-ui/core/Popover';
+import './ProvTable.css';
 
 const useStyles = makeStyles((theme) => ({
 root: {
     maxWidth: 345,
+    display: 'flex',
+    flexWrap: "wrap",
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: 300,
+    height: 'auto',
+    margin: '7px 7px 7px 7px'
+    
+    // position: 'relative'
+    
 },
-media: {
+img: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '56.25%',
+    borderRadius: '500%', // 16:9
+    width: '70%',
+    alignSelf: 'center'
+    //alignSelf: 'center'
 },
 expand: {
     transform: 'rotate(0deg)',
@@ -43,7 +57,9 @@ avatar: {
 
 function ProvCard(props) {
     const data = props.props
-    const programs = {ccs:data.ccs, psp:data.psp, choices: data.choices}
+    const programs = [['ccs', data.ccs], ['psp', data.psp], ['choices', data.choices]]
+    const email = "mailto:" + data.email
+    const phone = "tel:" + data.phone_num
     console.log('yyyyyyyyyyy', props, programs);
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
@@ -52,39 +68,46 @@ function ProvCard(props) {
         setExpanded(!expanded);
     };
 
+
+
     return (
+      <div className="card-wrapper">
         <Card className={classes.root}>
         <CardHeader
+            id='cardHeader'
             title={data.first_name + " " + data.last_name}
         />
         <CardMedia
-            className={classes.media}
+            className={classes.img}
             image={data.image}
             title="profile image"
         />
-        <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {data.bio}
+        <CardContent >
+            <Typography >
+             Programs I work with:
             </Typography>
-            <List component="nav" aria-label="secondary mailbox folders">
-              Programs:
-              {Object.entries(programs).map(([key, value]) => {
-                console.log(key, value, 'klasdkfj;as')
-                  // value ? 
-                  //   (<ListItem button>
-                  //     <ListItemText primary={key} />
-                  //   </ListItem>)
-                  //   :
-                  //   <div></div>
+            <ul>
+              {programs.map((prog) => {
+                console.log(prog, 'klasdkfj;as')
+                  if(prog[1]){
+                    return( 
+                    <li>
+                      <Paper className="paper" varient="outlined" >{prog[0]}</Paper>
+                    </li>)
+                  }
                 
                   })}
-            </List>
+            </ul>
         </CardContent>
-        <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
+        <CardActions disableSpacing className="card-actions">
+            <IconButton href={phone}
+              aria-label="add to favorites">
             <PhoneIcon />
             </IconButton>
-            <IconButton aria-label="share">
+            <IconButton 
+            href={email}
+            // onClick={handleExpandClick}
+            aria-label="share">
             <EmailIcon />
             </IconButton>
             <IconButton
@@ -100,20 +123,24 @@ function ProvCard(props) {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-            <Typography paragraph>{data.description}</Typography>
+              <Typography paragraph>
+              Contact Info:
+               <Typography href={phone} variant="body2">{data.phone_num}</Typography>
+               <Typography href={email} variant="body2">{data.email}</Typography>
+            </Typography>
+              
             <Typography paragraph>
               My Mission:
-              <br/>
-               {data.mission}
+               <Typography variant="body2">{data.mission} </Typography>
             </Typography>
             <Typography paragraph>
               Who I work with:
-              <br/>
-                {data.help_info}
+              <Typography variant="body2">{data.help_info} </Typography>
             </Typography>
             </CardContent>
         </Collapse>
         </Card>
+        </div>
     );
     }
 
@@ -147,9 +174,11 @@ export default function CollapsibleTable() {
       </Table>
       
     </TableContainer> */}
-    {prov.map((row) => (
-            <ProvCard key={row.id} props={row} />
-          ))}
+    <div id='cardDisplay'>
+      {prov.map((row) => (
+              <ProvCard key={row.id} props={row} />
+            ))}
+    </div>
     
     </>
   );

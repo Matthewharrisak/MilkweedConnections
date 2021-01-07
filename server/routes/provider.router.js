@@ -33,6 +33,112 @@ router.get('/providers', (req, res) => {
     res.sendStatus(500);
   });
 });
+router.get("/participants/:id", async (req, res) => {
+  // console.log("in transactional post", req.body);
+  
+  const connection = await pool.connect();
+  try {
+    const data = [];
+    await connection.query("BEGIN");
+    const partInfo = ` SELECT 
+                            participants.id,
+                            participants.first_name,
+                            participants.last_name,
+                            participants.phone_num,
+                            participants.county,
+                            participants.ccs,
+                            participants.psp,
+                            participants.choices,
+                            participants.other
+                            FROM prov_part
+                            JOIN providers ON providers.id = prov_part.providers_id
+                            JOIN participants ON participants.id = prov_part.participants_id
+                            WHERE providers_id = $1;`;
+    const workerInfo = `SELECT 
+                        service_workers.name,
+                        service_workers.email,
+                        service_workers.phone
+                        FROM service_workers
+                        JOIN participants ON participants.id = service_workers.participants_id
+                        WHERE participants_id = $1;`
+    // Save the result so we can get the returned value
+    const result = await connection.query(partInfo, [req.params.id]);
+
+    // Get the id from the result - will have 1 row with the id
+    const part = result.rows;
+    console.log('in new query', part);
+    for (var i = 0; i <= part.length-1; i++) {
+      console.log("about to query counties", part[i].id);
+      var elem = await connection.query(workerInfo, [part[i].id]);
+      console.log('worker response', elem.rows);
+      var toAppend = {}
+      console.log();
+      if (elem.rows.length !== 0){
+        console.log('herro');
+        toAppend = {
+          id: part[i].id,
+          first_name: part[i].first_name,
+          last_name: part[i].last_name,
+          phone_num: part[i].phone_num,
+          county: part[i].county,
+          ccs: part[i].ccs,
+          psp: part[i].psp,
+          choices: part[i].choices,
+          other: part[i].other,
+          worker_name: elem.rows[0].name,
+          worker_email: elem.rows[0].email,
+          worker_phone: elem.rows[0].phone
+        }
+      }
+      else{
+        toAppend = part[i];
+      }
+      console.log('toAppend object', toAppend);
+      data.push(toAppend);
+    }
+    console.log('data', data);
+    // const sqlInitialDeposit = `INSERT INTO service_workers ("name", "phone", "email", "county", "participants_id") 
+    // VALUES ($1, $2, $3, $4, $5);`;
+    // await connection.query(sqlInitialDeposit, []);
+    await connection.query("COMMIT");
+    // res.sendStatus(200)
+    res.send(data);
+  } catch (error) {
+    await connection.query("ROLLBACK");
+    console.log(`Transaction Error - Rolling back new account`, error);
+    res.sendStatus(500);
+  } finally {
+    connection.release();
+  }
+});
+
+
+// router.get('/participants/:id', (req, res) => {
+//   // GET route code here
+//   const queryText = 
+//   `SELECT 
+//   prov_part.id,
+//   participants.id,
+// 	participants.first_name,
+// 	participants.last_name,
+// 	participants.phone_num,
+// 	participants.county,
+// 	participants.gender,
+// 	participants.limitations,
+// 	participants.notes,
+// 	participants.county
+//   FROM prov_part
+//   JOIN providers ON providers.id = prov_part.providers_id
+//   JOIN participants ON participants.id = prov_part.participants_id
+//   WHERE providers_id = $1;`;
+//   pool.query(queryText, [req.params.id])
+//   .then((result) => {
+//     res.send(result.rows);
+//   }).catch((error) => {
+//     console.log('error in the provider Query' , error);
+//     res.sendStatus(500);
+//   });
+// });
  // this is only for ADMIN view 
 router.get('/', (req, res) => {
   // GET route code here

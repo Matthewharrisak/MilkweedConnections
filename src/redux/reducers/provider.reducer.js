@@ -23,6 +23,16 @@ const allProviders = (state = [], action) => {
   }
 };
 
+const currProv = (state = {}, action) => {
+  // holds provider after API get
+  switch (action.type) {
+    case "SET_CURR_PROV":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const provPart = (state = [], action) => {
   // holds provider after API get
   switch (action.type) {
@@ -37,4 +47,5 @@ export default combineReducers({
   providerReducer,
   allProviders,
   provPart,
+  currProv
 });

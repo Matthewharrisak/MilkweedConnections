@@ -15,10 +15,21 @@ function* fetchProvider() {
 
 function* fetchAllProviders() {
   try {
-    console.log("this is where we are");
     const providerResponse = yield axios.get("/api/provider/providers");
     console.log("all providers", providerResponse.data);
     yield put({ type: "SET_ALL_PROVS", payload: providerResponse.data });
+  } catch (error) {
+    console.log("whats up from the fetchAllProviders", error);
+  }
+}
+
+function* fetchParticipantsOnProvider(action) {
+    console.log('beautiful');
+  try {
+    console.log("this is where we are");
+    const providerResponse = yield axios.get(`/api/provider//participants/${action.payload}`); //${action.payload}
+    console.log("specific participants", providerResponse.data);
+    yield put({ type: "SET_ALL_PROV_PARTS", payload: providerResponse.data });
   } catch (error) {
     console.log("whats up from the fetchProvider", error);
   }
@@ -71,6 +82,7 @@ function* providerSaga() {
   yield takeLatest('ADD_PROV_PART', addProviderParticipant);
   yield takeLatest('GET_PROV_PART', fetchProviderParticipant);
   yield takeLatest('DELETE_PROV_PART', removeProviderParticipant);
+  yield takeLatest('GET_PART_ON_PROV', fetchParticipantsOnProvider);
 
 //   yield takeLatest('GET_THAT_PROV', fetchProvProv)
 }

@@ -121,6 +121,7 @@ router.get("/choices", (req, res) => {
     });
 });
 
+// select all participants with psp as true
 router.get("/psp", (req, res) => {
   const queryText = `SELECT * from participants 
   JOIN service_workers ON participants.id = service_workers.participants_id WHERE psp = true ORDER BY last_name ASC;`;
@@ -231,7 +232,7 @@ router.post("/test", async (req, res) => {
     ]);
     // Get the id from the result - will have 1 row with the id
     const accountId = result.rows[0].id;
-    const sqlInitialDeposit = `INSERT INTO service_workers ("name", "phone", "email", "county", "participants_id") 
+    const sqlInitialDeposit = `INSERT INTO service_workers ("name", "phone", "email", "serv_county", "participants_id") 
     VALUES ($1, $2, $3, $4, $5);`;
     await connection.query(sqlInitialDeposit, [
       req.body.referralFormData.serviceWorkerRef.name,

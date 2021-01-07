@@ -119,22 +119,22 @@ function Row(props) {
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box margin={1}>
-                <Typography variant="h10" gutterBottom component="div">
+                <Typography variant="h6" gutterBottom component="div">
                   Referring County Worker Details:
                 </Typography>
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Name</TableCell>
-                      <TableCell>
+                      <TableCell variant="body1">Name</TableCell>
+                      <TableCell variant="body1">
                         Email
                         <IconButton 
-                            href={'mailto' + row.worker_email}
+                            href={'mailto:' + row.worker_email}
                             aria-label="share">
                             <EmailIcon />
                           </IconButton>
                       </TableCell>
-                      <TableCell>
+                      <TableCell variant="body1">
                         Phone
                         <IconButton 
                             href={'tel:' + row.worker_phone}
@@ -146,13 +146,13 @@ function Row(props) {
                   </TableHead>
                   <TableBody>
                       <TableRow >
-                        <TableCell component="th" scope="row">
+                        <TableCell variant="body2" component="th" scope="row">
                           {row.worker_name}
                         </TableCell>
-                        <TableCell component="th" scope="row">
+                        <TableCell variant="body2" component="th" scope="row">
                           {row.worker_email}
                         </TableCell>
-                        <TableCell component="th" scope="row">
+                        <TableCell variant="body2" component="th" scope="row">
                           {row.worker_phone}
                         </TableCell>
                       </TableRow>

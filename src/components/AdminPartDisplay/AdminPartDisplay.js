@@ -18,6 +18,9 @@ import Checkbox from "@material-ui/core/Checkbox";
 import EditPartForm from "../EditPartForm/EditPartForm";
 import AdminPartAssign from "../AdminPartAssign/AdminPartAssign";
 import "./AdminPartDisplay.css";
+import SelectAll from '../SelectAll/SelectAll'
+
+
 
 // this component displays waitlisted participants
 

@@ -33,7 +33,7 @@ function* fetchParticipantsNameDesc() {
 function* fetchParticipantsCountyAsc() {
   try {
     const participantResponse = yield axios.get(
-      "/api/participant/county_acend"
+      "/api/participant/county_ascend"
     );
     yield put({ type: "SET_PART", payload: participantResponse.data });
   } catch (error) {

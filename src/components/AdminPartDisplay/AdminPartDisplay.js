@@ -308,8 +308,11 @@ export default function CollapsibleTable() {
                   All
                 </button>
               </TableCell>
-              <TableCell align="right">Status</TableCell>
+              <TableCell align="right">
+                Status
                 <button onClick={filterDischarged}>Hide Discharged</button>
+                <button onClick={allSort}>Show All</button>
+              </TableCell>
               <TableCell align="right">
                 County
                 <button className="countyAscBtn" onClick={countyAsc}>

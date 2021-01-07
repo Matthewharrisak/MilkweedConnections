@@ -5,7 +5,7 @@ const router = express.Router();
 // Route to get all from the Participants table 
 router.get("/", (req, res) => {
   const queryText = `SELECT * from participants
-  JOIN service_workers ON participants.id = service_workers.participants_id;`;
+  JOIN service_workers ON participants.id = service_workers.participants_id ORDER BY status, last_name;`;
   pool
     .query(queryText)
     .then((result) => {
@@ -64,7 +64,7 @@ router.get("/name_decend", (req, res) => {
 });
 
 // Route to get all from the Participants table 
-router.get("/county_acend", (req, res) => {
+router.get("/county_ascend", (req, res) => {
   const queryText = `SELECT * from participants
   JOIN service_workers ON participants.id = service_workers.participants_id ORDER BY participants.county ASC;`;
   pool
@@ -352,7 +352,7 @@ router.post("/", (req, res) => {
 
 // Route to get non discharged Participants from the participants table 
 router.get("/participant/no_discharge", (req, res) => {
-  const queryText = `SELECT * from participants where "status" != 'Discharged'`;
+  const queryText = `SELECT * from participants JOIN service_workers ON participants.id = service_workers.participants_id where "status" != 'Discharged' ORDER BY status, last_name;`;
   pool
     .query(queryText)
     .then((result) => {

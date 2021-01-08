@@ -27,7 +27,8 @@ router.get('/providers',  rejectUnauthenticated, (req, res) => {
     providers.choices,
     providers.psp
   FROM "provider_profile"
-  JOIN providers ON providers.id = provider_profile.providers_id;`;
+  JOIN providers ON providers.id = provider_profile.providers_id
+  WHERE providers.acitve = true;`;
   pool.query(queryText)
   .then((result) => {
     res.send(result.rows);

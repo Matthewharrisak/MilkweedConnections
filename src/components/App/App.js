@@ -22,10 +22,13 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 
 import './App.css';
 import AdminPage from '../AdminPage/AdminPage';
+
 class App extends Component {
   componentDidMount() {
     this.props.dispatch({ type: 'FETCH_USER' });
   }
+
+
 
   render() {
     return (

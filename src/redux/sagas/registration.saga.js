@@ -27,6 +27,8 @@ function* registerUser(action) {
 // takes in provider_id created from registering new user and provider and creates a provider profile linked to their provider account based off id
 function* createProfile(action) {
   try {
+    console.log('WHAT UP FROM THE CREATE PROFILE');
+    
     yield axios.post(`/api/provider/${action.payload.prov_id}`, action.payload);
   } 
   catch (error) {

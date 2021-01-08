@@ -17,9 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@material-ui/core/Checkbox";
 import EditPartForm from "../EditPartForm/EditPartForm";
 import AdminPartAssign from "../AdminPartAssign/AdminPartAssign";
+import AdminPartStatusAssign from "../AdminPartStatusAssign/AdminPartStatusAssign";
 import "./AdminPartDisplay.css";
 import SelectAll from '../SelectAll/SelectAll'
-
 
 
 // this component displays waitlisted participants
@@ -129,7 +129,9 @@ function Row(props) {
           <span> </span>
           {row.other != "" ? <>{row.other}</> : <></>}
         </TableCell>
-        <TableCell align="right">{row.status}</TableCell>
+        <TableCell align="right">
+          <AdminPartStatusAssign id={row.id} status={row.status} />
+        </TableCell>
         <TableCell align="right">{row.county}</TableCell>
         <TableCell align="right">{row.avatar}</TableCell>
         <TableCell align="right">{dt.toLocaleString()}</TableCell>
@@ -179,16 +181,18 @@ function Row(props) {
                           <>
                             {row.id === provPart.participants_id ? (
                               <>
-                                {provPart.first_name} {provPart.last_name}{" "}
-                                <button
-                                  onClick={removeProvPart}
-                                  value={provPart.id}
-                                >
-                                  Remove
-                                </button>
+                                <p>
+                                  {provPart.first_name} {provPart.last_name}{" "}
+                                  <button
+                                    onClick={removeProvPart}
+                                    value={provPart.id}
+                                  >
+                                    Remove
+                                  </button>
+                                </p>
                               </>
                             ) : (
-                              <></>
+                              <>Dropdown will go here</>
                             )}
                           </>
                         ))}

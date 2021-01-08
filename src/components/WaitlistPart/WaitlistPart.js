@@ -14,14 +14,23 @@ import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { useDispatch, useSelector } from "react-redux";
+// import Checkbox from "@material-ui/core/Checkbox";
+import EditPartForm from "../EditPartForm/EditPartForm";
+import AdminPartAssign from "../AdminPartAssign/AdminPartAssign";
+import AdminPartStatusAssign from "../AdminPartStatusAssign/AdminPartStatusAssign";
+import "./WaitlistPart.css";
+import SelectAll from "../SelectAll/SelectAll";
+import { CSVLink, CSVDownload } from "react-csv";
+// import PrintIcon from "@material-ui/icons/Print";
 
-// this component displays waitlisted participants 
+// this component displays waitlisted participants
 
 // sets styles for rows using makeStyles hook
 const useRowStyles = makeStyles({
   root: {
     "& > *": {
-      borderBottom: "unset",
+      // borderBottom: "unset",
+      borderColor: "#f08621",
     },
   },
 });
@@ -45,6 +54,8 @@ function createData(
   other,
   avatar,
   guardian,
+  name,
+  email
 ) {
   return {
     id,
@@ -56,15 +67,17 @@ function createData(
     choices,
     psp,
     other,
+    county,
+    avatar,
+    dob,
+    name,
+    email,
     details: [
       {
-        dob,
         address,
-        county,
         gender,
         limitations,
         notes,
-        avatar,
         guardian,
       },
     ],
@@ -78,10 +91,22 @@ function Row(props) {
   const [open, setOpen] = React.useState(false);
 
   const classes = useRowStyles();
+  const dispatch = useDispatch();
+  const { DateTime } = require("luxon");
+  const dt = DateTime.fromISO(row.dob);
+  const prov = useSelector((store) => store.provider.providerReducer);
+  const part_prov = useSelector((store) => store.provider.provPart);
+
+  function removeProvPart(event) {
+    dispatch({
+      type: "DELETE_PROV_PART",
+      payload: event.target.value,
+    });
+  }
 
   return (
     <React.Fragment>
-      <TableRow className={classes.root}>
+      <TableRow id="borderStyle" className={classes.root}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -102,45 +127,79 @@ function Row(props) {
           <span> </span>
           {row.psp === "true" ? <>PSP</> : <></>}
           <span> </span>
-          {row.other != "" ? <>{row.other}</>
-          :
-          <></>}
+          {row.other != "" ? <>{row.other}</> : <></>}
         </TableCell>
-        <TableCell align="right">{row.status}</TableCell>
+        <TableCell align="right">
+          <AdminPartStatusAssign id={row.id} status={row.status} />
+        </TableCell>
+        <TableCell align="right">{row.county}</TableCell>
+        <TableCell align="right">{row.avatar}</TableCell>
+        <TableCell align="right">{dt.toLocaleString()}</TableCell>
+        <TableCell align="right">
+          {row.name}
+          <br />
+          {row.email}
+        </TableCell>
+        <TableCell align="right">
+          {/* <SelectAll row={[row]} align="center" /> */}
+        </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
-              <Typography variant="h10" gutterBottom component="div">
+              {/* <Typography variant="h10" gutterBottom component="div">
                 {row.first_name}'s Details
-              </Typography>
+              </Typography> */}
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>County</TableCell>
-                    <TableCell>Avatar/ID</TableCell>
                     <TableCell>Address</TableCell>
                     <TableCell>Gender</TableCell>
-                    <TableCell>Birthday</TableCell>
                     <TableCell>Guardian Name</TableCell>
                     <TableCell>Scheduling Limitations</TableCell>
-                    <TableCell align="right">Notes</TableCell>
+                    <TableCell>Notes</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>Current Provider(s)</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {row.details.map((detailsRow) => (
                     <TableRow key={detailsRow.dob}>
-                      <TableCell component="th" scope="row">
-                        {detailsRow.county}
-                      </TableCell>
-                      <TableCell>{detailsRow.avatar}</TableCell>
                       <TableCell>{detailsRow.address}</TableCell>
                       <TableCell>{detailsRow.gender}</TableCell>
-                      <TableCell>{detailsRow.dob}</TableCell>
                       <TableCell>{detailsRow.guardian}</TableCell>
                       <TableCell>{detailsRow.limitations}</TableCell>
-                      <TableCell align="right">{detailsRow.notes}</TableCell>
+                      <TableCell>{detailsRow.notes}</TableCell>
+
+                      <TableCell>
+                        <AdminPartAssign prov={prov} row={row} />
+                      </TableCell>
+
+                      <TableCell>
+                        {part_prov.map((provPart) => (
+                          <>
+                            {row.id === provPart.participants_id ? (
+                              <>
+                                <p>
+                                  {provPart.first_name} {provPart.last_name}{" "}
+                                  <button
+                                    onClick={removeProvPart}
+                                    value={provPart.id}
+                                  >
+                                    Remove
+                                  </button>
+                                </p>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ))}
+                      </TableCell>
+                      <TableCell>
+                        <EditPartForm rowEdit={row} />
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -154,8 +213,16 @@ function Row(props) {
 }
 
 export default function CollapsibleTable() {
+  const classes = useRowStyles();
+
+  // function ButtonClick() {
+  //   dispatch({ type: "SET_PRINT", payload: rows });
+  // }
+
   let rows = [];
   // getting participants from redux store
+  // const print = useSelector((store) => store.print);
+  const provPart = useSelector((store) => store.provPart);
   const part = useSelector((store) => store.participants);
   // loop through participants and assign each to a row
   for (let i = 0; i < part.length; i++) {
@@ -177,7 +244,9 @@ export default function CollapsibleTable() {
         part[i].psp.toString(),
         part[i].other,
         part[i].avatar,
-        part[i].guardian
+        part[i].guardian,
+        part[i].name,
+        part[i].email
       );
     }
   }
@@ -187,28 +256,116 @@ export default function CollapsibleTable() {
   React.useEffect(() => {
     console.log("mounted");
     dispatch({ type: "GET_PART" });
+    dispatch({ type: "GET_PROV" });
+    dispatch({ type: "GET_PROV_PART" });
     console.log(part);
   }, []);
 
+  function nameAsc() {
+    dispatch({ type: "GET_PART_NAME_ASC" });
+  }
+
+  function nameDesc() {
+    dispatch({ type: "GET_PART_NAME_DESC" });
+  }
+
+  function countyAsc() {
+    dispatch({ type: "GET_PART_COUNTY_ASC" });
+  }
+
+  function countyDesc() {
+    dispatch({ type: "GET_PART_COUNTY_DESC" });
+  }
+
+  function ccsSort() {
+    dispatch({ type: "GET_PART_CCS" });
+  }
+
+  function choicesSort() {
+    dispatch({ type: "GET_PART_CHOICES" });
+  }
+
+  function pspSort() {
+    dispatch({ type: "GET_PART_PSP" });
+  }
+
+  function allSort() {
+    dispatch({ type: "GET_PART" });
+  }
+
+  function filterDischarged() {
+    dispatch({ type: "GET_PART_NO_DISCHARGE" });
+  }
+
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Phone</TableCell>
-            <TableCell align="right">Program(s)</TableCell>
-            <TableCell align="right">Status</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <Row key={row.id} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>
+                Name
+                <button className="nameAscBtn" onClick={nameAsc}>
+                  Name ASC
+                </button>
+                <button className="nameDescBtn" onClick={nameDesc}>
+                  Name DESC
+                </button>
+              </TableCell>
+              <TableCell align="right">Phone</TableCell>
+              <TableCell align="right">
+                Program(s)
+                <button className="ccsSortBtn" onClick={ccsSort}>
+                  CCS
+                </button>
+                <button className="choicesSortBtn" onClick={choicesSort}>
+                  Choices
+                </button>
+                <button className="pspSortBtn" onClick={pspSort}>
+                  PSP
+                </button>
+                <button className="allSortBtn" onClick={allSort}>
+                  All
+                </button>
+              </TableCell>
+              <TableCell align="right">
+                Status
+                <button className="hideDischargeBtn" onClick={filterDischarged}>
+                  Hide Discharged
+                </button>
+                <button className="showAllBtn" onClick={allSort}>
+                  Show All
+                </button>
+              </TableCell>
+              <TableCell align="right">
+                County
+                <button className="countyAscBtn" onClick={countyAsc}>
+                  County ASC
+                </button>
+                <button className="countyDescBtn" onClick={countyDesc}>
+                  County DESC
+                </button>
+              </TableCell>
+              <TableCell align="right">Avatar/ID</TableCell>
+              <TableCell align="right">Date of Birth</TableCell>
+              <TableCell align="right">Referring Worker</TableCell>
+
+              <TableCell align="right">
+                {/* <button className="printAllBtn" onClick={ButtonClick}>
+                  {" "}
+                  Print All{" "}
+                </button> */}
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <Row key={row.id} row={row} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
-  
 }

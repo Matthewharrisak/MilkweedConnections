@@ -34,6 +34,7 @@ const useRowStyles = makeStyles({
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+  const [acitve, setAcitve] = React.useState(row.acitve);
   const programs =  [['CCS', row.ccs], ['PSP', row.psp], ['Choices', row.choices],[row.other, row.other]];
   const email = "mailto:" + row.email
   const phone = "tel:" + row.phone_num
@@ -41,7 +42,13 @@ function Row(props) {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-  // dispatch({ type: "UPDATE_ACTIVE_STATUS", payload: {id: row.id, acitve: row.acitve}}) 
+    setAcitve(!acitve)
+    try{
+      dispatch({ type: "UPDATE_ACTIVE_STATUS", payload: {id: row.id, acitve: !row.acitve}}) 
+    }
+    catch{
+      console.log('ERROR in dispatch UPDATE_ACTIVE_STATUS');
+    }
   // dispatch({ type: "GET_PROV"});
   console.log('clickinggggg');
 }
@@ -74,7 +81,7 @@ function Row(props) {
             <EmailIcon />
           </IconButton>{row.email}</TableCell>
         <TableCell align="right">
-          {!row.acitve ?
+          {!acitve ?
           <Button className="nav-right" onClick={handleClick} color="primary">
                         ACTIVATE
           </Button>

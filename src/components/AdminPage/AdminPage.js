@@ -13,9 +13,9 @@ class AdminPage extends Component {
 
   render() {
     return (
-      <div>
+      <div id="page">
         <AdminTabBar/>
-        <CSVLink data={this.props.store.print}><div className="printLink">Print all of the check marked Participant rows</div></CSVLink>
+        {/* <CSVLink data={this.props.store.print}><div className="printLink">Print all of the check marked Participant rows</div></CSVLink> */}
         <NewPartForm/>
       </div>
     );

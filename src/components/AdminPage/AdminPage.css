@@ -1,15 +1,22 @@
 .printLink {
-    color: #f08621;
-    background-color: cornsilk;
+    color: #1d1611;
+    float: right;
+    margin-right: 25px;
+    /* background-color: cornsilk;
     font-size: large;
     margin-left: 10px;
     margin-top: 20px;
     margin-right: 10px;
-    border-radius: 2.5px;
+    border-radius: 2.5px; */
 }
 
-.printLink:hover {
+/* .printLink:hover {
     background-color: #878C36 !important;
     color: white;
     text-align: center; 
+} */
+#page {
+    display: flex;
+    margin: 0px 20px 0px 20px;
+    flex-direction: column;
 }

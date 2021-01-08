@@ -102,6 +102,7 @@ export default function SimpleTabs() {
           value={value}
           onChange={handleChange}
           aria-label="simple tabs example"
+          variant="fullWidth"
         >
           <Tab label="Providers" {...a11yProps(0)} />
           <Tab label="Participants" {...a11yProps(1)} />

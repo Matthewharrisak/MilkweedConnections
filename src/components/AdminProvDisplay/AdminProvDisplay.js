@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
+import PhoneIcon from '@material-ui/icons/Phone';
+import EmailIcon from '@material-ui/icons/Email';
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -14,6 +16,7 @@ import Paper from "@material-ui/core/Paper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { useDispatch, useSelector } from "react-redux";
+import Button from '@material-ui/core/Button';
 
 // this component hold the data table for providers that are being displayed for admins
 
@@ -25,32 +28,23 @@ const useRowStyles = makeStyles({
   },
 });
 
-function createData(
-  id,
-  email,
-  active,
-  first_name,
-  last_name,
-  phone_num,
-  programs,
-  openings,
-  schedule,
-  user_id,
-) {
-  return {
-  id,
-  first_name,
-  last_name,
-  phone_num,
-  email,
-  details: [{ openings, schedule, user_id, programs, active, }],
-};
-}
+// dispatch({ type: "UPDATE_ACTIVE_STATUS", payload: {id: row.id, acitve: row.acitve}}) 
+
 
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+  const programs =  [['CCS', row.ccs], ['PSP', row.psp], ['Choices', row.choices],[row.other, row.other]];
+  const email = "mailto:" + row.email
+  const phone = "tel:" + row.phone_num
   const classes = useRowStyles();
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+  // dispatch({ type: "UPDATE_ACTIVE_STATUS", payload: {id: row.id, acitve: row.acitve}}) 
+  // dispatch({ type: "GET_PROV"});
+  console.log('clickinggggg');
+}
 
   return (
     <React.Fragment>
@@ -67,9 +61,30 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.first_name} {row.last_name}
         </TableCell>
-        <TableCell align="right">{row.phone_num}</TableCell>
-        <TableCell align="right">{row.programs}</TableCell>
-        <TableCell align="right">{row.schedule}</TableCell>
+        <TableCell align="right">
+          <IconButton href={phone}
+              aria-label="add to favorites">
+            <PhoneIcon />
+          </IconButton>{row.phone_num}</TableCell>
+        <TableCell align="right">
+          <IconButton 
+            href={email}
+            // onClick={handleExpandClick}
+            aria-label="share">
+            <EmailIcon />
+          </IconButton>{row.email}</TableCell>
+        <TableCell align="right">
+          {!row.acitve ?
+          <Button className="nav-right" onClick={handleClick} color="primary">
+                        ACTIVATE
+          </Button>
+          : 
+          <Button className="nav-right" onClick={handleClick} color="primary">
+                        DEACTIVATE
+          </Button>
+        }
+          {row.acitve}
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -81,24 +96,29 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Phone</TableCell>
-                    <TableCell>Email</TableCell>
                     <TableCell>Programs</TableCell>
+                    <TableCell>Number of openings</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.details.map((detailsRow) => (
-
-                    <TableRow key={detailsRow.id}>
-                      <TableCell component="th" scope="row">
-                        {detailsRow.openings}
-                      </TableCell>
-                      <TableCell>{detailsRow.schedule}</TableCell>
-                      <TableCell>{detailsRow.user_id}</TableCell>
-                      <TableCell align="right">{detailsRow.notes}</TableCell>
-                    </TableRow>
-                  ))}
+                  <TableRow key={row.id}>
+                    <TableCell component="th" scope="row">
+                      <ul>
+                        {programs.map((prog) => {
+                            if(prog[1]){
+                              return( 
+                                // prog[0] == 'ccs' ?
+                                  <li>
+                                    <Paper className="paper" varient="outlined" >{prog[0]}</Paper>
+                                  </li>
+                              )
+                            }
+                          
+                            })}
+                      </ul>
+                    </TableCell>
+                    <TableCell>{row.openings}</TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </Box>
@@ -110,27 +130,7 @@ function Row(props) {
 }
 
 export default function CollapsibleTable() {
-  let rows = [];
-
   const prov = useSelector((store) => store.provider.providerReducer);
-
-  for (let i = 0; i < prov.length; i++) {
-    console.log(prov[i]);
-    if (prov[i]) {
-      rows[i] = createData(
-        prov[i].id,
-        prov[i].active,
-        prov[i].first_name,
-        prov[i].last_name,
-        prov[i].phone_num,
-        prov[i].email,
-        prov[i].programs,
-        prov[i].openings,
-        prov[i].schedule,
-        prov[i].user_id
-      );
-    }
-  }
 
   const dispatch = useDispatch();
 
@@ -153,7 +153,7 @@ export default function CollapsibleTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {prov.map((row) => (
             <Row key={row.id} row={row} />
           ))}
         </TableBody>

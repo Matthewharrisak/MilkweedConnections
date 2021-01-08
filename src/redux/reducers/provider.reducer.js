@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 
-const providerReducer = (state = {}, action) => {
+const providerReducer = (state = [], action) => {
   // holds provider after API get
   switch (action.type) {
     case "SET_PROV":

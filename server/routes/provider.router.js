@@ -175,6 +175,19 @@ router.get('/:first_name/:last_name/:email',  (req, res) => {
     res.sendStatus(500);
   });
 });
+router.put("/providers/:id", rejectUnauthenticated, (req, res) => {
+  console.log(req.body);
+  const queryText = `UPDATE "providers" SET "acitve" = $1 WHERE "id" = $2;`;
+  pool
+    .query(queryText, [req.body.acitve, req.params.id])
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("error in edit", error);
+    });
+});
 
 // get request to GET provider information upon logging in -- pass provider.id to provider_profile POST request
 //This needs the reducer name to continue working on it

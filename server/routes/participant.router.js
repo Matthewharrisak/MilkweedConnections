@@ -206,7 +206,7 @@ router.delete("/provPart/:id",  rejectUnauthenticated, (req, res) => {
 
 /// route for POSTING participant and service worker at the same time through form 
 // the form exists on the clinets WIX page and the "add new participant button"
-router.post("/test", rejectUnauthenticated, async (req, res) => {
+router.post("/test", async (req, res) => {
   // console.log("in transactional post", req.body);
   
   const connection = await pool.connect();

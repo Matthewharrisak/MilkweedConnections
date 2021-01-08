@@ -11,9 +11,8 @@ class UserPage extends Component {
 
   render() {
     return (
-      <div>
-        <h1 id="welcome">Milkweed Connect!</h1>
-        <p className='usernameStyle'>{this.props.store.user.username}</p>
+      <div id="page">
+        {/* <p className='usernameStyle'>{this.props.store.user.username}</p> */}
         {/* <CSVLink data={this.props.store.print}>Download me</CSVLink>; */}
         <ProvTabBar/>
       </div>

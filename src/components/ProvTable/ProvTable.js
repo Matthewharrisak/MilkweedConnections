@@ -15,7 +15,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Paper from '@material-ui/core/Paper';
 import { useDispatch, useSelector } from "react-redux";
-import Popover from '@material-ui/core/Popover';
+import { createMuiTheme } from '@material-ui/core/styles';
 import './ProvTable.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +32,7 @@ root: {
     // position: 'relative'
     
 },
+
 img: {
     height: 0,
     paddingTop: '56.25%',
@@ -54,6 +55,30 @@ avatar: {
     backgroundColor: red[500],
 },
 }));
+
+const theme1 = createMuiTheme({
+  palette: {
+    secondary: {
+      main: '#ef6c00',
+    },
+  }
+});
+const theme2 = createMuiTheme({
+  
+  palette: {
+    primary: {
+      main: '#558b2f',
+    },
+  }
+});
+const theme3 = createMuiTheme({
+  
+  palette: {
+    primary: {
+      main: '#26a69a',
+    },
+  }
+});
 
 function ProvCard(props) {
     const data = props.props
@@ -90,9 +115,11 @@ function ProvCard(props) {
                 console.log(prog, 'klasdkfj;as')
                   if(prog[1]){
                     return( 
-                    <li>
-                      <Paper className="paper" varient="outlined" >{prog[0]}</Paper>
-                    </li>)
+                      // prog[0] == 'ccs' ?
+                        <li>
+                          <Paper className="paper" theme={theme1} varient="outlined" >{prog[0]}</Paper>
+                        </li>
+                    )
                   }
                 
                   })}

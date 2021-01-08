@@ -56,14 +56,21 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.first_name} {row.last_name}
         </TableCell>
-        <TableCell align="right">{row.phone_num}</TableCell>
         <TableCell align="right">
-          {row.ccs === "true" ? <>CCS</> : <></>}
-          <span> </span>
-          {row.choices === "true" ? <>Choices</> : <></>}
-          <span> </span>
-          {row.psp === "true" ? <>PSP</> : <></>}
-          <span> </span>
+          <IconButton 
+            href={'tel:' + row.phone_num}
+            aria-label="add to favorites">
+            <PhoneIcon />
+        </IconButton>
+        {row.phone_num}
+        </TableCell>
+        <TableCell align="right">
+          {row.ccs === true ? <>CCS  </> : <></>}
+          <span>  </span>
+          {row.choices === true ? <>Choices</> : <></>}
+          <span>  </span>
+          {row.psp === true ? <>PSP</> : <></>}
+          <span>  </span>
           {row.other != "" ? <>{row.other}</>
           :
           <></>}

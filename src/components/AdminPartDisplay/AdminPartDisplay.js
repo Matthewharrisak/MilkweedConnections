@@ -20,6 +20,9 @@ import AdminPartAssign from "../AdminPartAssign/AdminPartAssign";
 import AdminPartStatusAssign from "../AdminPartStatusAssign/AdminPartStatusAssign";
 import "./AdminPartDisplay.css";
 import SelectAll from '../SelectAll/SelectAll'
+import { CSVLink, CSVDownload } from "react-csv";
+import PrintIcon from '@material-ui/icons/Print';
+
 
 
 // this component displays waitlisted participants
@@ -223,6 +226,7 @@ export default function CollapsibleTable() {
 
   let rows = [];
   // getting participants from redux store
+  const print = useSelector((store) => store.print);
   const provPart = useSelector((store) => store.provPart);
   const part = useSelector((store) => store.participants);
   // loop through participants and assign each to a row
@@ -363,6 +367,7 @@ export default function CollapsibleTable() {
             ))}
           </TableBody>
         </Table>
+        <CSVLink data={print}><div className="printLink"><PrintIcon/></div></CSVLink>
       </TableContainer>
     </>
   );

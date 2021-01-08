@@ -1,72 +1,14 @@
 const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
+const {
+  rejectUnauthenticated,
+} = require('../modules/authentication-middleware');
 
 // Route to get all from the Participants table 
-router.get("/", (req, res) => {
+router.get("/", rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * from participants
-  JOIN service_workers ON participants.id = service_workers.participants_id;`;
-  pool
-    .query(queryText)
-    .then((result) => {
-      res.send(result.rows);
-    })
-    .catch((error) => {
-      res.sendStatus(500);
-      alert("error in participants GET", error);
-    });
-});
-
-// Route to get all from the Participants and their providers from the table 
-router.get("/part_prov", (req, res) => {
-  const queryText = `SELECT * from providers
-JOIN prov_part ON providers_id = providers.id;`;
-  pool
-    .query(queryText)
-    .then((result) => {
-      console.log(result.rows);
-      res.send(result.rows);
-    })
-    .catch((error) => {
-      res.sendStatus(500);
-      alert("error in participants GET", error);
-    });
-});
-
-// Route to get all from the Participants table 
-router.get("/name_ascend", (req, res) => {
-  const queryText = `SELECT * from participants
-  JOIN service_workers ON participants.id = service_workers.participants_id ORDER BY last_name;`;
-  pool
-    .query(queryText)
-    .then((result) => {
-      res.send(result.rows);
-    })
-    .catch((error) => {
-      res.sendStatus(500);
-      alert("error in participants GET", error);
-    });
-});
-
-// Route to get all from the Participants table 
-router.get("/name_decend", (req, res) => {
-  const queryText = `SELECT * from participants
-  JOIN service_workers ON participants.id = service_workers.participants_id ORDER BY last_name DESC;`;
-  pool
-    .query(queryText)
-    .then((result) => {
-      res.send(result.rows);
-    })
-    .catch((error) => {
-      res.sendStatus(500);
-      alert("error in participants GET", error);
-    });
-});
-
-// Route to get all from the Participants table 
-router.get("/county_acend", (req, res) => {
-  const queryText = `SELECT * from participants
-  JOIN service_workers ON participants.id = service_workers.participants_id ORDER BY participants.county ASC;`;
+  JOIN service_workers ON participants.id = service_workers.participants_id ORDER BY status, last_name;`;
   pool
     .query(queryText)
     .then((result) => {
@@ -78,8 +20,69 @@ router.get("/county_acend", (req, res) => {
     });
 });
 
+// Route to get all from the Participants and their providers from the table 
+router.get("/part_prov", rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * from providers
+JOIN prov_part ON providers_id = providers.id;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      console.log(result.rows);
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("error in participants GET 0", error);
+    });
+});
+
 // Route to get all from the Participants table 
-router.get("/county_decend", (req, res) => {
+router.get("/name_ascend", rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * from participants
+  JOIN service_workers ON participants.id = service_workers.participants_id ORDER BY last_name;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("error in participants GET 1", error);
+    });
+});
+
+// Route to get all from the Participants table 
+router.get("/name_decend", rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * from participants
+  JOIN service_workers ON participants.id = service_workers.participants_id ORDER BY last_name DESC;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("error in participants GET 2", error);
+    });
+});
+
+// Route to get all from the Participants table 
+router.get("/county_ascend", rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * from participants
+  JOIN service_workers ON participants.id = service_workers.participants_id ORDER BY participants.county ASC;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("error in participants GET 3", error);
+    });
+});
+
+// Route to get all from the Participants table 
+router.get("/county_decend", rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * from participants
   JOIN service_workers ON participants.id = service_workers.participants_id ORDER BY participants.county DESC;`;
   pool
@@ -93,7 +96,7 @@ router.get("/county_decend", (req, res) => {
     });
 });
 
-router.get("/ccs", (req, res) => {
+router.get("/ccs", rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * from participants 
   JOIN service_workers ON participants.id = service_workers.participants_id WHERE ccs = true ORDER BY last_name ASC;`;
   pool
@@ -107,7 +110,7 @@ router.get("/ccs", (req, res) => {
     });
 });
 
-router.get("/choices", (req, res) => {
+router.get("/choices", rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * from participants 
   JOIN service_workers ON participants.id = service_workers.participants_id WHERE choices = true ORDER BY last_name ASC;`;
   pool
@@ -121,7 +124,8 @@ router.get("/choices", (req, res) => {
     });
 });
 
-router.get("/psp", (req, res) => {
+// select all participants with psp as true
+router.get("/psp", rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * from participants 
   JOIN service_workers ON participants.id = service_workers.participants_id WHERE psp = true ORDER BY last_name ASC;`;
   pool
@@ -136,7 +140,7 @@ router.get("/psp", (req, res) => {
 });
 
 // GET route to grab participants for partcipants tabel in admin view
-router.get("/:id", (req, res) => {
+router.get("/:id", rejectUnauthenticated, (req, res) => {
   const queryText = `
   SELECT
     participants.id,
@@ -167,11 +171,11 @@ WHERE providers_id = $1;`;
     })
     .catch((error) => {
       res.sendStatus(500);
-      alert("error in participants GET with given id", error);
+      console.log("error in participants GET with given id", error);
     });
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", rejectUnauthenticated, async (req, res) => {
   const connection = await pool.connect();
   try {
     await connection.query("BEGIN");
@@ -187,7 +191,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.delete("/provPart/:id", (req, res) => {
+router.delete("/provPart/:id",  rejectUnauthenticated, (req, res) => {
   const queryText = `DELETE FROM "prov_part" WHERE "id" = $1;`;
   pool
     .query(queryText, [req.params.id])
@@ -202,7 +206,7 @@ router.delete("/provPart/:id", (req, res) => {
 
 /// route for POSTING participant and service worker at the same time through form 
 // the form exists on the clinets WIX page and the "add new participant button"
-router.post("/test", async (req, res) => {
+router.post("/test", rejectUnauthenticated, async (req, res) => {
   // console.log("in transactional post", req.body);
   
   const connection = await pool.connect();
@@ -231,7 +235,7 @@ router.post("/test", async (req, res) => {
     ]);
     // Get the id from the result - will have 1 row with the id
     const accountId = result.rows[0].id;
-    const sqlInitialDeposit = `INSERT INTO service_workers ("name", "phone", "email", "county", "participants_id") 
+    const sqlInitialDeposit = `INSERT INTO service_workers ("name", "phone", "email", "serv_county", "participants_id") 
     VALUES ($1, $2, $3, $4, $5);`;
     await connection.query(sqlInitialDeposit, [
       req.body.referralFormData.serviceWorkerRef.name,
@@ -251,7 +255,7 @@ router.post("/test", async (req, res) => {
   }
 });
 
-router.post("/", (req, res) => {
+router.post("/", rejectUnauthenticated, (req, res) => {
   // console.log("in transactional post", req.body);
   
     const queryText = `INSERT INTO participants 
@@ -283,7 +287,7 @@ router.post("/", (req, res) => {
   });
 
 
-  router.put('/:id', (req, res) => {
+  router.put('/:id', rejectUnauthenticated, (req, res) => {
     console.log('whats up form the put request?' , req.params.id , req.body);
     let id = req.params.id;
     let queryText = `UPDATE "participants" 
@@ -328,7 +332,7 @@ router.post("/", (req, res) => {
   
   });
 
-  router.post("/participant", (req, res) => {
+  router.post("/participant", rejectUnauthenticated, (req, res) => {
     console.log(req.body)
 
       const queryText = `select exists(select 1 from prov_part where providers_id=$1 AND participants_id=$2);`;
@@ -350,6 +354,19 @@ router.post("/", (req, res) => {
             });
         }})})
 
+// Route to get non discharged Participants from the participants table 
+router.get("/participant/no_discharge", rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * from participants JOIN service_workers ON participants.id = service_workers.participants_id where "status" != 'Discharged' ORDER BY status, last_name;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("error in non discharged participants GET", error);
+    });
+});
 
 
 module.exports = router;

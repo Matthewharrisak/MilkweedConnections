@@ -1,12 +1,15 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const {
+  rejectUnauthenticated,
+} = require('../modules/authentication-middleware');
 
 
 /**
  * GET route for all providers
  */
-router.get('/providers', (req, res) => {
+router.get('/providers',  rejectUnauthenticated, (req, res) => {
   // GET route code here
   const queryText = `
   SELECT
@@ -33,7 +36,7 @@ router.get('/providers', (req, res) => {
     res.sendStatus(500);
   });
 });
-router.get("/participants/:id", async (req, res) => {
+router.get("/participants/:id",  rejectUnauthenticated, async (req, res) => {
   // console.log("in transactional post", req.body);
   
   const connection = await pool.connect();
@@ -113,34 +116,9 @@ router.get("/participants/:id", async (req, res) => {
 });
 
 
-// router.get('/participants/:id', (req, res) => {
-//   // GET route code here
-//   const queryText = 
-//   `SELECT 
-//   prov_part.id,
-//   participants.id,
-// 	participants.first_name,
-// 	participants.last_name,
-// 	participants.phone_num,
-// 	participants.county,
-// 	participants.gender,
-// 	participants.limitations,
-// 	participants.notes,
-// 	participants.county
-//   FROM prov_part
-//   JOIN providers ON providers.id = prov_part.providers_id
-//   JOIN participants ON participants.id = prov_part.participants_id
-//   WHERE providers_id = $1;`;
-//   pool.query(queryText, [req.params.id])
-//   .then((result) => {
-//     res.send(result.rows);
-//   }).catch((error) => {
-//     console.log('error in the provider Query' , error);
-//     res.sendStatus(500);
-//   });
-// });
+
  // this is only for ADMIN view 
-router.get('/', (req, res) => {
+router.get('/',  rejectUnauthenticated, (req, res) => {
   // GET route code here
   const queryText = 'SELECT * FROM providers;';
   pool.query(queryText)
@@ -152,8 +130,10 @@ router.get('/', (req, res) => {
   });
 });
 
+// DO NOT rejectUnauthenticated, these functions are for account registration
+
 // this route grabs the provider ID when registering a new account. As registration is a multi step process
-router.get('/:first_name/:last_name/:email', (req, res) => {
+router.get('/:first_name/:last_name/:email',  (req, res) => {
   console.log('IN GET PROV ID ROUTER', req.params);
   // GET route code here
   const queryText = `SELECT "id" FROM providers WHERE "first_name" = $1 AND "last_name" = $2 AND "email" = $3;`;

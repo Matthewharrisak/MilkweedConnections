@@ -17,9 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@material-ui/core/Checkbox";
 import EditPartForm from "../EditPartForm/EditPartForm";
 import AdminPartAssign from "../AdminPartAssign/AdminPartAssign";
+import AdminPartStatusAssign from "../AdminPartStatusAssign/AdminPartStatusAssign";
 import "./AdminPartDisplay.css";
 import SelectAll from '../SelectAll/SelectAll'
-
 
 
 // this component displays waitlisted participants
@@ -129,7 +129,9 @@ function Row(props) {
           <span> </span>
           {row.other != "" ? <>{row.other}</> : <></>}
         </TableCell>
-        <TableCell align="right">{row.status}</TableCell>
+        <TableCell align="right">
+          <AdminPartStatusAssign id={row.id} status={row.status} />
+        </TableCell>
         <TableCell align="right">{row.county}</TableCell>
         <TableCell align="right">{row.avatar}</TableCell>
         <TableCell align="right">{dt.toLocaleString()}</TableCell>
@@ -139,10 +141,7 @@ function Row(props) {
           {row.email}
         </TableCell>
         <TableCell align="right">
-
-          <SelectAll row={[row]}
-            align="center"/>
-
+          <SelectAll row={[row]} align="center" />
         </TableCell>
       </TableRow>
       <TableRow>
@@ -159,7 +158,9 @@ function Row(props) {
                     <TableCell>Gender</TableCell>
                     <TableCell>Guardian Name</TableCell>
                     <TableCell>Scheduling Limitations</TableCell>
-                    <TableCell align="right">Notes</TableCell>
+                    <TableCell>Notes</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>Current Provider(s)</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -169,26 +170,36 @@ function Row(props) {
                       <TableCell>{detailsRow.gender}</TableCell>
                       <TableCell>{detailsRow.guardian}</TableCell>
                       <TableCell>{detailsRow.limitations}</TableCell>
-                      <TableCell align="right">{detailsRow.notes}</TableCell>
-                      {part_prov.map((provPart) => (
-                        <>
-                          {row.id === provPart.participants_id ? (
-                            <p>
-                              {provPart.first_name} {provPart.last_name}{" "}
-                              <button
-                                onClick={removeProvPart}
-                                value={provPart.id}
-                              >
-                                Remove
-                              </button>
-                            </p>
-                          ) : (
-                            <></>
-                          )}
-                        </>
-                      ))}
-                      <AdminPartAssign prov={prov} row={row} />
-                      <EditPartForm rowEdit={row} />
+                      <TableCell>{detailsRow.notes}</TableCell>
+
+                      <TableCell>
+                        <AdminPartAssign prov={prov} row={row} />
+                      </TableCell>
+
+                      <TableCell>
+                        {part_prov.map((provPart) => (
+                          <>
+                            {row.id === provPart.participants_id ? (
+                              <>
+                                <p>
+                                  {provPart.first_name} {provPart.last_name}{" "}
+                                  <button
+                                    onClick={removeProvPart}
+                                    value={provPart.id}
+                                  >
+                                    Remove
+                                  </button>
+                                </p>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        ))}
+                      </TableCell>
+                      <TableCell>
+                        <EditPartForm rowEdit={row} />
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -283,6 +294,11 @@ export default function CollapsibleTable() {
     dispatch({ type: "GET_PART" });
   }
 
+  function filterDischarged() {
+    dispatch({ type: "GET_PART_NO_DISCHARGE" });
+  }
+  
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -315,7 +331,11 @@ export default function CollapsibleTable() {
                   All
                 </button>
               </TableCell>
-              <TableCell align="right">Status</TableCell>
+              <TableCell align="right">
+                Status
+                <button className="hideDischargeBtn" onClick={filterDischarged}>Hide Discharged</button>
+                <button className="showAllBtn" onClick={allSort}>Show All</button>
+              </TableCell>
               <TableCell align="right">
                 County
                 <button className="countyAscBtn" onClick={countyAsc}>
@@ -331,7 +351,7 @@ export default function CollapsibleTable() {
 
               <TableCell align="right">
 
-              <button onClick={ButtonClick}> Print All </button>
+              <button className="printAllBtn" onClick={ButtonClick}> Print All </button>
 
               </TableCell>
 

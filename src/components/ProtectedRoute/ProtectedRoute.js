@@ -3,7 +3,9 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LoginPage from '../LoginPage/LoginPage';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-
+import AdminPage from '../AdminPage/AdminPage';
+import UserPage from '../UserPage/UserPage';
+import InfoPage from '../InfoPage/InfoPage';
 // A Custom Wrapper Component -- This will keep our code DRY.
 // Responsible for watching redux state, and returning an appropriate component
 // API for this component is the same as a regular route
@@ -28,15 +30,24 @@ const ProtectedRoute = (props) => {
 
   let ComponentToShow;
 
-  if (store.user.id) {
+  if (store.user.id && store.provider.currProv.acitve) {
     // if the user is logged in (only logged in users have ids)
     // show the component that is protected
-    ComponentToShow = ComponentToProtect;
-  } else {
+    ComponentToShow = UserPage;
+    
+  } else if (store.user.id && store.user.admin) {
+    ComponentToShow = AdminPage;
+
+  } else if (store.user.id && !store.provider.currProv.acitve) {
+    ComponentToShow = InfoPage;
+  }
+  else {
     // if they are not logged in, check the loginMode on Redux State
     // if the mode is 'login', show the LoginPage
     ComponentToShow = LoginPage;
-  }
+  } 
+
+
 
   // redirect a logged in user if an authRedirect prop has been provided
   if (store.user.id && authRedirect != null) {

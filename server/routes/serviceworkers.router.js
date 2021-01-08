@@ -1,9 +1,13 @@
 const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
+const {
+  rejectUnauthenticated,
+} = require('../modules/authentication-middleware');
+
 
 // route to get all data from Service Worker table
-router.get("/", (req, res) => {
+router.get("/", rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * from service_workers 
    JOIN participants ON service_workers.participants_id = participants.id;
   `;

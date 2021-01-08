@@ -33,7 +33,7 @@ function* fetchParticipantsNameDesc() {
 function* fetchParticipantsCountyAsc() {
   try {
     const participantResponse = yield axios.get(
-      "/api/participant/county_acend"
+      "/api/participant/county_ascend"
     );
     yield put({ type: "SET_PART", payload: participantResponse.data });
   } catch (error) {
@@ -101,6 +101,17 @@ function* deletePart(action){
     }
   }
 
+  function* fetchParticipantsNoDischarge() {
+    try {
+      const participantResponse = yield axios.get("/api/participant/participant/no_discharge");
+      yield put({ type: "SET_PART", payload: participantResponse.data });
+    } catch (error) {
+      console.log("whats up from the fetchPARTYTIME", error);
+    }
+  }
+
+
+
 function* participantsSaga() {
   yield takeLatest('GET_PART', fetchParticipants);
   yield takeLatest('GET_PART_NAME_ASC', fetchParticipantsNameAsc);
@@ -111,7 +122,8 @@ function* participantsSaga() {
   yield takeLatest('GET_PART_CHOICES', fetchParticipantsChoices);
   yield takeLatest('GET_PART_PSP', fetchParticipantsPSP);
   yield takeLatest('DELETE_PARTICIPANT', deletePart);
-  yield takeLatest('UPDATE_PART' , updatePart)
+  yield takeLatest('UPDATE_PART' , updatePart);
+  yield takeLatest('GET_PART_NO_DISCHARGE' , fetchParticipantsNoDischarge);
 
 }
 

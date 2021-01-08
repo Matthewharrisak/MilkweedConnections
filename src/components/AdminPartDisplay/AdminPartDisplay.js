@@ -192,7 +192,7 @@ function Row(props) {
                                 </p>
                               </>
                             ) : (
-                              <>Dropdown will go here</>
+                              <></>
                             )}
                           </>
                         ))}

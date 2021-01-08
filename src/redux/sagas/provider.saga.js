@@ -21,6 +21,16 @@ function* fetchAllDeactiveProviders(action) {
     console.log("whats up from the fetchAllProviders", error);
   }
 }
+
+function* updateActiveStatus(action) {
+    yield console.log('UPDATING  ACTIVE STATUS:', action.payload)
+    try {
+      yield axios.put(`/api/provider/providers/${action.payload.id}` , action.payload);
+    } catch (error) {
+      console.log('ERROR in axios update', error);
+    }
+  }
+
 function* fetchAllProviders(action) {
   try {
     const providerResponse = yield axios.get(`/api/provider/providers/${action.payload.status}`);
@@ -92,6 +102,8 @@ function* providerSaga() {
   yield takeLatest('DELETE_PROV_PART', removeProviderParticipant);
   yield takeLatest('GET_PART_ON_PROV', fetchParticipantsOnProvider);
   yield takeLatest('GET_ALL_DEACTIVE_PROVS', fetchAllDeactiveProviders);
+  yield takeLatest('UPDATE_ACTIVE_STATUS', updateActiveStatus);
+
 //   yield takeLatest('GET_THAT_PROV', fetchProvProv)
 }
 

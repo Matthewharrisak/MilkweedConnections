@@ -12,6 +12,8 @@ import WaitlistPart from '../WaitlistPart/WaitlistPart';
 import PartTable from '../PartTable/PartTable';
 import { useDispatch, useSelector } from "react-redux";
 
+import './ProvTabBar.css';
+
 // this component holds the tab bar for the admin page -- sources in the data tables 
 
 function TabPanel(props) {
@@ -70,8 +72,8 @@ export default function SimpleTabs() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static"  style={{backgroundColor: "#878C36" , color : "white"}}>
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+      <AppBar position="static" className="action-bar"  style={{backgroundColor: "#878C36" , color : "white"}}>
+        <Tabs value={value} onChange={handleChange} variant="fullWidth" aria-label="simple tabs example">
           <Tab label="Providers" {...a11yProps(0)} />
           <Tab label="Participants" {...a11yProps(1)} />
         </Tabs>
@@ -81,8 +83,6 @@ export default function SimpleTabs() {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <PartTable/>
-      </TabPanel>
-      <TabPanel value={value} index={2}>
       </TabPanel>
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../redux/mapStoreToProps";
+import "./AdminPartStatusAssign.css";
 
 class AdminPartStatusAssign extends Component {
   state = {
@@ -43,13 +44,13 @@ class AdminPartStatusAssign extends Component {
                 <option value="Discharged">Discharge</option>
               </optgroup>
             </select>
-            <button onClick={this.editToggle}>Cancel</button>
+            <button className="cancelBtn" onClick={this.editToggle}>Cancel</button>
           </>
         ) : (
           <>
             {this.props.status}
             <br />
-            <button onClick={this.editToggle}>Update</button>
+            <button className="updateBtn" onClick={this.editToggle}>Update</button>
           </>
         )}
       </>

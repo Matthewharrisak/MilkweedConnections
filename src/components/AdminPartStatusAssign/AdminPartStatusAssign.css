@@ -1,0 +1,9 @@
+.updateBtn:hover {
+    background-color: #878C36 !important;
+    color: white;
+}
+
+.cancelBtn:hover {
+    color: black !important;
+    background-color: #f08621 !important;
+}

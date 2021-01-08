@@ -5,6 +5,8 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom';
+import mapStoreToProps from '../../redux/mapStoreToProps';
+
 
 import { connect } from 'react-redux';
 
@@ -24,11 +26,23 @@ import './App.css';
 import AdminPage from '../AdminPage/AdminPage';
 
 class App extends Component {
+  view = '';
+  prov = this.props.store.provider.currProv.acitve;
+  admin = this.props.store.user.admin;
+
   componentDidMount() {
     this.props.dispatch({ type: 'FETCH_USER' });
+    // authRedirect for providers and admins accounts
+    if(this.admin){
+      this.view ="/admin"
+    } else
+    if(this.prov){
+      this.view ="/user"
+    } 
+    else{
+      this.view ="/info"
+    }
   }
-
-
 
   render() {
     return (
@@ -83,7 +97,7 @@ class App extends Component {
               exact
               path="/login"
               component={LoginPage}
-              authRedirect="/user"
+              authRedirect={this.view}
             />
             <ProtectedRoute
               // with authRedirect:
@@ -92,7 +106,7 @@ class App extends Component {
               exact
               path="/registration"
               component={RegisterPage}
-              authRedirect="/user"
+              authRedirect={this.view}
             />
             <ProtectedRoute
               // with authRedirect:
@@ -101,7 +115,7 @@ class App extends Component {
               exact
               path="/home"
               component={LandingPage}
-              authRedirect="/user"
+              authRedirect={this.view}
             />
 
             {/* If none of the other routes matched, we will show a 404. */}
@@ -114,4 +128,4 @@ class App extends Component {
   }
 }
 
-export default connect()(App);
+export default connect(mapStoreToProps)(App);

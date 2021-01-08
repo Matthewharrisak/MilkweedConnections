@@ -28,50 +28,6 @@ const useRowStyles = makeStyles({
   },
 });
 
-// defining the structure of our data and a function to assemble it
-function createData(
-  id,
-  first_name,
-  last_name,
-  dob,
-  phone_num,
-  address,
-  county,
-  gender,
-  limitations,
-  notes,
-  status,
-  ccs,
-  choices,
-  psp,
-  other,
-  avatar,
-  guardian,
-) {
-  return {
-    id,
-    first_name,
-    last_name,
-    phone_num,
-    status,
-    ccs,
-    choices,
-    psp,
-    other,
-    details: [
-      {
-        dob,
-        address,
-        county,
-        gender,
-        limitations,
-        notes,
-        avatar,
-        guardian,
-      },
-    ],
-  };
-}
 
 //function setting up rows for display
 function Row(props) {

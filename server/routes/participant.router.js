@@ -175,7 +175,7 @@ WHERE providers_id = $1;`;
     });
 });
 
-router.delete("/:id", rejectUnauthenticated, async (req, res) => {
+router.delete("/delete/:id", rejectUnauthenticated, async (req, res) => {
   const connection = await pool.connect();
   try {
     await connection.query("BEGIN");

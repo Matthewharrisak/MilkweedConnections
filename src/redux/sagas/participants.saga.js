@@ -85,8 +85,8 @@ function* deletePart(action){
     try{
         console.log('hello from deletePart:', action.payload);
     // use string interpolation to pass the payload
-    yield axios.delete(`/api/participant/${action.payload.id}`)
-    
+    yield axios.delete(`/api/participant/delete/${action.payload.id}`)
+    yield put({ type: "GET_PART" });
     } catch (error){
         console.log('error in post', error);
     }

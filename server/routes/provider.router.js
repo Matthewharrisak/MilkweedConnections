@@ -6,6 +6,34 @@ const {
 } = require('../modules/authentication-middleware');
 
 
+router.get('/providers/:status',  rejectUnauthenticated, (req, res) => {
+  // GET route code here
+  const queryText = `
+  SELECT
+    providers.id,
+    description,
+    help_info,
+    mission,
+    bio,
+    image,
+    providers.first_name,
+    providers.last_name,
+    providers.phone_num,
+    providers.email,
+    providers.ccs,
+    providers.choices,
+    providers.psp
+  FROM "provider_profile"
+  JOIN providers ON providers.id = provider_profile.providers_id
+  WHERE providers.acitve = $1;`;
+  pool.query(queryText,[req.params.status])
+  .then((result) => {
+    res.send(result.rows);
+  }).catch((error) => {
+    console.log('error in the provider Query' , error);
+    res.sendStatus(500);
+  });
+});
 /**
  * GET route for all providers
  */

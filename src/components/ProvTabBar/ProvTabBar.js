@@ -67,7 +67,7 @@ export default function SimpleTabs() {
   const dispatch = useDispatch();
   useEffect(() => {
     console.log("as,d.fmasd,./fma");    
-    dispatch({ type: "GET_ALL_PROVS" });
+    dispatch({ type: "GET_ALL_PROVS", payload: {status: true}});
   }, []);
 
   return (

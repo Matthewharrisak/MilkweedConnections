@@ -12,10 +12,18 @@ function* fetchProvider() {
         
     }
 }
-
-function* fetchAllProviders() {
+function* fetchAllDeactiveProviders(action) {
   try {
-    const providerResponse = yield axios.get("/api/provider/providers");
+    const providerResponse = yield axios.get(`/api/provider/providers/${action.payload.status}`);
+    console.log("all providers", providerResponse.data);
+    yield put({ type: "SET_ALL_PROVS", payload: providerResponse.data });
+  } catch (error) {
+    console.log("whats up from the fetchAllProviders", error);
+  }
+}
+function* fetchAllProviders(action) {
+  try {
+    const providerResponse = yield axios.get(`/api/provider/providers/${action.payload.status}`);
     console.log("all providers", providerResponse.data);
     yield put({ type: "SET_ALL_PROVS", payload: providerResponse.data });
   } catch (error) {
@@ -83,7 +91,7 @@ function* providerSaga() {
   yield takeLatest('GET_PROV_PART', fetchProviderParticipant);
   yield takeLatest('DELETE_PROV_PART', removeProviderParticipant);
   yield takeLatest('GET_PART_ON_PROV', fetchParticipantsOnProvider);
-
+  yield takeLatest('GET_ALL_DEACTIVE_PROVS', fetchAllDeactiveProviders);
 //   yield takeLatest('GET_THAT_PROV', fetchProvProv)
 }
 

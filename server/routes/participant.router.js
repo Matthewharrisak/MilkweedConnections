@@ -368,5 +368,22 @@ router.get("/participant/no_discharge", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.put("/participant/status", rejectUnauthenticated, (req, res) => {
+  console.log(req.body);
+  const queryText = `UPDATE "participants" SET "status" = $1 WHERE "id" = $2;`;
+  pool
+    .query(queryText, [req.body.status, req.body.row])
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+      console.log("error in edit", error);
+    });
+});
+
+
+
+
 
 module.exports = router;

@@ -110,6 +110,18 @@ function* deletePart(action){
     }
   }
 
+  function* updatePartStatus(action) {
+    console.log('hello from edit book');
+    try {
+      yield axios.put("/api/participant/participant/status", action.payload);
+      yield put({ type: "GET_PART_NAME_ASC" });
+    } catch (error) {
+      console.log("Edit Book Failed", error);
+    }
+  }
+  
+
+
 
 
 function* participantsSaga() {
@@ -124,6 +136,7 @@ function* participantsSaga() {
   yield takeLatest('DELETE_PARTICIPANT', deletePart);
   yield takeLatest('UPDATE_PART' , updatePart);
   yield takeLatest('GET_PART_NO_DISCHARGE' , fetchParticipantsNoDischarge);
+  yield takeLatest('UPDATE_STATUS' , updatePartStatus);
 
 }
 

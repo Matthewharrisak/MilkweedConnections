@@ -55,7 +55,8 @@ function createData(
   avatar,
   guardian,
   name,
-  email
+  email,
+  date_waitlist
 ) {
   return {
     id,
@@ -72,6 +73,7 @@ function createData(
     dob,
     name,
     email,
+    date_waitlist,
     details: [
       {
         address,
@@ -93,7 +95,7 @@ function Row(props) {
   const classes = useRowStyles();
   const dispatch = useDispatch();
   const { DateTime } = require("luxon");
-  const dt = DateTime.fromISO(row.dob);
+  let dt = DateTime.fromISO(row.date_waitlist);
   const prov = useSelector((store) => store.provider.providerReducer);
   const part_prov = useSelector((store) => store.provider.provPart);
 
@@ -121,13 +123,31 @@ function Row(props) {
         </TableCell>
         <TableCell align="right">{row.phone_num}</TableCell>
         <TableCell align="right">
-          {row.ccs === "true" ? <>CCS</> : <></>}
-          <span> </span>
-          {row.choices === "true" ? <>Choices</> : <></>}
-          <span> </span>
-          {row.psp === "true" ? <>PSP</> : <></>}
-          <span> </span>
-          {row.other != "" ? <>{row.other}</> : <></>}
+          {row.ccs === "true" ? (
+            <>
+              CCS<span> </span>
+            </>
+          ) : (
+            <></>
+          )}
+
+          {row.choices === "true" ? (
+            <>
+              Choices<span> </span>
+            </>
+          ) : (
+            <></>
+          )}
+
+          {row.psp === "true" ? (
+            <>
+              PSP<span> </span>
+            </>
+          ) : (
+            <></>
+          )}
+
+          {row.other != "" ? <><br/>{row.other}</> : <></>}
         </TableCell>
         <TableCell align="right">
           <AdminPartStatusAssign id={row.id} status={row.status} />
@@ -246,7 +266,8 @@ export default function CollapsibleTable() {
         part[i].avatar,
         part[i].guardian,
         part[i].name,
-        part[i].email
+        part[i].email,
+        part[i].date_waitlist
       );
     }
   }
@@ -348,7 +369,7 @@ export default function CollapsibleTable() {
                 </button>
               </TableCell>
               <TableCell align="right">Avatar/ID</TableCell>
-              <TableCell align="right">Date of Birth</TableCell>
+              <TableCell align="right">Date Added To Waitlist</TableCell>
               <TableCell align="right">Referring Worker</TableCell>
 
               <TableCell align="right">

@@ -90,16 +90,16 @@ function* deletePart(action){
     } catch (error){
         console.log('error in post', error);
     }
-  }
+}
 
-  function* updatePart(action) {
+function* updatePart(action) {
     yield console.log('UPDATING  ITEM:', action)
     try {
       yield axios.put(`/api/participant/${action.payload.id}` , action.payload);
     } catch (error) {
       console.log('ERROR in axios update', error);
     }
-  }
+}
 
   function* fetchParticipantsNoDischarge() {
     try {

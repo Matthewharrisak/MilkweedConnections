@@ -22,6 +22,8 @@ import "./AdminPartDisplay.css";
 import SelectAll from '../SelectAll/SelectAll'
 import { CSVLink, CSVDownload } from "react-csv";
 import PrintIcon from '@material-ui/icons/Print';
+import NewPartForm from '../NewPartForm/NewPartForm';
+
 
 
 
@@ -368,6 +370,7 @@ export default function CollapsibleTable() {
           </TableBody>
         </Table>
         <CSVLink data={print}><div className="printLink"><PrintIcon/></div></CSVLink>
+        <NewPartForm/>
       </TableContainer>
     </>
   );

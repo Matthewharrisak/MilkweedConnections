@@ -45,7 +45,7 @@ function* fetchParticipantsOnProvider(action) {
     console.log('beautiful');
   try {
     console.log("this is where we are");
-    const providerResponse = yield axios.get(`/api/provider//participants/${action.payload}`); //${action.payload}
+    const providerResponse = yield axios.get(`/api/provider/participants/${action.payload}`); //${action.payload}
     console.log("specific participants", providerResponse.data);
     yield put({ type: "SET_ALL_PROV_PARTS", payload: providerResponse.data });
   } catch (error) {

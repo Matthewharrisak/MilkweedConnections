@@ -382,22 +382,6 @@ router.put("/participant/status", rejectUnauthenticated, (req, res) => {
     });
 });
 
-router.put(
-  "/participant/prov_assign_date/:part",
-  rejectUnauthenticated,
-  (req, res) => {
-    console.log(req.body);
-    const queryText = `UPDATE "participants" SET "date_service_began" = current_timestamp WHERE "id" = $1;`;
-    pool
-      .query(queryText, [req.params.part])
-      .then((result) => {
-        res.sendStatus(201);
-      })
-      .catch((error) => {
-        res.sendStatus(500);
-        console.log("error in edit", error);
-      });}
-);
 
 
 

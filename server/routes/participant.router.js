@@ -213,8 +213,8 @@ router.post("/test", async (req, res) => {
   try {
     await connection.query("BEGIN");
     const sqlAddAccount = `INSERT INTO participants 
-    ("status", "first_name", "last_name", "dob", "phone_num", "address", "county", "other", "gender", "limitations", "notes", "ccs", "choices", "psp", "avatar", "guardian") 
-    VALUES ('Waitlist', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING id`;
+    ("status", "first_name", "last_name", "dob", "phone_num", "address", "county", "other", "gender", "limitations", "notes", "ccs", "choices", "psp", "avatar", "guardian", "date_waitlist") 
+    VALUES ('Waitlist', $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, current_timestamp) RETURNING id`;
     // Save the result so we can get the returned value
     const result = await connection.query(sqlAddAccount, [
       req.body.referralFormData.participantRef.first_name,
@@ -284,10 +284,10 @@ router.post("/", rejectUnauthenticated, (req, res) => {
       console.log(' Error in the POST', error);
       res.sendStatus(500);
     });
-  });
+});
 
 
-  router.put('/:id', rejectUnauthenticated, (req, res) => {
+router.put('/:id', rejectUnauthenticated, (req, res) => {
     console.log('whats up form the put request?' , req.params.id , req.body);
     let id = req.params.id;
     let queryText = `UPDATE "participants" 
@@ -330,9 +330,9 @@ router.post("/", rejectUnauthenticated, (req, res) => {
       res.sendStatus(500)
     });
   
-  });
+});
 
-  router.post("/participant", rejectUnauthenticated, (req, res) => {
+router.post("/participant", rejectUnauthenticated, (req, res) => {
     console.log(req.body)
 
       const queryText = `select exists(select 1 from prov_part where providers_id=$1 AND participants_id=$2);`;
@@ -352,7 +352,7 @@ router.post("/", rejectUnauthenticated, (req, res) => {
               res.sendStatus(500);
               console.log("error in add book", error);
             });
-        }})})
+}})})
 
 // Route to get non discharged Participants from the participants table 
 router.get("/participant/no_discharge", rejectUnauthenticated, (req, res) => {
@@ -381,6 +381,23 @@ router.put("/participant/status", rejectUnauthenticated, (req, res) => {
       console.log("error in edit", error);
     });
 });
+
+router.put(
+  "/participant/prov_assign_date/:part",
+  rejectUnauthenticated,
+  (req, res) => {
+    console.log(req.body);
+    const queryText = `UPDATE "participants" SET "date_service_began" = current_timestamp WHERE "id" = $1;`;
+    pool
+      .query(queryText, [req.params.part])
+      .then((result) => {
+        res.sendStatus(201);
+      })
+      .catch((error) => {
+        res.sendStatus(500);
+        console.log("error in edit", error);
+      });}
+);
 
 
 

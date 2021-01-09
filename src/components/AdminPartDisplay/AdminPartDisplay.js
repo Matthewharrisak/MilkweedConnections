@@ -124,13 +124,31 @@ function Row(props) {
         </TableCell>
         <TableCell align="right">{row.phone_num}</TableCell>
         <TableCell align="right">
-          {row.ccs === "true" ? <>CCS</> : <></>}
-          <span> </span>
-          {row.choices === "true" ? <>Choices</> : <></>}
-          <span> </span>
-          {row.psp === "true" ? <>PSP</> : <></>}
-          <span> </span>
-          {row.other != "" ? <>{row.other}</> : <></>}
+          {row.ccs === "true" ? (
+            <>
+              CCS<span> </span>
+            </>
+          ) : (
+            <></>
+          )}
+
+          {row.choices === "true" ? (
+            <>
+              Choices<span> </span>
+            </>
+          ) : (
+            <></>
+          )}
+
+          {row.psp === "true" ? (
+            <>
+              PSP<span> </span>
+            </>
+          ) : (
+            <></>
+          )}
+
+          {row.other != "" ? <><br/>{row.other}</> : <></>}
         </TableCell>
         <TableCell align="right">
           <AdminPartStatusAssign id={row.id} status={row.status} />

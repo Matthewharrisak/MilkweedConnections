@@ -109,12 +109,21 @@ export default function MixFormDialog(navigation) {
         setOpen(false); 
     };
 
+    const handleDummy1 = () => {
+        setFirst('LeRoy')
+        setLast('Dahl')
+        setEmail('leroydahl@gmail.com')
+        setNumber('6517575954')
+        setPassword('OrangeCounty2020!!')     
+    };
+    
+
     return (
         <div>
             <Button variant="outlined-light" className="addMixBtn text-light" onClick={handleClickOpen}>Register</Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogContent>
-                    <DialogContentText> Connection Details: </DialogContentText>
+                    <DialogContentText onClick={handleDummy1}> Connection Details: </DialogContentText>
                     <TextField
                         autoFocus
                         margin="dense"

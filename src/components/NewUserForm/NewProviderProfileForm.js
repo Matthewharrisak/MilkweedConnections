@@ -62,8 +62,14 @@ export default function NewProviderProfileForm(navigation) {
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle >Provider Profile:</DialogTitle>
                 <DialogContent id="profile-container">
-                    <Button variant="outlined-light" className="addMixBtn text-light" onClick={handleClickOpenBtn}>Image Upload</Button>
-                    <Dialog open={openImgUrl} onClose={handleCloseBtn} aria-labelledby="form-dialog-title">
+                    {img != '' ? 
+                    <>
+                        <img src={img}></img>
+                        <Button variant="outlined-light" className="addMixBtn text-light" onClick={handleClickOpenBtn}>Image Upload</Button>
+                    </>
+                        :
+                        <Button variant="outlined-light" className="addMixBtn text-light" onClick={handleClickOpenBtn}>Image Upload</Button>
+                        }                    <Dialog open={openImgUrl} onClose={handleCloseBtn} aria-labelledby="form-dialog-title">
                         <DialogTitle >Image:</DialogTitle>
                         <TextField
                             autoFocus

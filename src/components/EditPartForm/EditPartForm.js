@@ -50,7 +50,7 @@ export default function FormDialog(row) {
   const [dOb, dob] = React.useState(new Date());
   const [phoneNum, phone_num] = React.useState(row.rowEdit.phone_num);
   const [Address, address] = React.useState(row.rowEdit.address);
-  const [county, setCounty] = React.useState([row.rowEdit.county]);
+  const [county, setCounty] = React.useState(row.rowEdit.county);
   const [avatarID, avatar] = React.useState(row.rowEdit.avatar);
   const [Guardian, guardian] = React.useState(row.rowEdit.guardian);
   const [Other, other] = React.useState(row.rowEdit.other);
@@ -72,7 +72,7 @@ export default function FormDialog(row) {
           last_name: lastName,
           dob: dOb,
           phone_num: phoneNum,
-          address: Address,
+          address: Address, 
           avatar: avatarID,
           guardian: Guardian,
           other: Other,
@@ -89,10 +89,10 @@ export default function FormDialog(row) {
  
 };
 
-const handleChangeCounties = (event) => {
-  setCounty(event.target.value);
-  console.log(county);
-};
+// const handleChangeCounties = (event) => {
+//   setCounty(event.target.value);
+//   console.log(county);
+// };
 
 
   const handleClickOpen = () => {
@@ -147,7 +147,7 @@ const deletePart = (id) => {
             autoFocus
             margin="dense"
             id="name"
-            label={row.rowEdit.last_name}
+            placeholder={row.rowEdit.last_name}
             type="Name"
             fullWidth
             onChange={e => last_name(e.target.value)}
@@ -157,7 +157,7 @@ const deletePart = (id) => {
             autoFocus
             margin="dense"
             id="name"
-            label={dt.toLocaleString()}
+            placeholder={dt.toLocaleString()}
             type="email"
             fullWidth
             onChange={e => dob(e.target.value)}
@@ -167,7 +167,7 @@ const deletePart = (id) => {
           autoFocus
           margin="dense"
           id="name"
-          label={row.rowEdit.address}
+          placeholder={"row.rowEdit.address"}
           type="email"
           fullWidth
           onChange={e => address(e.target.value)}
@@ -177,54 +177,43 @@ const deletePart = (id) => {
         autoFocus
         margin="dense"
         id="name"
-        label={row.rowEdit.phone_num}
+        placeholder={row.rowEdit.phone_num}
         type="email"
         fullWidth
         onChange={e => phone_num(e.target.value)}
        />  
-   <FormControl className={classes.formControl} >
-                        <InputLabel id="county-selector">County</InputLabel>
-                        <Select
-                            labelId="county-selector"
-                            id="county-selected"
-                            multiple
-                            value={county}
-                            onChange={handleChangeCounties}
-                            input={<Input id="select-multiple-counties" />}
-                            renderValue={(selected) => (
-                                <div className={classes.chips}>
-                                    {selected.map((value) => (
-                                        <Chip key={value.id} label={value.name} className={classes.chip} />
-                                    ))}
-                                </div>
-                            )}>
-                            {counties.map((elem) => (
-                                <MenuItem key={elem.id} value={elem}>
-                                {elem.name}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                      <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label={row.rowEdit.avatar}
-                    type="email"
-                    fullWidth
-                    onChange={e => avatar(e.target.value)}
 
-                  />   
-                    <TextField
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  label={row.rowEdit.guardian}
-                  type="email"
-                  fullWidth
-                  onChange={e => guardian(e.target.value)}
 
-                />  
+        <TextField
+      autoFocus
+      margin="dense"
+      id="name"
+      placeholder={row.rowEdit.avatar}
+      type="email"
+      fullWidth
+      onChange={e => avatar(e.target.value)}
+
+    />   
+       <TextField
+      autoFocus
+      margin="dense"
+      id="name"
+      placeholder={row.rowEdit.county}
+      type="email"
+      fullWidth
+      onChange={e => setCounty(e.target.value)}
+
+    />   
+      <TextField
+    autoFocus
+    margin="dense"
+    id="name"
+    placeholder={"row.rowEdit.guardian"}
+    type="email"
+    fullWidth
+    onChange={e => guardian(e.target.value)}
+
+  />  
   
   <FormControl component="fieldset">
                         <FormLabel component="legend"> Programs </FormLabel>
@@ -259,21 +248,21 @@ const deletePart = (id) => {
                         </FormGroup>
                     </FormControl>
 
-                    <TextField
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  label={row.rowEdit.other}
-                  type="email"
-                  fullWidth
-                  onChange={e => other(e.target.value)}
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          placeholder={row.rowEdit.other}
+          type="email"
+          fullWidth
+          onChange={e => other(e.target.value)}
 
-                />  
+        />  
         <TextField
         autoFocus
         margin="dense"
         id="name"
-        label={row.rowEdit.gender}
+        placeholder={"row.rowEdit.gender"}
         type="email"
         fullWidth
         onChange={e => gender(e.target.value)}
@@ -283,7 +272,7 @@ const deletePart = (id) => {
       autoFocus
       margin="dense"
       id="name"
-      label={row.rowEdit.limitations}
+      placeholder={"row.rowEdit.limitations"}
       type="email"
       fullWidth
       onChange={e => limitations(e.target.value)}
@@ -293,7 +282,7 @@ const deletePart = (id) => {
     autoFocus
     margin="dense"
     id="name"
-    label={row.rowEdit.notes}
+    placeholder={'row.rowEdit.notes'}
     type="email"
     fullWidth
     onChange={e => notes(e.target.value)}
@@ -303,7 +292,7 @@ const deletePart = (id) => {
   autoFocus
   margin="dense"
   id="name"
-  label={row.rowEdit.status}
+  placeholder={row.rowEdit.status}
   type="email"
   fullWidth
   // onChange={e => status(e.target.value)}

@@ -23,6 +23,7 @@ import SelectAll from '../SelectAll/SelectAll'
 import { CSVLink, CSVDownload } from "react-csv";
 import PrintIcon from '@material-ui/icons/Print';
 import NewPartForm from '../NewPartForm/NewPartForm';
+import swal from 'sweetalert';
 
 
 
@@ -241,6 +242,13 @@ export default function CollapsibleTable() {
 
   function ButtonClick() {
     dispatch({ type: "SET_PRINT", payload: rows })
+    swal({
+      // title: "?",
+      text: "Ready to Print!",
+      icon: "success",
+      buttons: false,
+      // dangerMode: true,
+    })
   }
 
 

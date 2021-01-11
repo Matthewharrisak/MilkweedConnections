@@ -55,16 +55,31 @@ export default function NewProviderProfileForm(navigation) {
     const handleCloseBtn = () => {
         setOpenImgUrl(false); 
     };
-
+    const handleDummy1 = () => {
+        setName('LeRoy Dahl')
+        setDescription('Recovery Coaching Peer and Parent Mentoring, Individual and family/parent support, Reentry and Reunification, Independent living skills')
+        setHelp('Substance use challenges, Youth to adults,Individuals and families')
+        setMission('LeRoy wants people to know that there is a way through it, because he has been through it - starting from the bottom and getting back up to your feet from nowhere. He has been through incarceration, child protective services, CHIPS, and Alternatives to Incarcerating Mothers (AIM) court. She has been through substance use recovery, and continues involvement in Narcotics Anonymous.')
+        setBio('In his spare time, LeRoy enjoys the company of his cat and dog. The outdoors often call to him, with fishing (including ice fishing), trail walking, and disc golfing being some of his favorite activities. He loves listening to all kinds of music.')     
+    }; 
+    const handleDummy2 = () => {
+        setImg('https://avatars0.githubusercontent.com/u/68084456?s=460&u=967b1256cf1f50b9acd36cb99fad1562eafb24e3&v=4')
+    }
     return (
         <div>
             <Button variant="outlined-light" className="addMixBtn text-light" onClick={handleClickOpen}>Register</Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle >Provider Profile:</DialogTitle>
+                <DialogTitle onClick={handleDummy1}>Provider Profile:</DialogTitle>
                 <DialogContent id="profile-container">
-                    <Button variant="outlined-light" className="addMixBtn text-light" onClick={handleClickOpenBtn}>Image Upload</Button>
-                    <Dialog open={openImgUrl} onClose={handleCloseBtn} aria-labelledby="form-dialog-title">
-                        <DialogTitle >Image:</DialogTitle>
+                    {img != '' ? 
+                    <>
+                        <img src={img}></img>
+                        <Button variant="outlined-light" className="addMixBtn text-light" onClick={handleClickOpenBtn}>Image Upload</Button>
+                    </>
+                        :
+                        <Button variant="outlined-light" className="addMixBtn text-light" onClick={handleClickOpenBtn}>Image Upload</Button>
+                        }                    <Dialog open={openImgUrl} onClose={handleCloseBtn} aria-labelledby="form-dialog-title">
+                        <DialogTitle onClick={handleDummy2}>Image:</DialogTitle>
                         <TextField
                             autoFocus
                             margin="dense"
